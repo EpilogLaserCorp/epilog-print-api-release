@@ -1,0 +1,94 @@
+name: Bug Report
+description: File a bug report.
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees:
+  - tylers-epilog
+  - allenb-epilog
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: "What happened?"
+      description: Also tell us what you expected to happen.
+      placeholder:
+        "Tip: You can attach images or other files by clicking this area to highlight it and then dragging files in."
+    validations:
+      required: true
+  - type: dropdown
+    id: version
+    attributes:
+      label: Version
+      description: What version of the PrintAPI are you running?
+      options:
+        - 1.0.3 (Latest)
+        - Other/Not Listed
+      default: 0
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "## PrintAPI Inputs"
+  - type: markdown
+    attributes:
+      value: Often times, an artwork file, a settings file, and the machine type is enough for us to reproduce and diagnose the issue that is occurring.
+  - type: dropdown
+    id: machine-type
+    attributes:
+      label: Machine Type
+      description:
+        "What kind of machine were you generating a print file for?
+        
+        Note: All forms of PrintAPI come with a way to query the version."
+      options:
+        - N/A
+        - Fusion Pro 24 (pro24)
+        - Fusion Pro 32 (pro32)
+        - Fusion Pro 36 (pro36)
+        - Fusion Pro 48 (pro48)
+        - Fusion Edge 12 (edge12)
+        - Fusion Edge 24 (edge24)
+        - Fusion Edge 36 (edge36)
+        - Fusion Maker 12 (maker12)
+        - Fusion Maker 24 (maker24)
+        - Fusion Maker 36 (maker36)
+        - Fusion G100 4x4 (g100_4x4)
+        - Fusion G100 6x6 (g100_6x6)
+      default: 0
+    validations:
+      required: false
+  - type: textarea
+    id: artwork-file
+    attributes:
+      label: Artwork (SVG) File
+      placeholder: "Tip: You can attach settings or artwork files by clicking this area to highlight it and then dragging files in."
+    validations:
+      required: false
+  - type: textarea
+    id: settings-file
+    attributes:
+      label: Settings (JSON) File
+      placeholder: "Tip: You can attach settings or settings files by clicking this area to highlight it and then dragging files in."
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: "## Additional Information"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      placeholder: Please copy and paste any relevant log output.
+      render: shell
+    validations:
+      required: false
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Anything Else?
+      placeholder: "Tip: You can attach images or other files by clicking this area to highlight it and then dragging files in."
+    validations:
+      required: false

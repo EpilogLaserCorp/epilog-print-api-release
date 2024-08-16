@@ -1,0 +1,71 @@
+{
+    "job_name": "Multi-Process-Raster-DPI-Processes",
+    "firmware_version": "1.0.9.0",
+    "autofocus": "off",
+    "copies": 1,
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave 500 DPI",
+            "speed": 100,
+            "power": 25,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "blue"
+                ]
+            },
+            "resolution": 500,
+            "dithering": "standard",
+            "unidirectional": false,
+            "precision_sync": false,
+            "engrave_direction": "down"
+        },
+        {
+            "_of": "engrave_process",
+            "name": "P2 Engrave 250 DPI",
+            "speed": 100,
+            "power": 25,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "aqua"
+                ]
+            },
+            "resolution": 250,
+            "dithering": "standard",
+            "unidirectional": false,
+            "precision_sync": false,
+            "engrave_direction": "down"
+        },
+        {
+            "_of": "engrave_process",
+            "name": "P3 Engrave 125 DPI",
+            "speed": 100,
+            "power": 25,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "lime"
+                ]
+            },
+            "resolution": 125,
+            "dithering": "standard",
+            "unidirectional": false,
+            "precision_sync": false,
+            "engrave_direction": "down"
+        }
+    ]
+}

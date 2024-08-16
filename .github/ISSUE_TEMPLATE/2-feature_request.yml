@@ -1,0 +1,33 @@
+name: Feature Request
+description: Suggest an idea for this project.
+title: "[Suggestion]: "
+labels: ["enhancement", "triage"]
+assignees:
+  - tylers-epilog
+  - allenb-epilog
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this feature request!
+  - type: textarea
+    id: description
+    attributes:
+      label: What would you suggest?
+      description: Give us a description of what behavior you would like to see. What currently happens instead?
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to an existing issue?
+      description: If so, please include a link to any related bug reports or feature requests that have been made.
+    validations:
+      required: false
+  - type: textarea
+    id: extra-information
+    attributes:
+      label: Extra Information
+      description: Artwork files, settings files, screenshots, or anything else that will give us more context!
+      placeholder: "Tip: You can attach images, artwork, or settings files by clicking this area to highlight it and then dragging files in."
+    validations:
+      required: false

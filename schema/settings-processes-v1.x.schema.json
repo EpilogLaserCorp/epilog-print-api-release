@@ -1,0 +1,959 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Settings",
+  "type": "object",
+  "required": [
+    "autofocus",
+    "copies",
+    "firmware_version",
+    "job_name",
+    "processes"
+  ],
+  "properties": {
+    "autofocus": {
+      "$ref": "#/definitions/Autofocus"
+    },
+    "copies": {
+      "type": "integer",
+      "format": "uint16",
+      "minimum": 1.0
+    },
+    "firmware_version": {
+      "type": "string",
+      "maxLength": 255,
+      "minLength": 0
+    },
+    "job_alignment": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/JobAlignment"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "job_name": {
+      "type": "string",
+      "maxLength": 255,
+      "minLength": 1
+    },
+    "processes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Process"
+      },
+      "minItems": 1
+    },
+    "rotary": {
+      "default": {
+        "_of": "none"
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/RotaryType"
+        }
+      ]
+    },
+    "svg_origin": {
+      "default": {
+        "_of": "zero"
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/SvgOrigin"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "AttributeFilter": {
+      "type": "object",
+      "required": [
+        "attribute",
+        "id"
+      ],
+      "properties": {
+        "attribute": {
+          "$ref": "#/definitions/AttributeType"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "AttributeType": {
+      "type": "string",
+      "enum": [
+        "all",
+        "stroke",
+        "fill"
+      ]
+    },
+    "Autofocus": {
+      "type": "string",
+      "enum": [
+        "off",
+        "plunger",
+        "thickness"
+      ]
+    },
+    "CenteringOffset": {
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "number",
+          "format": "float"
+        },
+        "y": {
+          "type": "number",
+          "format": "float"
+        }
+      }
+    },
+    "CenteringPoint": {
+      "type": "string",
+      "enum": [
+        "custom",
+        "center_center",
+        "left_center",
+        "right_center",
+        "center_top",
+        "center_bottom",
+        "top_left",
+        "top_right",
+        "bottom_left",
+        "bottom_right"
+      ]
+    },
+    "DitheringType": {
+      "type": "string",
+      "enum": [
+        "none",
+        "standard",
+        "floyd_steinberg",
+        "jarvis",
+        "stucki",
+        "bayer"
+      ]
+    },
+    "EngravingDirection": {
+      "type": "string",
+      "enum": [
+        "up",
+        "down"
+      ]
+    },
+    "Filter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "all_filter"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "colors"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "color_filter"
+              ]
+            },
+            "colors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "op",
+            "width"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "stroke_filter"
+              ]
+            },
+            "op": {
+              "$ref": "#/definitions/StrokeFilterOp"
+            },
+            "width": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "attributes"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "attribute_filter"
+              ]
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttributeFilter"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "HatchPatternType": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "angle",
+            "spacing"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "sweep"
+              ]
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ],
+              "maximum": 25.4,
+              "minimum": 0.000254
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "angle",
+            "spacing"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "s_sweep"
+              ]
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ],
+              "maximum": 25.4,
+              "minimum": 0.000254
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "angle",
+            "spacing"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "unidirectional"
+              ]
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ],
+              "maximum": 25.4,
+              "minimum": 0.000254
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "outline"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "HatchPattern_for_SpeedPowerFrequencyWaveform_for_SpeedDecimal_and_PowerDecimal_and_FrequencyDecimal_and_WaveformIntOption": {
+      "type": "object",
+      "required": [
+        "frequency",
+        "name",
+        "passes",
+        "pattern_type",
+        "power",
+        "speed"
+      ],
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "frequency": {
+          "type": "number",
+          "format": "float",
+          "maximum": 100.0,
+          "minimum": 1.0
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "passes": {
+          "type": "integer",
+          "format": "uint16",
+          "minimum": 1.0
+        },
+        "pattern_type": {
+          "$ref": "#/definitions/HatchPatternType"
+        },
+        "power": {
+          "type": "number",
+          "format": "float",
+          "maximum": 100.0,
+          "minimum": 0.0
+        },
+        "speed": {
+          "type": "number",
+          "format": "float",
+          "maximum": 100.0,
+          "minimum": 0.01
+        },
+        "waveform": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint16",
+          "maximum": 15.0,
+          "minimum": 0.0
+        }
+      }
+    },
+    "JobAlignment": {
+      "type": "object",
+      "required": [
+        "centering_point"
+      ],
+      "properties": {
+        "centering_point": {
+          "$ref": "#/definitions/CenteringPoint"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/CenteringOffset"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "LaserType": {
+      "type": "string",
+      "enum": [
+        "co2",
+        "fiber"
+      ]
+    },
+    "Process": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "beziers",
+            "cycles",
+            "filter",
+            "frequency",
+            "name",
+            "power",
+            "speed",
+            "vector_sorting"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "vector_process"
+              ]
+            },
+            "air_assist": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "beziers": {
+              "type": "boolean"
+            },
+            "cycles": {
+              "type": "integer",
+              "format": "uint16",
+              "minimum": 1.0
+            },
+            "enabled": {
+              "default": true,
+              "type": "boolean"
+            },
+            "filter": {
+              "$ref": "#/definitions/Filter"
+            },
+            "frequency": {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 1.0
+            },
+            "laser_type": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/LaserType"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 255,
+              "minLength": 1
+            },
+            "offset": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "optimize_cycles": {
+              "default": true,
+              "type": "boolean"
+            },
+            "power": {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "speed": {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 0.01
+            },
+            "thickness": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "vector_sorting": {
+              "$ref": "#/definitions/VectorSorting"
+            },
+            "waveform": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint16",
+              "maximum": 15.0,
+              "minimum": 0.0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "cycles",
+            "filter",
+            "isolate_shapes",
+            "name",
+            "patterns"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "hatch_process"
+              ]
+            },
+            "air_assist": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "cycles": {
+              "type": "integer",
+              "format": "uint16",
+              "minimum": 1.0
+            },
+            "enabled": {
+              "default": true,
+              "type": "boolean"
+            },
+            "filter": {
+              "$ref": "#/definitions/Filter"
+            },
+            "isolate_shapes": {
+              "type": "boolean"
+            },
+            "laser_type": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/LaserType"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 255,
+              "minLength": 1
+            },
+            "offset": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "optimize_hatch_sort": {
+              "default": true,
+              "type": "boolean"
+            },
+            "patterns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/HatchPattern_for_SpeedPowerFrequencyWaveform_for_SpeedDecimal_and_PowerDecimal_and_FrequencyDecimal_and_WaveformIntOption"
+              }
+            },
+            "thickness": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "cycles",
+            "dithering",
+            "engrave_direction",
+            "filter",
+            "name",
+            "power",
+            "precision_sync",
+            "resolution",
+            "speed",
+            "unidirectional"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "engrave_process"
+              ]
+            },
+            "air_assist": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "cycles": {
+              "type": "integer",
+              "format": "uint16",
+              "minimum": 1.0
+            },
+            "dithering": {
+              "$ref": "#/definitions/DitheringType"
+            },
+            "enabled": {
+              "default": true,
+              "type": "boolean"
+            },
+            "engrave_direction": {
+              "$ref": "#/definitions/EngravingDirection"
+            },
+            "filter": {
+              "$ref": "#/definitions/Filter"
+            },
+            "frequency": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 1.0
+            },
+            "laser_type": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/LaserType"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 255,
+              "minLength": 1
+            },
+            "offset": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "power": {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "precision_sync": {
+              "type": "boolean"
+            },
+            "resolution": {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 1200.0,
+              "minimum": 50.0
+            },
+            "speed": {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 0.01
+            },
+            "thickness": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "unidirectional": {
+              "type": "boolean"
+            },
+            "waveform": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint16",
+              "maximum": 15.0,
+              "minimum": 0.0
+            }
+          }
+        }
+      ]
+    },
+    "RotaryType": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "none"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "rim"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "diameter"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "three_jaw"
+              ]
+            },
+            "diameter": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "StrokeFilterOp": {
+      "type": "string",
+      "enum": [
+        "<",
+        "<=",
+        ">",
+        ">=",
+        "==",
+        "!="
+      ]
+    },
+    "SvgOrigin": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "zero"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "half_table_size"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "view_rect_top_left"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "view_rect_center"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "x",
+            "y"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "custom"
+              ]
+            },
+            "x": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "y": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "VectorSorting": {
+      "type": "string",
+      "enum": [
+        "off",
+        "optimize",
+        "inside_out"
+      ]
+    }
+  }
+}
