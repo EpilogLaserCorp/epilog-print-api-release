@@ -3,15 +3,15 @@
 #include <string>
 #include <memory>
 
-struct PrnGen; // From epilog-print-api.h
+struct PrnGen;            // From epilog-print-api.h
 enum class EpilogMachine; // From epilog-print-api.h
 
 class EpilogPrintFileGenerator
 {
     struct PrnGenDeleterFunctor
     {
-        template<class T>
-        void operator()(T* obj)
+        template <class T>
+        void operator()(T *obj)
         {
             // Free the print file generator pointer.
             free_prn_gen(obj);
@@ -19,18 +19,26 @@ class EpilogPrintFileGenerator
     };
 
 public:
-    struct ApiResult {
+    struct ApiResult
+    {
         std::string result;
-        std::string errorString;
-        bool isValid;
+        std::string error;
+        bool didSucceed;
     };
 
-    EpilogPrintFileGenerator(std::string svgContents,
-                             std::string settingsJson,
+    struct ApiError
+    {
+        std::string error;
+        bool didSucceed;
+    };
+
+    EpilogPrintFileGenerator(const std::string &svgContents,
+                             const std::string &settingsJson,
                              EpilogMachine machine);
 
     ~EpilogPrintFileGenerator();
 
+    ApiError add_font_data(const std::string &data);
     ApiResult generatePrintFile();
 
     static std::string apiVersion();

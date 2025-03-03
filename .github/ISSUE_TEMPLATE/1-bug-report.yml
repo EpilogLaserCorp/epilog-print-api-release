@@ -24,7 +24,8 @@ body:
       label: Version
       description: What version of the PrintAPI are you running?
       options:
-        - 1.0.3 (Latest)
+        - 1.2.0 (Latest)
+        - 1.0.3
         - Other/Not Listed
       default: 0
     validations:
@@ -57,6 +58,20 @@ body:
         - Fusion Maker 36 (maker36)
         - Fusion G100 4x4 (g100_4x4)
         - Fusion G100 6x6 (g100_6x6)
+        - Galvo G2 (g2)
+        - Fusion 32 M2 (fusion32_m2)
+        - Fusion 40 M2 (fusion40_m2)
+        - Fusion 32 (fusion32)
+        - Fusion 32 Fibermark (fusion32_fibermark)
+        - Fusion 40 (fusion40)
+        - Fibermark 24 (fibermark24)
+        - Fibermark 24 S2 (fibermark24_s2)
+        - Zing 16 (zing16)
+        - Zing 24 (zing24)
+        - Helix 24 (helix24)
+        - Mini 18 (mini18)
+        - Mini 24 (mini24)
+        - EXT 36 (ext36)
       default: 0
     validations:
       required: false

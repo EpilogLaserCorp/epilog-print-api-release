@@ -1,0 +1,73 @@
+{
+    "job_name": "Multi-Process-Mixed-Legacy",
+    "copies": 1,
+    "autofocus": false,
+    "engrave_resolution": 600,
+    "engrave_direction": "down",
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "blue"
+                ]
+            },
+            "cycles": 1,
+            "dithering": "standard",
+            "speed": 100,
+            "power": 25,
+            "precision_sync": false,
+            "air_assist": false
+        },
+        {
+            "_of": "engrave_process",
+            "name": "P2 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "lime"
+                ]
+            },
+            "cycles": 1,
+            "dithering": "standard",
+            "speed": 100,
+            "power": 50,
+            "precision_sync": true,
+            "air_assist": false
+        },
+        {
+            "_of": "vector_process",
+            "name": "P3 Vector",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "aqua"
+                ]
+            },
+            "cycles": 1,
+            "speed": 100,
+            "power": 25,
+            "frequency": 5000,
+            "vector_sorting": "off",
+            "air_assist": false
+        },
+        {
+            "_of": "vector_process",
+            "name": "P4 Vector",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "yellow"
+                ]
+            },
+            "cycles": 1,
+            "speed": 100,
+            "power": 50,
+            "frequency": 10,
+            "vector_sorting": "off",
+            "air_assist": false
+        }
+    ]
+}

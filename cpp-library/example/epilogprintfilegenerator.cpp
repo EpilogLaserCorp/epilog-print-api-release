@@ -17,21 +17,34 @@ fromCStringAndFree(const char *cstr)
 }
 
 static EpilogPrintFileGenerator::ApiResult
-fromCGenerateResultAndFree(const CApiResult &cresult)
+fromCApiResultAndFree(const CApiResult &cresult)
 {
     // Convert c strings into c++ strings.
     const auto result = std::string(cresult.result, cresult.result_size);
-    const auto error_string = std::string(cresult.error);
+    const auto error = std::string(cresult.error);
 
     // IMPORTANT: Free the memory of cresult.
     free_c_api_result(&cresult);
 
     // Return the result.
-    return EpilogPrintFileGenerator::ApiResult{result, error_string, error_string.empty()};
+    return EpilogPrintFileGenerator::ApiResult{result, error, error.empty()};
 }
 
-EpilogPrintFileGenerator::EpilogPrintFileGenerator(std::string svgContents,
-                                                   std::string settingsJson,
+static EpilogPrintFileGenerator::ApiError
+fromCApiErrorAndFree(const CApiError &cresult)
+{
+    // Convert c strings into c++ strings.
+    const auto error = std::string(cresult.error);
+
+    // IMPORTANT: Free the memory of cresult.
+    free_c_api_error(&cresult);
+
+    // Return the result.
+    return EpilogPrintFileGenerator::ApiError{error, error.empty()};
+}
+
+EpilogPrintFileGenerator::EpilogPrintFileGenerator(const std::string &svgContents,
+                                                   const std::string &settingsJson,
                                                    EpilogMachine machine)
 {
     // Create a print file generator.
@@ -46,7 +59,17 @@ EpilogPrintFileGenerator::~EpilogPrintFileGenerator()
 {
 }
 
-EpilogPrintFileGenerator::ApiResult EpilogPrintFileGenerator::generatePrintFile()
+EpilogPrintFileGenerator::ApiError
+EpilogPrintFileGenerator::add_font_data(const std::string &data)
+{
+    // Add font data for print file generation and return an error if one
+    // occurred.
+    return fromCApiErrorAndFree(
+        prn_gen_add_font_data(m_prnGen.get(), data.data(), data.size()));
+}
+
+EpilogPrintFileGenerator::ApiResult
+EpilogPrintFileGenerator::generatePrintFile()
 {
     // Note: work could instead be done in chunks by repeatedly calling
     // prn_gen_run_chunk until the function returns false.
@@ -56,7 +79,7 @@ EpilogPrintFileGenerator::ApiResult EpilogPrintFileGenerator::generatePrintFile(
     // using the resulting struct.
 
     // Do all work and return the result.
-    return fromCGenerateResultAndFree(prn_gen_run_until_complete(m_prnGen.get()));
+    return fromCApiResultAndFree(prn_gen_run_until_complete(m_prnGen.get()));
 }
 
 std::string EpilogPrintFileGenerator::apiVersion()

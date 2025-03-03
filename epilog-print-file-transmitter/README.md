@@ -56,6 +56,22 @@ The available `machine-type` values are:
 - `g100_4x4`
 - `g100_6x6`
 
+Future values for `machine-type` will include:
+- `g2`
+- `fusion32_m2`
+- `fusion40_m2`
+- `fusion32`
+- `fusion32_fibermark`
+- `fusion40`
+- `fibermark24`
+- `fibermark24_s2`
+- `zing16`
+- `zing24`
+- `helix24`
+- `mini18`
+- `mini24`
+- `ext36`
+
 ### `-h, --help`
 
 Prints helpful information about using the `epilog_print_file_transmitter` executable to stdout.

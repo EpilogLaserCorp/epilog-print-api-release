@@ -77,12 +77,28 @@ int main(int argc, char *argv[])
         EpilogMachine::Edge12 // The target machine type
     );
 
+    // // Load extra fonts not contained in the system font directories.
+    // const auto fontFileContents = readFile(path_to_file);
+    // if (!fontFileContents.first)
+    // {
+    //     std::cerr << "Unable to read contents of font file: "
+    //               << path_to_file << std::endl;
+    //     return -1;
+    // }
+    // const auto fontDataResult = gen.add_font_data(fontFileContents.second);
+    // if (!fontDataResult.didSucceed)
+    // {
+    //     std::cerr << "Unable to add font data for print file generation: "
+    //               << fontDataResult.error << std::endl;
+    //     return -1;
+    // }
+
     // Generate the print file.
     std::cout << "Generating print file..." << std::endl;
     const auto printFile = gen.generatePrintFile();
-    if (!printFile.isValid)
+    if (!printFile.didSucceed)
     {
-        std::cerr << "Unable to generate print file: " << printFile.errorString
+        std::cerr << "Unable to generate print file: " << printFile.error
                   << std::endl;
         return -1;
     }

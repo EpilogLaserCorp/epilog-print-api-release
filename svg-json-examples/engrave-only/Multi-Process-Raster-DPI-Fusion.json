@@ -1,0 +1,63 @@
+{
+    "job_name": "Multi-Process-Raster-Fusion",
+    "copies": 1,
+    "autofocus": false,
+    "engrave_resolution": 600,
+    "engrave_direction": "down",
+    "vector_grid": true,
+    "vector_speed_half": false,
+    "vector_power_comp": true,
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "blue"
+                ]
+            },
+            "cycles": 1,
+            "dithering": "standard",
+            "speed": 100,
+            "power": 25,
+            "precision_sync": false,
+            "laser_type": "co2",
+            "air_assist": false
+        },
+        {
+            "_of": "engrave_process",
+            "name": "P2 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "aqua"
+                ]
+            },
+            "cycles": 1,
+            "dithering": "standard",
+            "speed": 50,
+            "power": 50,
+            "precision_sync": true,
+            "laser_type": "co2",
+            "air_assist": false
+        },
+        {
+            "_of": "engrave_process",
+            "name": "P3 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "lime"
+                ]
+            },
+            "cycles": 2,
+            "dithering": "standard",
+            "speed": 10,
+            "power": 100,
+            "precision_sync": true,
+            "laser_type": "co2",
+            "air_assist": false
+        }
+    ]
+}

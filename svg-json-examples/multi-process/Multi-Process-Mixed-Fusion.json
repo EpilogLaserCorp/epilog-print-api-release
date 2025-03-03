@@ -1,0 +1,82 @@
+{
+    "job_name": "Multi-Process-Mixed-Fusion",
+    "copies": 1,
+    "autofocus": false,
+    "engrave_resolution": 600,
+    "engrave_direction": "down",
+    "vector_grid": true,
+    "vector_speed_half": false,
+    "vector_power_comp": true,
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "blue"
+                ]
+            },
+            "cycles": 1,
+            "dithering": "standard",
+            "speed": 100,
+            "power": 25,
+            "precision_sync": false,
+            "laser_type": "co2",
+            "air_assist": false
+        },
+        {
+            "_of": "engrave_process",
+            "name": "P2 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "lime"
+                ]
+            },
+            "cycles": 1,
+            "dithering": "standard",
+            "speed": 100,
+            "power": 50,
+            "precision_sync": true,
+            "laser_type": "co2",
+            "air_assist": false
+        },
+        {
+            "_of": "vector_process",
+            "name": "P3 Vector",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "aqua"
+                ]
+            },
+            "cycles": 1,
+            "speed": 100,
+            "power": 25,
+            "frequency": 100,
+            "vector_sorting": "off",
+            "beziers": true,
+            "laser_type": "co2",
+            "air_assist": false
+        },
+        {
+            "_of": "vector_process",
+            "name": "P4 Vector",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "yellow"
+                ]
+            },
+            "cycles": 1,
+            "speed": 100,
+            "power": 50,
+            "frequency": 1,
+            "vector_sorting": "off",
+            "beziers": true,
+            "laser_type": "co2",
+            "air_assist": false
+        }
+    ]
+}

@@ -38,13 +38,15 @@ This new capability allows customers to fully integrate Epilog Laser machines in
 
 ### Schemas
 
-  - This file is a template for the format of the json settings files.
-  - It specifies _most_ of the constraints on any given parameter.
-  - The [Json Settings Document](./JSON_SETTINGS.md) also has details on each parameter's constraints.
+  - These files are a template for the format of the json settings files.
+  - They specify _most_ of the constraints on any given parameter.
+  - Each generator type has a different schema.
+  - The [Json Settings Document](./JSON_SETTINGS.md) also has details on each parameter's constraints and on how each generator is used.
 
 ### Example Svg and Json Files
 
-  - These examples provide a quick and easy way to see how PrintAPI works.
+  - These examples provide a quick and easy way to see how the Epilog PrintAPI works.
+  - Each type of generator has a different `json` file. The `Processes` generator will most likely be correct generator since it is used for all new machine types. If you're not sure, take a look at the [JSON Settings Document](./JSON_SETTINGS.md) to see which generator to use.
 
 ## Support
 

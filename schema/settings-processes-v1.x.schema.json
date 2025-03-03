@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Settings",
+  "title": "SettingsGeneric_for_Filter_and_Nullable_Filter",
+  "description": "For internal use only.",
   "type": "object",
   "required": [
     "autofocus",
@@ -18,10 +19,38 @@
       "format": "uint16",
       "minimum": 1.0
     },
+    "debug": {
+      "default": [],
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": true
+    },
     "firmware_version": {
       "type": "string",
       "maxLength": 255,
       "minLength": 0
+    },
+    "generic_font_families": {
+      "default": {
+        "_of": "system_defaults"
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/GenericFontFamilies"
+        }
+      ]
+    },
+    "injection": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/JobCommandInjection"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "job_alignment": {
       "anyOf": [
@@ -41,7 +70,7 @@
     "processes": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/Process"
+        "$ref": "#/definitions/ProcessGeneric_for_Filter_and_Nullable_Filter"
       },
       "minItems": 1
     },
@@ -130,6 +159,71 @@
         "bottom_right"
       ]
     },
+    "ClosedPathLaserSide": {
+      "description": "Defines how the laser side is determined for closed paths.",
+      "oneOf": [
+        {
+          "description": "The outside of the path is the side that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "outside"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The inside of the path is the side that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "inside"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "right_hand_rule"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The negative cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "left_hand_rule"
+              ]
+            }
+          }
+        }
+      ]
+    },
     "DitheringType": {
       "type": "string",
       "enum": [
@@ -138,7 +232,181 @@
         "floyd_steinberg",
         "jarvis",
         "stucki",
-        "bayer"
+        "bayer",
+        "grayscale_3d"
+      ]
+    },
+    "EngraveOperationGeneric_for_Filter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "value"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "threshold"
+              ]
+            },
+            "value": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "invert"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "distance"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "dilate"
+              ]
+            },
+            "distance": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "distance"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "distance_transform"
+              ]
+            },
+            "distance": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "mask"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "image_mask"
+              ]
+            },
+            "mask": {
+              "$ref": "#/definitions/Filter"
+            },
+            "mask_operations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EngraveOperationGeneric_for_Filter"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "mask"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "path_mask"
+              ]
+            },
+            "mask": {
+              "$ref": "#/definitions/Filter"
+            },
+            "mask_operations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EngraveOperationGeneric_for_Filter"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "interpolate_type"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "map"
+              ]
+            },
+            "interpolate_type": {
+              "$ref": "#/definitions/InterpolateType"
+            },
+            "value_map": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": [
+                  {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  {
+                    "type": "number",
+                    "format": "float"
+                  }
+                ],
+                "maxItems": 2,
+                "minItems": 2
+              }
+            }
+          }
+        }
       ]
     },
     "EngravingDirection": {
@@ -233,6 +501,104 @@
               "items": {
                 "$ref": "#/definitions/AttributeFilter"
               }
+            }
+          }
+        }
+      ]
+    },
+    "GenericFontFamilies": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "none"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "epilog_defaults"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "system_defaults"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "font_family"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "single_named"
+              ]
+            },
+            "font_family": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "cursive_family",
+            "fantasy_family",
+            "monospace_family",
+            "sans_serif_family",
+            "serif_family"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "named"
+              ]
+            },
+            "cursive_family": {
+              "type": "string"
+            },
+            "fantasy_family": {
+              "type": "string"
+            },
+            "monospace_family": {
+              "type": "string"
+            },
+            "sans_serif_family": {
+              "type": "string"
+            },
+            "serif_family": {
+              "type": "string"
             }
           }
         }
@@ -420,6 +786,80 @@
         }
       }
     },
+    "InterpolateType": {
+      "description": "Defines how values in between the map's `value_map` points are treated.",
+      "oneOf": [
+        {
+          "description": "Linearly interpolates between the nearest input value below and the nearest input value above the specified input.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "linear"
+              ]
+            },
+            "max": {
+              "description": "The value that 1 maps to if not specified in the `value_map`.",
+              "default": 1.0,
+              "type": "number",
+              "format": "float"
+            },
+            "min": {
+              "description": "The value that 0 maps to if not specified in the `value_map`.",
+              "default": 0.0,
+              "type": "number",
+              "format": "float"
+            }
+          }
+        },
+        {
+          "description": "Chooses the mapping to the nearest input value below the specified input.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "nearest_below"
+              ]
+            },
+            "min": {
+              "description": "The value that 0 maps to if not specified in the `value_map`.",
+              "default": 0.0,
+              "type": "number",
+              "format": "float"
+            }
+          }
+        },
+        {
+          "description": "Chooses the mapping to the nearest input value above the specified input.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "nearest_above"
+              ]
+            },
+            "max": {
+              "description": "The value that 1 maps to if not specified in the `value_map`.",
+              "default": 1.0,
+              "type": "number",
+              "format": "float"
+            }
+          }
+        }
+      ]
+    },
     "JobAlignment": {
       "type": "object",
       "required": [
@@ -441,6 +881,95 @@
         }
       }
     },
+    "JobCommandInjection": {
+      "type": "object",
+      "properties": {
+        "end_hpgl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_pcl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_pjl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start_hpgl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start_pcl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "Kerf": {
+      "type": "object",
+      "required": [
+        "line_join",
+        "offset"
+      ],
+      "properties": {
+        "line_join": {
+          "$ref": "#/definitions/LineJoin"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        }
+      }
+    },
+    "LaserSideGeneric_for_Nullable_Filter": {
+      "description": "Laser-side can essentially be thought of as the side of an artwork path that we would like to laser. As such, this represents the side of the path that we would like to offset towards. This struct specifies the side of the line for offsetting paths and will eventually be used for lead-in and lead-out as well. Note: When lead-in and lead-out are implemented, make the `kerf_offset` field optional.",
+      "type": "object",
+      "required": [
+        "closed",
+        "kerf",
+        "open"
+      ],
+      "properties": {
+        "closed": {
+          "$ref": "#/definitions/ClosedPathLaserSide"
+        },
+        "kerf": {
+          "$ref": "#/definitions/Kerf"
+        },
+        "open": {
+          "$ref": "#/definitions/OpenPathLaserSide"
+        },
+        "overrides": {
+          "description": "This specifies which objects will have their laser sides flipped as such: - Outside <-> Inside - RightHandRule <-> LeftHandRule",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Filter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
     "LaserType": {
       "type": "string",
       "enum": [
@@ -448,7 +977,92 @@
         "fiber"
       ]
     },
-    "Process": {
+    "LineJoin": {
+      "description": "The type of joining used when offsetting paths.",
+      "oneOf": [
+        {
+          "description": "Joins the ends of the lines with a simple bevel.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "bevel"
+              ]
+            }
+          }
+        },
+        {
+          "description": "Joins the ends of the lines with a circular arc.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "round"
+              ]
+            }
+          }
+        },
+        {
+          "description": "Joins the ends of the lines with a miter.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "miter"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "OpenPathLaserSide": {
+      "description": "Defines how the laser side is determined for open paths.",
+      "oneOf": [
+        {
+          "description": "The cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "right_hand_rule"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The negative cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "left_hand_rule"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ProcessGeneric_for_Filter_and_Nullable_Filter": {
       "oneOf": [
         {
           "type": "object",
@@ -496,6 +1110,26 @@
               "format": "float",
               "maximum": 100.0,
               "minimum": 1.0
+            },
+            "injection": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/ProcessHpglInjection"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "laser_side": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/LaserSideGeneric_for_Nullable_Filter"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "laser_type": {
               "anyOf": [
@@ -598,6 +1232,16 @@
             },
             "filter": {
               "$ref": "#/definitions/Filter"
+            },
+            "injection": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/ProcessHpglInjection"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             },
             "isolate_shapes": {
               "type": "boolean"
@@ -706,6 +1350,16 @@
               "maximum": 100.0,
               "minimum": 1.0
             },
+            "injection": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/ProcessPclInjection"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
             "laser_type": {
               "anyOf": [
                 {
@@ -731,6 +1385,12 @@
                   "format": "float"
                 }
               ]
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/EngraveOperationGeneric_for_Filter"
+              }
             },
             "power": {
               "type": "number",
@@ -779,6 +1439,40 @@
           }
         }
       ]
+    },
+    "ProcessHpglInjection": {
+      "type": "object",
+      "properties": {
+        "end": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "ProcessPclInjection": {
+      "type": "object",
+      "properties": {
+        "end": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
     },
     "RotaryType": {
       "oneOf": [

@@ -31,48 +31,48 @@ if(UNIX AND NOT APPLE)
     if(CMAKE_VERSION VERSION_LESS "3.21.0")
         file(
             COPY
-            ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api.so
+            ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api_libcpp.so
             DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
         )
     else()
         file(
             COPY_FILE
-            ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api.so
-            ${CMAKE_CURRENT_BINARY_DIR}/libepilog_print_api.so ONLY_IF_DIFFERENT
+            ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api_libcpp.so
+            ${CMAKE_CURRENT_BINARY_DIR}/libepilog_print_api_libcpp.so ONLY_IF_DIFFERENT
         )
     endif()
 
     install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api.so
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api_libcpp.so
         DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 
     target_link_libraries(
         epilog-print-api-example
-        ${CMAKE_CURRENT_BINARY_DIR}/libepilog_print_api.so
+        ${CMAKE_CURRENT_BINARY_DIR}/libepilog_print_api_libcpp.so
     )
 elseif(WIN32)
     if(CMAKE_VERSION VERSION_LESS "3.21.0")
         file(
             COPY_FILE
-            ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api.dll
-            ${CMAKE_CURRENT_BINARY_DIR}/epilog_print_api.dll ONLY_IF_DIFFERENT
+            ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api_libcpp.dll
+            ${CMAKE_CURRENT_BINARY_DIR}/epilog_print_api_libcpp.dll ONLY_IF_DIFFERENT
         )
     else()
         file(
             COPY_FILE
-            ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api.dll
-            ${CMAKE_CURRENT_BINARY_DIR}/epilog_print_api.dll ONLY_IF_DIFFERENT
+            ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api_libcpp.dll
+            ${CMAKE_CURRENT_BINARY_DIR}/epilog_print_api_libcpp.dll ONLY_IF_DIFFERENT
         )
     endif()
 
     install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api.dll
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api_libcpp.dll
         DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 
     target_link_libraries(
         epilog-print-api-example
-        ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api.dll.lib
+        ${CMAKE_CURRENT_SOURCE_DIR}/win-x64/epilog_print_api_libcpp.dll.lib
     )
 endif()

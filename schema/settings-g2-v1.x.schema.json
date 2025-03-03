@@ -1,0 +1,1019 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SettingsGeneric_for_Filter_and_Nullable_Filter",
+  "description": "For internal use only.",
+  "type": "object",
+  "required": [
+    "autofocus",
+    "copies",
+    "job_name",
+    "processes"
+  ],
+  "properties": {
+    "autofocus": {
+      "type": "boolean"
+    },
+    "copies": {
+      "type": "integer",
+      "format": "uint16",
+      "minimum": 1.0
+    },
+    "debug": {
+      "default": [],
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": true
+    },
+    "generic_font_families": {
+      "default": {
+        "_of": "system_defaults"
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/GenericFontFamilies"
+        }
+      ]
+    },
+    "injection": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/JobCommandInjection"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "job_name": {
+      "type": "string",
+      "maxLength": 255,
+      "minLength": 1
+    },
+    "processes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ProcessGeneric_for_Filter_and_Nullable_Filter"
+      },
+      "minItems": 1
+    },
+    "svg_origin": {
+      "default": {
+        "_of": "zero"
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/SvgOrigin"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "AttributeFilter": {
+      "type": "object",
+      "required": [
+        "attribute",
+        "id"
+      ],
+      "properties": {
+        "attribute": {
+          "$ref": "#/definitions/AttributeType"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "AttributeType": {
+      "type": "string",
+      "enum": [
+        "all",
+        "stroke",
+        "fill"
+      ]
+    },
+    "ClosedPathLaserSide": {
+      "description": "Defines how the laser side is determined for closed paths.",
+      "oneOf": [
+        {
+          "description": "The outside of the path is the side that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "outside"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The inside of the path is the side that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "inside"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "right_hand_rule"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The negative cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "left_hand_rule"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Filter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "all_filter"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "colors"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "color_filter"
+              ]
+            },
+            "colors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "op",
+            "width"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "stroke_filter"
+              ]
+            },
+            "op": {
+              "$ref": "#/definitions/StrokeFilterOp"
+            },
+            "width": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "attributes"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "attribute_filter"
+              ]
+            },
+            "attributes": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AttributeFilter"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GenericFontFamilies": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "none"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "epilog_defaults"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "system_defaults"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "font_family"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "single_named"
+              ]
+            },
+            "font_family": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "cursive_family",
+            "fantasy_family",
+            "monospace_family",
+            "sans_serif_family",
+            "serif_family"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "named"
+              ]
+            },
+            "cursive_family": {
+              "type": "string"
+            },
+            "fantasy_family": {
+              "type": "string"
+            },
+            "monospace_family": {
+              "type": "string"
+            },
+            "sans_serif_family": {
+              "type": "string"
+            },
+            "serif_family": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "HatchPatternType": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "angle",
+            "spacing"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "sweep"
+              ]
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ],
+              "maximum": 25.4,
+              "minimum": 0.000254
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "angle",
+            "spacing"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "s_sweep"
+              ]
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ],
+              "maximum": 25.4,
+              "minimum": 0.000254
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "angle",
+            "spacing"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "unidirectional"
+              ]
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ],
+              "maximum": 25.4,
+              "minimum": 0.000254
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "outline"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "HatchPattern_for_SpeedPowerFrequencyWaveform_for_SpeedDecimal_and_PowerInt_and_FrequencyDecimal_and_WaveformIntOption": {
+      "type": "object",
+      "required": [
+        "frequency",
+        "name",
+        "passes",
+        "pattern_type",
+        "power",
+        "speed"
+      ],
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "frequency": {
+          "type": "number",
+          "format": "float",
+          "maximum": 100.0,
+          "minimum": 1.0
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "passes": {
+          "type": "integer",
+          "format": "uint16",
+          "minimum": 1.0
+        },
+        "pattern_type": {
+          "$ref": "#/definitions/HatchPatternType"
+        },
+        "power": {
+          "type": "integer",
+          "format": "uint16",
+          "maximum": 100.0,
+          "minimum": 0.0
+        },
+        "speed": {
+          "type": "number",
+          "format": "float",
+          "maximum": 100.0,
+          "minimum": 0.01
+        },
+        "waveform": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint16",
+          "maximum": 15.0,
+          "minimum": 0.0
+        }
+      }
+    },
+    "JobCommandInjection": {
+      "type": "object",
+      "properties": {
+        "end_hpgl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_pcl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "end_pjl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start_hpgl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start_pcl": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "Kerf": {
+      "type": "object",
+      "required": [
+        "line_join",
+        "offset"
+      ],
+      "properties": {
+        "line_join": {
+          "$ref": "#/definitions/LineJoin"
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        }
+      }
+    },
+    "LaserSideGeneric_for_Nullable_Filter": {
+      "description": "Laser-side can essentially be thought of as the side of an artwork path that we would like to laser. As such, this represents the side of the path that we would like to offset towards. This struct specifies the side of the line for offsetting paths and will eventually be used for lead-in and lead-out as well. Note: When lead-in and lead-out are implemented, make the `kerf_offset` field optional.",
+      "type": "object",
+      "required": [
+        "closed",
+        "kerf",
+        "open"
+      ],
+      "properties": {
+        "closed": {
+          "$ref": "#/definitions/ClosedPathLaserSide"
+        },
+        "kerf": {
+          "$ref": "#/definitions/Kerf"
+        },
+        "open": {
+          "$ref": "#/definitions/OpenPathLaserSide"
+        },
+        "overrides": {
+          "description": "This specifies which objects will have their laser sides flipped as such: - Outside <-> Inside - RightHandRule <-> LeftHandRule",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Filter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "LineJoin": {
+      "description": "The type of joining used when offsetting paths.",
+      "oneOf": [
+        {
+          "description": "Joins the ends of the lines with a simple bevel.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "bevel"
+              ]
+            }
+          }
+        },
+        {
+          "description": "Joins the ends of the lines with a circular arc.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "round"
+              ]
+            }
+          }
+        },
+        {
+          "description": "Joins the ends of the lines with a miter.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "miter"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "OpenPathLaserSide": {
+      "description": "Defines how the laser side is determined for open paths.",
+      "oneOf": [
+        {
+          "description": "The cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "right_hand_rule"
+              ]
+            }
+          }
+        },
+        {
+          "description": "The negative cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "left_hand_rule"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ProcessGeneric_for_Filter_and_Nullable_Filter": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "cycles",
+            "filter",
+            "frequency",
+            "name",
+            "power",
+            "speed",
+            "vector_sorting"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "vector_process"
+              ]
+            },
+            "cycles": {
+              "type": "integer",
+              "format": "uint16",
+              "minimum": 1.0
+            },
+            "enabled": {
+              "default": true,
+              "type": "boolean"
+            },
+            "filter": {
+              "$ref": "#/definitions/Filter"
+            },
+            "focus": {
+              "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "frequency": {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 1.0
+            },
+            "injection": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/ProcessHpglInjection"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "laser_side": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/LaserSideGeneric_for_Nullable_Filter"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 255,
+              "minLength": 1
+            },
+            "optimize_cycles": {
+              "default": true,
+              "type": "boolean"
+            },
+            "power": {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100.0,
+              "minimum": 0.0
+            },
+            "speed": {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 0.01
+            },
+            "vector_sorting": {
+              "$ref": "#/definitions/VectorSorting"
+            },
+            "waveform": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint16",
+              "maximum": 15.0,
+              "minimum": 0.0
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "cycles",
+            "filter",
+            "isolate_shapes",
+            "name",
+            "patterns"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "hatch_process"
+              ]
+            },
+            "cycles": {
+              "type": "integer",
+              "format": "uint16",
+              "minimum": 1.0
+            },
+            "enabled": {
+              "default": true,
+              "type": "boolean"
+            },
+            "filter": {
+              "$ref": "#/definitions/Filter"
+            },
+            "focus": {
+              "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled.",
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "injection": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/ProcessHpglInjection"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "isolate_shapes": {
+              "type": "boolean"
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 255,
+              "minLength": 1
+            },
+            "optimize_hatch_sort": {
+              "default": true,
+              "type": "boolean"
+            },
+            "patterns": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/HatchPattern_for_SpeedPowerFrequencyWaveform_for_SpeedDecimal_and_PowerInt_and_FrequencyDecimal_and_WaveformIntOption"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ProcessHpglInjection": {
+      "type": "object",
+      "properties": {
+        "end": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "start": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "StrokeFilterOp": {
+      "type": "string",
+      "enum": [
+        "<",
+        "<=",
+        ">",
+        ">=",
+        "==",
+        "!="
+      ]
+    },
+    "SvgOrigin": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "zero"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "half_table_size"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "view_rect_top_left"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "view_rect_center"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of",
+            "x",
+            "y"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "custom"
+              ]
+            },
+            "x": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            },
+            "y": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "VectorSorting": {
+      "type": "string",
+      "enum": [
+        "off",
+        "optimize",
+        "inside_out"
+      ]
+    }
+  }
+}

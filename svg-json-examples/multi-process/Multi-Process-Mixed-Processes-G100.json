@@ -1,0 +1,103 @@
+{
+    "job_name": "Multi-Process-Mixed-G100",
+    "firmware_version": "1.0.9.0",
+    "autofocus": "off",
+    "copies": 1,
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave",
+            "speed": 100,
+            "power": 25,
+            "frequency": 10,
+            "air_assist": false,
+            "cycles": 1,
+            "offset": 0,
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "blue"
+                ]
+            },
+            "resolution": 500,
+            "dithering": "none",
+            "unidirectional": false,
+            "precision_sync": false,
+            "engrave_direction": "down"
+        },
+        {
+            "_of": "hatch_process",
+            "name": "P2 Hatch",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "lime"
+                ]
+            },
+            "cycles": 1,
+            "patterns": [
+                {
+                    "name": "Sweep Pass",
+                    "speed": 100,
+                    "power": 25,
+                    "frequency": 100,
+                    "waveform": 0,
+                    "passes": 10,
+                    "pattern_type": {
+                        "_of": "sweep",
+                        "spacing": "0.02in",
+                        "angle": 0
+                    }
+                },
+                {
+                    "name": "Outline Pass",
+                    "speed": 100,
+                    "power": 25,
+                    "frequency": 100,
+                    "passes": 10,
+                    "pattern_type": {
+                        "_of": "outline"
+                    }
+                }
+            ],
+            "isolate_shapes": true,
+            "air_assist": false
+        },
+        {
+            "_of": "vector_process",
+            "name": "P3 Vector",
+            "speed": 100,
+            "power": 25,
+            "frequency": 100,
+            "cycles": 1,
+            "offset": 0.0,
+            "beziers": true,
+            "air_assist": false,
+            "vector_sorting": "off",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "aqua"
+                ]
+            }
+        },
+        {
+            "_of": "vector_process",
+            "name": "P4 Vector",
+            "speed": 100,
+            "power": 25,
+            "frequency": 1,
+            "cycles": 1,
+            "offset": 0.0,
+            "beziers": true,
+            "air_assist": false,
+            "vector_sorting": "off",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "yellow"
+                ]
+            }
+        }
+    ]
+}

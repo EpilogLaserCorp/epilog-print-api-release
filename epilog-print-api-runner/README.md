@@ -52,6 +52,22 @@ The available `machine-type` values are:
 - `g100_4x4`
 - `g100_6x6`
 
+Future values for `machine-type` will include:
+- `g2`
+- `fusion32_m2`
+- `fusion40_m2`
+- `fusion32`
+- `fusion32_fibermark`
+- `fusion40`
+- `fibermark24`
+- `fibermark24_s2`
+- `zing16`
+- `zing24`
+- `helix24`
+- `mini18`
+- `mini24`
+- `ext36`
+
 ### `-j, --json-output` (Optional)
 
 If this option is specified, output will be generated in json format instead of as a print file. This can be useful for debugging.

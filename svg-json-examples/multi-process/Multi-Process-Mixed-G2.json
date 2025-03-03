@@ -1,0 +1,104 @@
+{
+    "job_name": "Multi-Process-Mixed-G2",
+    "copies": 1,
+    "autofocus": false,
+    "processes": [
+        {
+            "_of": "hatch_process",
+            "name": "P1 Hatch",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "blue"
+                ]
+            },
+            "cycles": 1,
+            "patterns": [
+                {
+                    "name": "Sweep Pass",
+                    "speed": 100,
+                    "power": 25,
+                    "frequency": 100,
+                    "waveform": 0,
+                    "passes": 10,
+                    "pattern_type": {
+                        "_of": "sweep",
+                        "spacing": "0.02in",
+                        "angle": 0
+                    }
+                },
+                {
+                    "name": "Outline Pass",
+                    "speed": 100,
+                    "power": 25,
+                    "frequency": 100,
+                    "waveform": 0,
+                    "passes": 10,
+                    "pattern_type": {
+                        "_of": "outline"
+                    }
+                }
+            ],
+            "isolate_shapes": true
+        },
+        {
+            "_of": "hatch_process",
+            "name": "P2 Hatch",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "lime"
+                ]
+            },
+            "cycles": 1,
+            "patterns": [
+                {
+                    "name": "Connected Sweep Pass",
+                    "speed": 100,
+                    "power": 25,
+                    "frequency": 50,
+                    "waveform": 0,
+                    "passes": 5,
+                    "pattern_type": {
+                        "_of": "s_sweep",
+                        "spacing": "0.01in",
+                        "angle": 45
+                    }
+                }
+            ],
+            "isolate_shapes": true
+        },
+        {
+            "_of": "vector_process",
+            "name": "P3 Vector",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "aqua"
+                ]
+            },
+            "cycles": 1,
+            "speed": 100,
+            "power": 25,
+            "frequency": 100,
+            "waveform": 0,
+            "vector_sorting": "off"
+        },
+        {
+            "_of": "vector_process",
+            "name": "P4 Vector",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "yellow"
+                ]
+            },
+            "cycles": 1,
+            "speed": 100,
+            "power": 25,
+            "frequency": 1,
+            "waveform": 0,
+            "vector_sorting": "off"
+        }
+    ]
+}

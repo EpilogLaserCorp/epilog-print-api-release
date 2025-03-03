@@ -101,6 +101,19 @@ std::unique_ptr<PrnGen, PrnGenDeleterFunctor> prnGen =  std::unique_ptr<PrnGen, 
 // When prnGen goes out of scope, it will be freed automatically.
 ```
 
+### `prn_gen_add_font_data`
+
+Adds font file data to the print generator so that fonts can be parsed.
+
+Important: Fonts located in the system font directories are loaded automatically.
+
+Note: The font data is copied so that the memory can be freed immediately after calling this function without causing issues.
+
+- [param: `PrnGen *` `gen`] A `PrnGen` object created by the `prn_gen_new` function.
+- [param: `const char *` `data`] A pointer to the font file contents.
+- [param: `uintptr_t` `data_length`] The number of bytes contained in the font file data.
+- [return: `CApiError`] An error string which lets us know if the something went wrong. Note that `error` will be empty if this function succeeded.
+
 ### `prn_gen_run_chunk`
 
 Runs a chunk of work on the PrnGen.
@@ -230,6 +243,19 @@ free_carray(result->result, result->result_size);
 free_cstring(result->error);
 ```
 
+### `free_c_api_error`
+
+Frees the string memory of a `CApiError` pointer.
+
+- [param: `CApiError *` `result`] A `CApiError` pointer.
+- [return: `bool`] Whether or not the memory was successfully freed.
+
+Note: This is equivalent to the following:
+
+```
+free_cstring(result->error);
+```
+
 ### `free_c_progress_report`
 
 Frees the string memory of a `CProgressReport` pointer.
@@ -244,7 +270,7 @@ free_cstring(result->stage_name);
 free_cstring(result->stage_json);
 ```
 
-# Types
+## Types
 
 ### `EpilogMachine`
 
@@ -260,6 +286,18 @@ The type of machine that the print file will be generated for.
 - [param: `uintptr_t` `stage_index`] The index of the current stage.
 - [param: `uintptr_t` `stage_count`] The total number of stages that will be processed.
 - [param: `float` `total_progress`] A floating point value between `0.0` and `1.0` that indicates how far along the print file generation is.
+
+### `CApiResult`
+
+- [param: `const char *` `result`] The result of the function called in the form of a character array.
+- [param: `uintptr_t` `result_size`] The size of the result data.
+- [param: `const char *` `error`] The error that occurred during the function call. If no error occurred, this will be an empty string.
+- [param: `uintptr_t` `error_size`] The size of the error data/string.
+
+### `CApiError`
+
+- [param: `const char *` `error`] The error that occurred during the function call. If no error occurred, this will be an empty string.
+- [param: `uintptr_t` `error_size`] The size of the error data/string.
 
 ### `ProgressType`
 
