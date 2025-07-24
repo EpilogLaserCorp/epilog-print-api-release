@@ -97,10 +97,10 @@ By default, all settings parameters are assumed to be provided in `mm`. However,
 - `px` - There are 96 pixels (px) in an inch.
 
 In the following examples, the focus thickness is assumed to be in `mm`:
-```
+```json
 "thickness": 25.4
 ```
-```
+```json
 "thickness": "25.4"
 ```
 
@@ -160,22 +160,28 @@ This setting is only applicable to the Processes generator and no others.
 
 This property defines the origin point of the artwork. The following options are available:
 - `zero` [default] - The origin is placed at the zero position of the svg viewbox.
-- `half_table_size` - [`g100` only] The origin is placed at half the table size over from the top-left position of the svg viewbox.
+- `half_table_size` - [`g100_4x4` and `g100_6x6` only] The origin is placed at half the table size over from the top-left position of the svg viewbox.
 - `view_rect_top_left` - The origin is placed at the top-left position of the svg viewbox.
 - `view_rect_center` - The origin is placed at the center of the svg viewbox.
 - `custom` - The origin is placed at a custom position relative to the zero location of the svg viewbox. An `x` and `y` value must be provided and follows the length unit options described above.
 
 Examples:
-```
-"svg_origin": {
-    "_of": "zero"
+```json
+{
+    "svg_origin": {
+        "_of": "zero"
+    },
+    ... more job settings
 }
 ```
-```
-"svg_origin": {
-    "_of": "custom",
-    "x": "1in",
-    "y": "0.5in",
+```json
+{
+    "svg_origin": {
+        "_of": "custom",
+        "x": "1in",
+        "y": "0.5in",
+    },
+    ... more job settings
 }
 ```
 
@@ -193,19 +199,25 @@ The following options are available:
 - `named` - Each type of generic font is specified. A `serif_family`, `sans_serif_family`, `cursive_family`, `fantasy_family`, and `monospace_family` value must be provided.
 
 Examples:
-```
-"generic_font_families": {
-    "_of": "none"
+```json
+{
+    "generic_font_families": {
+        "_of": "none"
+    },
+    ... more job settings
 }
 ```
-```
-"generic_font_families": {
-    "_of": "named",
-    "serif_family": "Times New Roman",
-    "sans_serif_family": "Arial",
-    "cursive_family": "Comic Sans MS",
-    "fantasy_family": "Impact",
-    "monospace_family": "Courier New",
+```json
+{
+    "generic_font_families": {
+        "_of": "named",
+        "serif_family": "Times New Roman",
+        "sans_serif_family": "Arial",
+        "cursive_family": "Comic Sans MS",
+        "fantasy_family": "Impact",
+        "monospace_family": "Courier New",
+    },
+    ... more job settings
 }
 ```
 
@@ -243,13 +255,68 @@ Specifies how the machine will handle auto-focusing.
 The following options are available:
 - `off` - No autofocus will occur.
 - `plunger` - The plunger attached to the carriage will be used to determine the thickness of the material.
+    - A custom plunger location can be specified with the optional `custom_position` field which requires `x` and `y` values following the length unit options described above. Note that this position is an absolute position.
 - `thickness` - A `thickness` value must be provided in each process and will be used to set the table to the specified height.
+
+Note: `plunger` is not available for `g100_4x4` and `g100_6x6` machines and will throw an error if used.
+
+Examples:
+```json
+{
+    "autofocus": {
+        "_of": "off"
+    },
+    ... more job settings
+}
+```
+```json
+{
+    "autofocus": {
+        "_of": "thickness"
+    },
+    ... more job settings
+}
+```
+```json
+{
+    "autofocus": {
+        "_of": "plunger"
+    },
+    ... more job settings
+}
+```
+```json
+{
+    "autofocus": {
+        "_of": "plunger"
+        "custom_position": {
+            "x": "0.1in",
+            "y": "2.54mm"
+        }
+    },
+    ... more job settings
+}
+```
 
 **[G2, Fusion, and Legacy Generators]**
 
 The following options are available:
 - `false` - No autofocus will occur.
 - `true` - A `focus` value must be provided in each process and will be used to set the table to the specified height.
+
+Examples:
+```json
+{
+    "autofocus": "false",
+    ... more job settings
+}
+```
+```json
+{
+    "autofocus": "true",
+    ... more job settings
+}
+```
 
 ### `job_alignment` (Optional)
 
@@ -269,24 +336,26 @@ If specified, determines the reference point for centering jobs. There are 3 fie
 - `offset` (Optional) - Provides an offset from the position specified by the `centering_point` parameter. An `x` and `y` value must be provided and follows the length unit options described above.
 
 Examples:
-```
-"job_alignment": {
-    "enabled": "true",
-    "centering_point": {
-        "_of": "center_center"
-    }
+```json
+{
+    "job_alignment": {
+        "enabled": true,
+        "centering_point": "center_center"
+    },
+    ... more job settings
 }
 ```
-```
-"job_alignment": {
-    "enabled": "true",
-    "centering_point": {
-        "_of": "custom",
+```json
+{
+    "job_alignment": {
+        "enabled": true,
+        "centering_point": "custom",
         "offset": {
             "x": "1in",
             "y": "0.5in"
         }
-    }
+    },
+    ... more job settings
 }
 ```
 
@@ -302,15 +371,21 @@ If specified, tells the engraver what kind of rotary the job is designed to be u
 - `three_jaw` - The job is designed for a three-jaw rotary. A `diameter` value must be provided and follows the length unit options described above.
 
 Examples:
-```
-"rotary": {
-    "_of_": "rim"
+```json
+{
+    "rotary": {
+        "_of_": "rim"
+    },
+    ... more job settings
 }
 ```
-```
-"rotary": {
-    "_of_": "three_jaw",
-    "diameter": "1.5in"
+```json
+{
+    "rotary": {
+        "_of_": "three_jaw",
+        "diameter": "1.5in"
+    },
+    ... more job settings
 }
 ```
 
@@ -395,21 +470,24 @@ The following three options are available:
 - `Hatch`
 
 Example:
-```
-"processes": [
-    {
-        "_of": "engrave_process"
-        ...
-    },
-    {
-        "_of": "vector_process"
-        ...
-    },
-    {
-        "_of": "hatch_process"
-        ...
-    }
-]
+```json
+{
+    "processes": [
+        {
+            "_of": "engrave_process",
+            ... more process settings
+        },
+        {
+            "_of": "vector_process",
+            ... more process settings
+        },
+        {
+            "_of": "hatch_process",
+            ... more process settings
+        }
+    ],
+    ... more job settings
+}
 ```
 
 Each process type and their settings are described in more detail below.
@@ -428,14 +506,23 @@ The Epilog PrintAPI supports four different filter types for assigning graphical
 
 ### `Color Filter`
 The color filter will select elements of the given input color or colors in valid [CSS colors](https://developer.mozilla.org/en-US/docs/Web/CSS/color), additional details [here](https://7thsigil.github.io/css-color-parser-rs/css_color_parser/index.html). Multiple colors can be specified in a list. For example:
-```
-"filter": {
-    "_of": "color_filter",
-    "colors": [
-        "red",
-        "black",
-        "#AABBCC"
-    ]
+```json
+{
+    "processes": [
+        {
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "red",
+                    "black",
+                    "#AABBCC"
+                ]
+            },
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 **NOTE:** Color filters are currently only able to select stroked elements for vector operations. Stroked elements can be filtered for either engrave or vector processes while filled elements can only be filtered for engrave processes.
@@ -452,69 +539,100 @@ The stroke filter allows the selection of element by stroke width via different 
 Note: The `width` can use the length unit options described above.
 
 A stroke filter is specified by the width and the operation like so:
-```
-"filter": {
-    "_of": stroke_filter",
-    "width": "1mm",
-    "op": "<"
+```json
+{
+    "processes": [
+        {
+            "filter": {
+                "_of": "stroke_filter",
+                "width": "1mm",
+                "op": "<"
+            },
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 This creates a stroke filter selecting any stroked items less than 1mm in width.
 
 ### `Attribute filter`
 The attribute filter uses the `id` attribute within the svg along with stroke, fill, or both to select the object. For example:
-```
-"filter": {
-    "_of": "attribute_filter",
-    "attributes": [
+```json
+{
+    "processes": [
         {
-            "id": "path851",
-            "attribute": "fill"
-        }
-    ]
+            "_of": "engrave_process",
+            "filter": {
+                "_of": "attribute_filter",
+                "attributes": [
+                    {
+                        "id": "path851",
+                        "attribute": "fill"
+                    }
+                ]
+            },
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 would select the filled part of the object in the svg with `id` of `path851`. The same `id` can be used in different processes so long as different attributes are used, that is:
-```
-"processes": [
-    {
-        "_of": "engrave_process",
-        "name": "Engrave Example",
-        "filter": {
-            "_of": "attribute_filter",
-            "attributes": [
-                {
-                    "id": "path851",
-                    "attribute": "fill"
-                }
-            ]
+```json
+{
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "filter": {
+                "_of": "attribute_filter",
+                "attributes": [
+                    {
+                        "id": "path851",
+                        "attribute": "fill"
+                    }
+                ]
+            },
+            ... more process settings
         },
-        ...
-    },
-    {
-        "_of": "vector_process",
-        "name": "Vector Example",
-        "filter": {
-            "_of": "attribute_filter",
-            "attributes": [
-                {
-                    "id": "path851",
-                    "attribute": "stroke"
-                }
-            ]
+        {
+            "_of": "vector_process",
+            "filter": {
+                "_of": "attribute_filter",
+                "attributes": [
+                    {
+                        "id": "path851",
+                        "attribute": "stroke"
+                    }
+                ]
+            },
+            ... more process settings
         },
-        ...
-    }
-]
+        ... more processes
+    ],
+    ... more job settings
+}
 ```
 but selecting the same attribute (stroke for example) in both processes would result in an error.
 
 ### `All filter`
 The all filter selects all remaining elements for a given process. If there are additional processes after a process that has used the all filter there will be no graphical elements available for those processes to match against. The filter is instantiated like so:
-```
-"filter":{
-    "_of": "all_filter"
-},
+```json
+{
+    "processes": [
+        {
+            "filter":{
+                "_of": "all_filter"
+            },
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
+}
+
 ```
 
 # Engrave Process
@@ -567,6 +685,8 @@ This setting is only applicable to the Processes generator and no others. The Fu
 
 The algorithm used to dither the artwork for the process into the binary (monochromatic) data used by the engraver.
 
+Note: `grayscale_3d` is not available for `g100_4x4` and `g100_6x6` machines and will throw an error if used.
+
 The following options are available:
 - `none` - No dithering is applied.
 - `standard` - The standard Epilog dithering pattern is applied.
@@ -608,8 +728,21 @@ Output:
 Example:
 ```json
 {
-    "_of": "threshold",
-    "value": 0.5
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "threshold",
+                    "value": 0.5
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -622,7 +755,20 @@ This operation can be performed on any image and the output image is the same ty
 Example:
 ```json
 {
-    "_of": "invert",
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "invert"
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -646,16 +792,42 @@ Examples:
 This example dilates by a distance of 2.54 mm (0.1 inches).
 ```json
 {
-    "_of": "dilate",
-    "distance": 2.54
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "dilate",
+                    "distance": 2.54
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
 This example erodes by a distance of 0.1 inches (2.54 mm).
 ```json
 {
-    "_of": "dilate",
-    "distance": "-0.1in"
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "dilate",
+                    "distance": "-0.1in"
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -677,8 +849,21 @@ Output:
 Example:
 ```json
 {
-    "_of": "distance_transform",
-    "distance": "0.05in"
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "distance_transform",
+                    "distance": "0.05in"
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -699,17 +884,30 @@ Example:
 This example applies a mask to the image defined by all svg objects with a color of red or black. The mask is dilated by 0.1 inches before being applied. 
 ```json
 {
-    "_of": "path_mask",
-    "mask": {
-        "_of": "color_filter",
-        "colors": ["red", "black"]
-    },
-    "mask_operations": [
+    "processes": [
         {
-            "_of": "dilate",
-            "distance": "0.1in"
-        }
-    ]
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "path_mask",
+                    "mask": {
+                        "_of": "color_filter",
+                        "colors": ["red", "black"]
+                    },
+                    "mask_operations": [
+                        {
+                            "_of": "dilate",
+                            "distance": "0.1in"
+                        }
+                    ]
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -730,45 +928,71 @@ Example:
 This example applies a mask to the image defined by all svg objects with a color of red or black. The mask is dilated by 0.1 inches before being applied. The `invert` and `threshold` is necessary so that red and black objects in the artwork create a monochrome mask.
 ```json
 {
-    "_of": "image_mask",
-    "mask": {
-        "_of": "color_filter",
-        "colors": ["red", "black"]
-    },
-    "mask_operations": [
+    "processes": [
         {
-            "_of": "invert"
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "image_mask",
+                    "mask": {
+                        "_of": "color_filter",
+                        "colors": ["red", "black"]
+                    },
+                    "mask_operations": [
+                        {
+                            "_of": "invert"
+                        },
+                        {
+                            "_of": "threshold",
+                            "value": 0.0
+                        },
+                        {
+                            "_of": "dilate",
+                            "distance": "0.1in"
+                        }
+                    ]
+                },
+                ... more operations
+            ],
+            ... more process settings
         },
-        {
-            "_of": "threshold",
-            "value": 0.0
-        },
-        {
-            "_of": "dilate",
-            "distance": "0.1in"
-        }
-    ]
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
 This example applies a mask to the image defined by another image in the svg. Black parts of the mask image will allow the input image to show completely, gray parts of the mask image will fade the input image.
 ```json
 {
-    "_of": "image_mask",
-    "mask": {
-        "_of": "attribute_filter",
-        "attributes": [
-            {
-            "id": "mask_image",
-            "attribute": "all"
-            }
-        ]
-    },
-    "mask_operations": [
+    "processes": [
         {
-            "_of": "invert",
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "image_mask",
+                    "mask": {
+                        "_of": "attribute_filter",
+                        "attributes": [
+                            {
+                            "id": "mask_image",
+                            "attribute": "all"
+                            }
+                        ]
+                    },
+                    "mask_operations": [
+                        {
+                            "_of": "invert"
+                        },
+                    ]
+                },
+                ... more operations
+            ],
+            ... more process settings
         },
-    ]
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -794,21 +1018,47 @@ Examples:
 This example provides no mapping such that the input and output are the same.
 ```json
 {
-    "_of": "map",
-    "interpolate_type": {
-        "_of": "linear",
-    }
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "map",
+                    "interpolate_type": {
+                        "_of": "linear"
+                    }
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
 This example maps all values below `0.5` to `0.0` and keeps all other values the same. This is sometimes called a to-zero threshold in image processing.
 ```json
 {
-    "_of": "map",
-    "value_map": [ [0.5, 0.0], [0.5, 0.5] ],
-    "interpolate_type": {
-        "_of": "linear",
-    }
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "map",
+                    "value_map": [ [0.5, 0.0], [0.5, 0.5] ],
+                    "interpolate_type": {
+                        "_of": "linear"
+                    }
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -825,13 +1075,26 @@ Example:
 This example linearly maps values between `0.0` and `0.3` to `0.1` and `0.5`, maps all values between `0.3` and `0.7` to a constant value of `0.5`, and linearly maps values between `0.7` and `1.0` to `0.5` and `0.9`.
 ```json
 {
-    "_of": "map",
-    "value_map": [ [0.3, 0.5], [0.7, 0.5] ],
-    "interpolate_type": {
-        "_of": "linear",
-        "min": 0.1,
-        "max": 0.9
-    }
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "map",
+                    "value_map": [ [0.3, 0.5], [0.7, 0.5] ],
+                    "interpolate_type": {
+                        "_of": "linear",
+                        "min": 0.1,
+                        "max": 0.9
+                    }
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -847,12 +1110,30 @@ Example:
 This example creates a 5-step threshold function where the lowest values are mapped to `0.1`.
 ```json
 {
-    "_of": "map",
-    "value_map": [ [0.2, 0.3], [0.4, 0.5], [0.6, 0.7], [0.8, 0.9] ],
-    "interpolate_type": {
-        "_of": "nearest_below",
-        "min": 0.1,
-    }
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "map",
+                    "value_map": [
+                        [0.2, 0.3],
+                        [0.4, 0.5],
+                        [0.6, 0.7],
+                        [0.8, 0.9]
+                    ],
+                    "interpolate_type": {
+                        "_of": "nearest_below",
+                        "min": 0.1
+                    }
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -868,12 +1149,30 @@ Example:
 This example also creates a 5-step threshold function equivalent to the example for `nearest_below`.
 ```json
 {
-    "_of": "map",
-    "value_map": [ [0.2, 0.1], [0.4, 0.3], [0.6, 0.5], [0.8, 0.7] ],
-    "interpolate_type": {
-        "_of": "nearest_above",
-        "max": 0.9,
-    }
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "operations": [
+                {
+                    "_of": "map",
+                    "value_map": [
+                        [0.2, 0.1],
+                        [0.4, 0.3],
+                        [0.6, 0.5],
+                        [0.8, 0.7]
+                    ],
+                    "interpolate_type": {
+                        "_of": "nearest_above",
+                        "max": 0.9
+                    }
+                },
+                ... more operations
+            ],
+            ... more process settings
+        },
+        ... more processes
+    ],
+    ... more job settings
 }
 ```
 
@@ -929,7 +1228,7 @@ This value must be between `10` and `5000` and must be an integer.
 
 For machines with waveform-enabled lasers, this option specified the waveform that is to be used.
 
-Note: Currently, only `g100` and `g2` machines have waveform-enabled lasers available.
+Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
 
 **[Processes Generator]**
 
@@ -1077,7 +1376,7 @@ This value must be between `10` and `5000` and must be an integer.
 
 For machines with waveform-enabled lasers, this option specified the waveform that is to be used.
 
-Note: Currently, only `g100` and `g2` machines have waveform-enabled lasers available.
+Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
 
 **[Processes Generator]**
 
@@ -1491,7 +1790,7 @@ This value must be between `10` and `5000` and must be an integer.
 
 For machines with waveform-enabled lasers, this option specified the waveform that is to be used.
 
-Note: Currently, only `g100` and `g2` machines have waveform-enabled lasers available.
+Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
 
 **[Processes Generator]**
 

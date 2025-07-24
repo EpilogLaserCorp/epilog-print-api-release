@@ -19,8 +19,10 @@ epilog_print_file_transmitter.exe --machine-type edge12 --input-prn example.prn 
 **Wasmtime**
 
 ```
-wasmtime --dir=. epilog_print_file_transmitter.wasi.wasm --machine-type edge12 --input-prn example.prn --ip-addr "192.168.1.1"
+wasmtime --dir=. --wasi inherit-network=true epilog_print_file_transmitter.wasi.wasm --machine-type edge12 --input-prn example.prn --ip-addr "192.168.1.1"
 ```
+
+Note: `--dir` gives access to local file resources and `--wasi inherit-network=true` gives access to network resources. See <https://docs.wasmtime.dev/cli-options.html#additional-options>
 
 ## Arguments
 

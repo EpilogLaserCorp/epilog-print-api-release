@@ -7,6 +7,13 @@
 #include <ostream>
 #include <new>
 
+enum class EpilogGeneratorType {
+    Processes,
+    G2,
+    Fusion,
+    Legacy,
+};
+
 enum class EpilogMachine {
     Pro24,
     Pro32,
@@ -173,6 +180,9 @@ bool prn_gen_send_file(EpilogMachine machine,
                        const char *data,
                        uintptr_t data_length,
                        const char *ip_address);
+
+/// Converts machine type to generator type.
+EpilogGeneratorType generator_type_from_machine_c(EpilogMachine machine);
 
 #if (!defined(DEFINE_WASM32) || defined(DEFINE_WASI))
 /// Frees the memory from a `CApiResult`` that was created by this api.

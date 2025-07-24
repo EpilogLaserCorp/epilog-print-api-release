@@ -19,8 +19,10 @@ epilog_print_api_runner.exe --machine-type edge12 --input-svg example.svg --inpu
 **Wasmtime**
 
 ```
-wasmtime --dir=. epilog_print_api_runner.wasi.wasm --machine-type edge12 --input-svg example.svg --input-settings example.json
+wasmtime --dir=. --wasi inherit-network=true epilog_print_api_runner.wasi.wasm --machine-type edge12 --input-svg example.svg --input-settings example.json
 ```
+
+Note: `--dir` gives access to local file resources and `--wasi inherit-network=true` gives access to network resources. See <https://docs.wasmtime.dev/cli-options.html#additional-options>
 
 ## Arguments
 

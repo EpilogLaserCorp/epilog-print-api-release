@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "SettingsGeneric_for_Filter_and_Nullable_Filter",
-  "description": "For internal use only.",
   "type": "object",
   "required": [
     "autofocus",
@@ -24,12 +23,7 @@
       "minimum": 1.0
     },
     "debug": {
-      "default": [],
-      "type": [
-        "array",
-        "null"
-      ],
-      "items": true
+      "default": {}
     },
     "engrave_direction": {
       "description": "The direction that all engrave processes should move in.",
@@ -153,12 +147,26 @@
       ],
       "properties": {
         "x": {
-          "type": "number",
-          "format": "float"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
         },
         "y": {
-          "type": "number",
-          "format": "float"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
         }
       }
     },
@@ -745,7 +753,7 @@
         }
       ]
     },
-    "HatchPattern_for_SpeedPowerFrequency_for_SpeedInt_and_PowerInt_and_FrequencyInt": {
+    "HatchPattern_for_SpfFusionVector": {
       "type": "object",
       "required": [
         "frequency",
@@ -763,10 +771,17 @@
           ]
         },
         "frequency": {
-          "type": "integer",
-          "format": "uint16",
-          "maximum": 100.0,
-          "minimum": 1.0
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100.0,
+              "minimum": 1.0
+            }
+          ]
         },
         "name": {
           "type": "string",
@@ -782,16 +797,30 @@
           "$ref": "#/definitions/HatchPatternType"
         },
         "power": {
-          "type": "integer",
-          "format": "uint16",
-          "maximum": 100.0,
-          "minimum": 0.0
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          ]
         },
         "speed": {
-          "type": "integer",
-          "format": "uint16",
-          "maximum": 100.0,
-          "minimum": 1.0
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100.0,
+              "minimum": 1.0
+            }
+          ]
         }
       }
     },
@@ -1118,6 +1147,9 @@
               "description": "The depth to which we want to focus. Must be specified if and only if auto focus is enabled and will throw an error during the validation stage otherwise.",
               "anyOf": [
                 {
+                  "type": "null"
+                },
+                {
                   "type": "string"
                 },
                 {
@@ -1127,13 +1159,20 @@
               ]
             },
             "frequency": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "format": "uint16",
-              "maximum": 5000.0,
-              "minimum": 10.0
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              ]
             },
             "injection": {
               "anyOf": [
@@ -1168,19 +1207,33 @@
               }
             },
             "power": {
-              "type": "integer",
-              "format": "uint16",
-              "maximum": 100.0,
-              "minimum": 0.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 100.0,
+                  "minimum": 0.0
+                }
+              ]
             },
             "precision_sync": {
               "type": "boolean"
             },
             "speed": {
-              "type": "integer",
-              "format": "uint16",
-              "maximum": 100.0,
-              "minimum": 1.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              ]
             }
           }
         },
@@ -1231,6 +1284,9 @@
               "description": "The depth to which we want to focus. Must be specified if and only if auto focus is enabled and will throw an error during the validation stage otherwise.",
               "anyOf": [
                 {
+                  "type": "null"
+                },
+                {
                   "type": "string"
                 },
                 {
@@ -1240,10 +1296,17 @@
               ]
             },
             "frequency": {
-              "type": "integer",
-              "format": "uint16",
-              "maximum": 100.0,
-              "minimum": 1.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              ]
             },
             "injection": {
               "anyOf": [
@@ -1286,16 +1349,30 @@
               "type": "boolean"
             },
             "power": {
-              "type": "integer",
-              "format": "uint16",
-              "maximum": 100.0,
-              "minimum": 0.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 100.0,
+                  "minimum": 0.0
+                }
+              ]
             },
             "speed": {
-              "type": "integer",
-              "format": "uint16",
-              "maximum": 100.0,
-              "minimum": 1.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              ]
             },
             "vector_sorting": {
               "$ref": "#/definitions/VectorSorting"
@@ -1342,6 +1419,9 @@
               "description": "The depth to which we want to focus. Must be specified if and only if auto focus is enabled and will throw an error during the validation stage otherwise.",
               "anyOf": [
                 {
+                  "type": "null"
+                },
+                {
                   "type": "string"
                 },
                 {
@@ -1386,7 +1466,7 @@
             "patterns": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/HatchPattern_for_SpeedPowerFrequency_for_SpeedInt_and_PowerInt_and_FrequencyInt"
+                "$ref": "#/definitions/HatchPattern_for_SpfFusionVector"
               }
             }
           }

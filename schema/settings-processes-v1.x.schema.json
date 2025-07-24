@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "SettingsGeneric_for_Filter_and_Nullable_Filter",
-  "description": "For internal use only.",
   "type": "object",
   "required": [
     "autofocus",
@@ -12,7 +11,15 @@
   ],
   "properties": {
     "autofocus": {
-      "$ref": "#/definitions/Autofocus"
+      "description": "Provides the means to serialize and deserialize the `Autofocus` enum as either a string or as an object with the `_of` field.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/AutofocusDiscriminants"
+        },
+        {
+          "$ref": "#/definitions/Autofocus"
+        }
+      ]
     },
     "copies": {
       "type": "integer",
@@ -20,12 +27,7 @@
       "minimum": 1.0
     },
     "debug": {
-      "default": [],
-      "type": [
-        "array",
-        "null"
-      ],
-      "items": true
+      "default": {}
     },
     "firmware_version": {
       "type": "string",
@@ -120,6 +122,63 @@
       ]
     },
     "Autofocus": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "off"
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "plunger"
+              ]
+            },
+            "custom_position": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/Position"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "_of"
+          ],
+          "properties": {
+            "_of": {
+              "type": "string",
+              "enum": [
+                "thickness"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "AutofocusDiscriminants": {
+      "description": "Auto-generated discriminant enum variants",
       "type": "string",
       "enum": [
         "off",
@@ -135,12 +194,26 @@
       ],
       "properties": {
         "x": {
-          "type": "number",
-          "format": "float"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
         },
         "y": {
-          "type": "number",
-          "format": "float"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
         }
       }
     },
@@ -727,7 +800,7 @@
         }
       ]
     },
-    "HatchPattern_for_SpeedPowerFrequencyWaveform_for_SpeedDecimal_and_PowerDecimal_and_FrequencyDecimal_and_WaveformIntOption": {
+    "HatchPattern_for_SpfwProcessesVector": {
       "type": "object",
       "required": [
         "frequency",
@@ -745,10 +818,17 @@
           ]
         },
         "frequency": {
-          "type": "number",
-          "format": "float",
-          "maximum": 100.0,
-          "minimum": 1.0
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 1.0
+            }
+          ]
         },
         "name": {
           "type": "string",
@@ -764,25 +844,46 @@
           "$ref": "#/definitions/HatchPatternType"
         },
         "power": {
-          "type": "number",
-          "format": "float",
-          "maximum": 100.0,
-          "minimum": 0.0
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 0.0
+            }
+          ]
         },
         "speed": {
-          "type": "number",
-          "format": "float",
-          "maximum": 100.0,
-          "minimum": 0.01
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float",
+              "maximum": 100.0,
+              "minimum": 0.01
+            }
+          ]
         },
         "waveform": {
-          "type": [
-            "integer",
-            "null"
-          ],
-          "format": "uint16",
-          "maximum": 15.0,
-          "minimum": 0.0
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 15.0,
+              "minimum": 0.0
+            }
+          ]
         }
       }
     },
@@ -1062,6 +1163,37 @@
         }
       ]
     },
+    "Position": {
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        },
+        "y": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        }
+      }
+    },
     "ProcessGeneric_for_Filter_and_Nullable_Filter": {
       "oneOf": [
         {
@@ -1106,10 +1238,17 @@
               "$ref": "#/definitions/Filter"
             },
             "frequency": {
-              "type": "number",
-              "format": "float",
-              "maximum": 100.0,
-              "minimum": 1.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float",
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              ]
             },
             "injection": {
               "anyOf": [
@@ -1149,6 +1288,9 @@
             "offset": {
               "anyOf": [
                 {
+                  "type": "null"
+                },
+                {
                   "type": "string"
                 },
                 {
@@ -1162,19 +1304,36 @@
               "type": "boolean"
             },
             "power": {
-              "type": "number",
-              "format": "float",
-              "maximum": 100.0,
-              "minimum": 0.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float",
+                  "maximum": 100.0,
+                  "minimum": 0.0
+                }
+              ]
             },
             "speed": {
-              "type": "number",
-              "format": "float",
-              "maximum": 100.0,
-              "minimum": 0.01
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float",
+                  "maximum": 100.0,
+                  "minimum": 0.01
+                }
+              ]
             },
             "thickness": {
               "anyOf": [
+                {
+                  "type": "null"
+                },
                 {
                   "type": "string"
                 },
@@ -1188,13 +1347,20 @@
               "$ref": "#/definitions/VectorSorting"
             },
             "waveform": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "format": "uint16",
-              "maximum": 15.0,
-              "minimum": 0.0
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 15.0,
+                  "minimum": 0.0
+                }
+              ]
             }
           }
         },
@@ -1264,6 +1430,9 @@
             "offset": {
               "anyOf": [
                 {
+                  "type": "null"
+                },
+                {
                   "type": "string"
                 },
                 {
@@ -1279,11 +1448,14 @@
             "patterns": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/HatchPattern_for_SpeedPowerFrequencyWaveform_for_SpeedDecimal_and_PowerDecimal_and_FrequencyDecimal_and_WaveformIntOption"
+                "$ref": "#/definitions/HatchPattern_for_SpfwProcessesVector"
               }
             },
             "thickness": {
               "anyOf": [
+                {
+                  "type": "null"
+                },
                 {
                   "type": "string"
                 },
@@ -1342,13 +1514,20 @@
               "$ref": "#/definitions/Filter"
             },
             "frequency": {
-              "type": [
-                "number",
-                "null"
-              ],
-              "format": "float",
-              "maximum": 100.0,
-              "minimum": 1.0
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float",
+                  "maximum": 100.0,
+                  "minimum": 1.0
+                }
+              ]
             },
             "injection": {
               "anyOf": [
@@ -1378,6 +1557,9 @@
             "offset": {
               "anyOf": [
                 {
+                  "type": "null"
+                },
+                {
                   "type": "string"
                 },
                 {
@@ -1393,10 +1575,17 @@
               }
             },
             "power": {
-              "type": "number",
-              "format": "float",
-              "maximum": 100.0,
-              "minimum": 0.0
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float",
+                  "maximum": 100.0,
+                  "minimum": 0.0
+                }
+              ]
             },
             "precision_sync": {
               "type": "boolean"
@@ -1408,13 +1597,23 @@
               "minimum": 50.0
             },
             "speed": {
-              "type": "number",
-              "format": "float",
-              "maximum": 100.0,
-              "minimum": 0.01
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float",
+                  "maximum": 100.0,
+                  "minimum": 0.01
+                }
+              ]
             },
             "thickness": {
               "anyOf": [
+                {
+                  "type": "null"
+                },
                 {
                   "type": "string"
                 },
@@ -1428,13 +1627,20 @@
               "type": "boolean"
             },
             "waveform": {
-              "type": [
-                "integer",
-                "null"
-              ],
-              "format": "uint16",
-              "maximum": 15.0,
-              "minimum": 0.0
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer",
+                  "format": "uint16",
+                  "maximum": 15.0,
+                  "minimum": 0.0
+                }
+              ]
             }
           }
         }

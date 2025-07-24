@@ -2,6 +2,58 @@
 
 Note: This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] 2025-07-28
+
+### Added
+
+- Custom autofocus plunger location is now available for the following machine types:
+    - Fusion Pro 24 (`pro24`)
+    - Fusion Pro 32 (`pro32`)
+    - Fusion Pro 36 (`pro36`)
+    - Fusion Pro 48 (`pro48`)
+    - Fusion Edge 12 (`edge12`)
+    - Fusion Edge 23 (`edge24`)
+    - Fusion Edge 36 (`edge36`)
+    - Fusion Maker 12 (`maker12`)
+    - Fusion Maker 24 (`maker24`)
+    - Fusion Maker 36 (`maker36`)
+- More CSS `image-rendering` types are now supported.
+    - The following options can now be used: `smooth`, `high-quality`, `pixelated`, `crisp-edges`.
+    - In previous versions, only `optimizeSpeed` and `optimizeQuality` were valid. These options can still be used.
+    - Note: `optimizeSpeed`, `pixelated`, and `crisp-edges` behave the same.
+    - Note: `optimizeQuality` and `high-quality` behave the same.
+    - Within a svg file, it would be used as such:
+    ```svg
+    <image style="image-rendering:high-quality" ... />
+    ```
+
+### Changed
+
+- Updated the documentation for using the `epilog_print_api_runner` and `epilog_print_file_transmitter` through wasmtime to show how to enable network capabilities.
+    - This is required to allow those executables to send print files to the laser engraver.
+
+### Fixed
+
+- Fixed bug where jobs with a `svg_origin` other than `none` (which is the default if not specified) might return an error.
+- An error is returned when `grayscale_3d` is set as the `dithering` type for a G2 (`g2`) or Fusion Galvo G100 (`g100_4x4`, `g100_6x6`) machine since neither of these support 3D or stamp engravings.
+- An error is returned when `plunger` is set as the `autofocus` type for Fusion Galvo G100 (`g100_4x4`, `g100_6x6`) machines since galvos do not have an autofocus plunger.
+    - Some of the older machines have autofocus plungers, but those are not enabled through the print file like they are with the new machines that use the processes generator.
+- Improved dithering quality. Some jobs had noticeable artifacts on the edges of the artwork. This is no longer the case.
+- Fixed invalid LDP acknowledgements errors for the following machine types:
+    - Helix 24 (`helix24`)
+    - Mini 18 (`mini18`)
+    - Mini 24 (`mini24`)
+    - EXT 36 (`ext36`)
+- Engrave processes with `image_mask` or `path_mask` operations now have the correct output.
+- Frequency range for original Fusion models (see list below) had incorrect frequency bounds on engrave processes. Previously, the bounds incorrectly matched that of the legacy machines which take values in Hertz instead of percentages. The frequency range for these Fusion machines has been changed to be between `1` and `100` as stated in the documentation. This is the full list of machines affected:
+    - Fusion 32 M2 (`fusion32_m2`)
+    - Fusion 40 M2 (`fusion40_m2`)
+    - Fusion 32 (`fusion32`)
+    - Fusion 32 Fibermark (`fusion32_fibermark`)
+    - Fusion 40 (`fusion40`)
+- Fixed documentation for `job_alignment` which had incorrect formatting in the examples.
+- The `job_alignment` `offset` parameter can now take string values with units like the documentation states.
+
 ## [1.2.0] 2025-03-03
 
 ### Added
@@ -56,17 +108,17 @@ Note: This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0
 ### Added
 
 - Print file generation and transmission for the following machine types:
-    - Fusion Pro 24 (pro24)
-    - Fusion Pro 32 (pro32)
-    - Fusion Pro 36 (pro36)
-    - Fusion Pro 48 (pro48)
-    - Fusion Edge 12 (edge12)
-    - Fusion Edge 23 (edge24)
-    - Fusion Edge 36 (edge36)
-    - Fusion Maker 12 (maker12)
-    - Fusion Maker 24 (maker24)
-    - Fusion Maker 36 (maker36)
-    - Fusion Galvo G100 (g100_4x4, g100_6x6)
+    - Fusion Pro 24 (`pro24`)
+    - Fusion Pro 32 (`pro32`)
+    - Fusion Pro 36 (`pro36`)
+    - Fusion Pro 48 (`pro48`)
+    - Fusion Edge 12 (`edge12`)
+    - Fusion Edge 23 (`edge24`)
+    - Fusion Edge 36 (`edge36`)
+    - Fusion Maker 12 (`maker12`)
+    - Fusion Maker 24 (`maker24`)
+    - Fusion Maker 36 (`maker36`)
+    - Fusion Galvo G100 (`g100_4x4`, `g100_6x6`)
 - C++ Library
     - Windows, Linux
 - Epilog PrintAPI Runner (Executable)
