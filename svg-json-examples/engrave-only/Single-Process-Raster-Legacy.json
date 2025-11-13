@@ -1,0 +1,22 @@
+{
+    "job_name": "Single-Process-Raster-Legacy",
+    "copies": 1,
+    "autofocus": false,
+    "engrave_resolution": 400,
+    "engrave_direction": "down",
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "cycles": 1,
+            "dithering": "none",
+            "speed": 100,
+            "power": 70,
+            "precision_sync": false,
+            "air_assist": false
+        }
+    ]
+}

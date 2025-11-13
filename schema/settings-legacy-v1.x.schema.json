@@ -19,9 +19,6 @@
       "format": "uint16",
       "minimum": 1.0
     },
-    "debug": {
-      "default": {}
-    },
     "engrave_direction": {
       "description": "The direction that all engrave processes should move in.",
       "allOf": [
@@ -43,16 +40,6 @@
       "allOf": [
         {
           "$ref": "#/definitions/GenericFontFamilies"
-        }
-      ]
-    },
-    "injection": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/JobCommandInjection"
-        },
-        {
-          "type": "null"
         }
       ]
     },
@@ -233,6 +220,7 @@
         "jarvis",
         "stucki",
         "bayer",
+        "brighten",
         "grayscale_3d"
       ]
     },
@@ -893,41 +881,6 @@
         }
       }
     },
-    "JobCommandInjection": {
-      "type": "object",
-      "properties": {
-        "end_hpgl": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "end_pcl": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "end_pjl": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "start_hpgl": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "start_pcl": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      }
-    },
     "Kerf": {
       "type": "object",
       "required": [
@@ -1141,16 +1094,6 @@
                 }
               ]
             },
-            "injection": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/ProcessPclInjection"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
             "name": {
               "type": "string",
               "maxLength": 255,
@@ -1259,16 +1202,6 @@
                 }
               ]
             },
-            "injection": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/ProcessHpglInjection"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
             "laser_side": {
               "anyOf": [
                 {
@@ -1370,16 +1303,6 @@
                 }
               ]
             },
-            "injection": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/ProcessHpglInjection"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
             "isolate_shapes": {
               "type": "boolean"
             },
@@ -1401,40 +1324,6 @@
           }
         }
       ]
-    },
-    "ProcessHpglInjection": {
-      "type": "object",
-      "properties": {
-        "end": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "start": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      }
-    },
-    "ProcessPclInjection": {
-      "type": "object",
-      "properties": {
-        "end": {
-          "type": [
-            "string",
-            "null"
-          ]
-        },
-        "start": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      }
     },
     "StrokeFilterOp": {
       "type": "string",

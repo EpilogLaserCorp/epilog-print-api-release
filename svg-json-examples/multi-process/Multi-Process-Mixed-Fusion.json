@@ -18,9 +18,9 @@
                 ]
             },
             "cycles": 1,
-            "dithering": "standard",
+            "dithering": "none",
             "speed": 100,
-            "power": 25,
+            "power": 60,
             "precision_sync": false,
             "laser_type": "co2",
             "air_assist": false
@@ -36,8 +36,8 @@
             },
             "cycles": 1,
             "dithering": "standard",
-            "speed": 100,
-            "power": 50,
+            "speed": 95,
+            "power": 65,
             "precision_sync": true,
             "laser_type": "co2",
             "air_assist": false
@@ -53,7 +53,7 @@
             },
             "cycles": 1,
             "speed": 100,
-            "power": 25,
+            "power": 30,
             "frequency": 100,
             "vector_sorting": "off",
             "beziers": true,
@@ -70,10 +70,10 @@
                 ]
             },
             "cycles": 1,
-            "speed": 100,
-            "power": 50,
-            "frequency": 1,
-            "vector_sorting": "off",
+            "speed": 95,
+            "power": 35,
+            "frequency": 90,
+            "vector_sorting": "inside_out",
             "beziers": true,
             "laser_type": "co2",
             "air_assist": false

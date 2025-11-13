@@ -1,0 +1,26 @@
+{
+    "job_name": "Single-Process-Raster-Fusion",
+    "copies": 1,
+    "autofocus": false,
+    "engrave_resolution": 600,
+    "engrave_direction": "down",
+    "vector_grid": true,
+    "vector_speed_half": false,
+    "vector_power_comp": true,
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "cycles": 1,
+            "dithering": "none",
+            "speed": 100,
+            "power": 60,
+            "precision_sync": false,
+            "laser_type": "co2",
+            "air_assist": false
+        }
+    ]
+}

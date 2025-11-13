@@ -2,6 +2,32 @@
 
 Note: This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] 2025-11-12
+
+### Added
+
+- Now includes Windows Arm64, macOS Arm64, and macOS x64 builds for the executables and C++ library.
+- Added `README.md` files in the svg/json example folders to provide a more in-depth understanding of how to use the examples.
+- Added advanced job settings and advanced process settings svg/json examples to assist users in creating more complex jobs.
+    - Advanced job features: custom autofocus plunger location, job alignment, SVG origin, and rotary.
+    - Advanced process features: process filter, 3D engraving, stamp engraving, vector sorting.
+    - Single process examples.
+- A new dithering type `brighten` has been added which behaves similar to `standard`, but increases the overall brightness.
+
+### Changed
+- Updated settings in example json files to be more useful.
+    - Settings have been tailored to mark on anodized aluminum.
+    - Optimal engrave/mark quality is not guaranteed since the PrintAPI does not have knowledge of the laser system's characteristics.
+
+### Fixed
+
+- Fixed error for jobs that only have a thin horizontal or vertical line.
+    - Previously, these jobs would return an error when trying to render the thumbnails.
+    - This was only an issue when sending to machines that use the processes generator.
+- Fixed output of hatch jobs with `isolate_shapes` enabled where in rare cases, the output would contain two shapes that overlap where there should be a gap instead.
+- Fixed engrave operations which caused incorrect positioning and incorrect masking.
+- Using an image as a mask no longer causes an error to be thrown complaining that it encountered an unexpected namespace of xlink.
+
 ## [1.2.1] 2025-07-28
 
 ### Added

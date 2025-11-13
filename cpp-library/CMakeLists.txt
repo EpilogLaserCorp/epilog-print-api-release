@@ -31,19 +31,19 @@ if(UNIX AND NOT APPLE)
     if(CMAKE_VERSION VERSION_LESS "3.21.0")
         file(
             COPY
-            ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api_libcpp.so
+            ${CMAKE_CURRENT_SOURCE_DIR}/linux-x64/libepilog_print_api_libcpp.so
             DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
         )
     else()
         file(
             COPY_FILE
-            ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api_libcpp.so
+            ${CMAKE_CURRENT_SOURCE_DIR}/linux-x64/libepilog_print_api_libcpp.so
             ${CMAKE_CURRENT_BINARY_DIR}/libepilog_print_api_libcpp.so ONLY_IF_DIFFERENT
         )
     endif()
 
     install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/ubuntu-20.04/libepilog_print_api_libcpp.so
+        FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux-x64/libepilog_print_api_libcpp.so
         DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 

@@ -42,49 +42,88 @@ The four generators and their associated machines are as follows:
     - `mini24`
     - `ext36`
 
-Because most settings are the same or similar between different generators, only a single list of settings will be provided below. The difference in those settings across each generator will be denoted in a section that looks like the example below:
+**[Feature Compatibility]**
 
-**[Processes Generator]**
+| **Feature** | **Settings Key** | **Compatible Machines** |
+|:------------|:-----------------|:------------------------|
+| [Job Alignment](#job_alignment-optional) | `job_alignment` | Machines for the **Processes**, **Fusion**, and **Legacy** generators |
+| [Rim Rotary](#rotary-optional) | `rotary` = `rim` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`, machines for the **Fusion** generator <br /> _Note: Machines for the **Legacy** generator configure their rotaries at the machine, not through the PrintAPI_ |
+| [3-Jaw Rotary](#rotary-optional) | `rotary` = `three_jaw` | Machines for the **Processes** and **Fusion** generators <br /> _Note: Machines for the **Legacy** generator configure their rotaries at the machine, not through the PrintAPI_ |
+| [Autofocus Plunger](#autofocus) | `autofocus` = `plunger` <br/> `processes` > `thickness`/`offset` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36` |
+| [Autofocus Manual Thickness](#autofocus) | `autofocus` = `thickness` <br/> `processes` > `thickness`/`offset` | Machines for the **Processes** generator |
+| [Autofocus Manual Thickness](#autofocus) | `autofocus` = `true` <br/> `processes` > `focus` | Machines for the **Fusion**, **Legacy**, and **G2** generators |
+| [Laser Type](#laser-types) | `processes` > `laser_type` | Machines for the **Processes**, **Fusion** and **Legacy** generators (restrictions apply, see the [Laser Types](#laser-types) section for details) |
+| [CO2 Laser](#co2-laser) | `processes` > `laser_type` = `co2` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`, `fusion32_m2`, `fusion40_m2`, `fusion32`, `fusion40`, `zing16`, `zing24`, `helix24`, `mini18`, `mini24`, `ext36` |
+| [Fiber Laser](#laser-types) | `processes` > `laser_type` = `fiber` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `g100_4x4`, `g100_6x6`, `g2`, `fusion32_m2`, `fusion40_m2`, `fusion32_fibermark`, `fibermark24`, `fibermark24_s2` |
+| [CO2/Fiber Dual Source](#laser-types) | `processes` > `laser_type` = `co2` and `fiber` | `pro24`, `pro32`, `pro36`, `pro48`, `fusion32_m2`, `fusion40_m2` |
+| [Engrave Processes](#engrave-process) | `processes` > `_of` = `engrave_process` | All machines except for the `g2` |
+| [Global Engrave Settings](#engrave-process) | `processes` > `engrave_resolution`/`engrave_direction` | Machines for the **Fusion** and **Legacy** generators |
+| [Per-Process Engrave Settings](#engrave_resolution) | `resolution`/`engrave_direction` (engrave processes only) | Machines for the **Processes** generator |
+| [Unidirectional Engraving](#unidirectional) | `processes` > `unidirectional` (engrave processes only) | Machines for the **Processes** generator |
+| [3D/Stamp Engraving](#stamp-and-3d-modes) | `processes` > `dithering`/`operations` (engrave processes only) | Machines for the Processes, **Fusion** and **Legacy** generators (CO2-lasers only) |
+| [Bezier Vectors](#beziers) | `processes` > `beziers` (vector processes only) | Machines for the **Processes** and **Fusion** generators |
+| [Air Assist](#air_assist-optional) | `processes` > `air_assist` | `pro24`, `pro36`, `pro48`, `mini18`, `mini24`, `helix24`, `ext36`, machines for the **Fusion** generator |
 
-An explanation of how this is implemented for the Processes generator or for how the implementation differs from that of other generators.
 
 # Laser Types
 
 It will be important when setting process `laser_type` parameters to know which machines support which laser types.
 
 The following machine types can only have `co2` lasers:
-- edge24
-- edge36
-- maker12
-- maker24
-- maker36
-- fusion32
-- fusion40
-- zing16
-- zing24
-- helix24
-- mini18
-- mini24
-- ext36
+- `edge24`
+- `edge36`
+- `maker12`
+- `maker24`
+- `maker36`
+- `fusion32`
+- `fusion40`
+- `zing16`
+- `zing24`
+- `helix24`
+- `mini18`
+- `mini24`
+- `ext36`
 
 The following machine types can only have `fiber` lasers:
-- g100_4x4
-- g100_6x6
-- g2
-- fusion32_fibermark
-- fibermark24
-- fibermark24_s2
+- `g100_4x4`
+- `g100_6x6`
+- `g2`
+- `fusion32_fibermark`
+- `fibermark24`
+- `fibermark24_s2`
 
 The following machine types have either laser type, but not both:
-- edg12
+- `edge12`
 
 The following machine types can have either or both laser types (dual source):
-- pro24
-- pro32
-- pro36
-- pro48
-- fusion32_m2
-- fusion40_m2
+- `pro24`
+- `pro32`
+- `pro36`
+- `pro48`
+- `fusion32_m2`
+- `fusion40_m2`
+
+Note: Process settings can omit the laser type setting if the machine only supports a single laser type. In that case, the laser type will be assumed to be the only supported type.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator**                         | **Supported**                |
+|:--------------------------------------|:-----------------------------|
+| Processes                             | _See Below_                  |
+| &emsp;`pro24`, `pro36`, `pro48`       | ✅ `co2`/`fiber` dual source |
+| &emsp;`pro32`                         | ✅ `co2`/`fiber` dual source |
+| &emsp;`edge12`                        | ✅ `co2`/`fiber`             |
+| &emsp;`edge24`, `edge36`              | ❌ `fiber` ✅ `co2`          |
+| &emsp;`maker12`, `maker24`, `maker36` | ❌ `fiber` ✅ `co2`          |
+| &emsp;`g100_4x4`, `g100_6x6`          | ❌ `co2` ✅ `fiber`          |
+| Fusion                                | _See Below_                  |
+| &emsp;`fusion32_m2`, `fusion40_m2`    | ✅ `co2`/`fiber` dual source |
+| &emsp;`fusion32_fibermark`            | ❌ `co2` ✅ `fiber`          |
+| &emsp;`fusion32`, `fusion40`          | ❌ `fiber` ✅ `co2`          |
+| Legacy                                | _See Below_                  |
+| &emsp;`fibermark24`, `fibermark24_s2` | ❌ `co2` ✅ `fiber`          |
+| &emsp;_All other Legacy machines_     | ❌ `fiber` ✅ `co2`          |
+| G2                                    | ❌ `co2` ✅ `fiber`          |
 
 # Length Units
 By default, all settings parameters are assumed to be provided in `mm`. However, other units can be specified by appending the unit string to end of the numeric value. The following options are available.
@@ -112,6 +151,15 @@ This could be equivalently described as such:
 # Stamp and 3D Modes
 
 Unlike the Software Suite, the PrintAPI allows users to have stamp and 3D enabled for each individual engrave process. This is done by adjusting the `dithering` and `operations` options.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported**           |
+|:--------------|:------------------------|
+| Processes     | ✅                      |
+| Fusion        | ✅                      |
+| Legacy        | ✅                      |
+| G2            | ❌ no engrave processes |
 
 ### 3D Mode
 
@@ -152,9 +200,12 @@ The firmware version of the machine that it is intended for.
 
 Note: No error is currently shown if the versions do not match.
 
-**[Processes Generator Only]**
-
-This setting is only applicable to the Processes generator and no others.
+| Generator | Supported |
+|:----------|:----------|
+| Processes | ✅        |
+| Fusion    | ❌        |
+| Legacy    | ❌        |
+| G2        | ❌        |
 
 ### `svg_origin` (Optional)
 
@@ -179,7 +230,7 @@ Examples:
     "svg_origin": {
         "_of": "custom",
         "x": "1in",
-        "y": "0.5in",
+        "y": "0.5in"
     },
     ... more job settings
 }
@@ -288,7 +339,7 @@ Examples:
 ```json
 {
     "autofocus": {
-        "_of": "plunger"
+        "_of": "plunger",
         "custom_position": {
             "x": "0.1in",
             "y": "2.54mm"
@@ -317,6 +368,17 @@ Examples:
     ... more job settings
 }
 ```
+
+**[Generator/Machine Compatibility]**
+
+| **Generator**                        | **Supported**                     |
+|:-------------------------------------|:----------------------------------|
+| Processes                            | _See Below_                       |
+| &emsp;`g100_4x4`, `g100_6x6`         | ❌ `plunger` ✅ `off`/`thickness` |
+| &emsp;_All other Processes machines_ | ✅ `off`/`plunger`/`thickness`    |
+| Fusion                               | ✅ `true`/`false`                 |
+| Legacy                               | ✅ `true`/`false`                 |
+| G2                                   | ✅ `true`/`false`                 |
 
 ### `job_alignment` (Optional)
 
@@ -359,9 +421,14 @@ Examples:
 }
 ```
 
-**[Processes, Fusion, and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not available for the G2 generator.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ✅            |
+| Legacy        | ✅            |
+| G2            | ❌            |
 
 ### `rotary` (Optional)
 
@@ -374,7 +441,7 @@ Examples:
 ```json
 {
     "rotary": {
-        "_of_": "rim"
+        "_of": "rim"
     },
     ... more job settings
 }
@@ -382,7 +449,7 @@ Examples:
 ```json
 {
     "rotary": {
-        "_of_": "three_jaw",
+        "_of": "three_jaw",
         "diameter": "1.5in"
     },
     ... more job settings
@@ -391,9 +458,16 @@ Examples:
 
 An error will be thrown if the specified machine does not support the provided rotary type.
 
-**[Processes and Fusion Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not available for the G2 and Legacy generators.
+| **Generator**                        | **Supported**                  |
+|:-------------------------------------|:-------------------------------|
+| Processes                            | _See Below_                    |
+| &emsp;`g100_4x4`, `g100_6x6`         | ❌ `rim` ✅ `none`/`three_jaw` |
+| &emsp;_All other Processes machines_ | ✅ `none`/`rim`/`three_jaw`    |
+| Fusion                               | ✅ `none`/`rim`/`three_jaw`    |
+| Legacy                               | ❌ configure at machine        |
+| G2                                   | ❌                             |
 
 ### `engrave_resolution`
 
@@ -416,7 +490,14 @@ For all non-Zing machines (Legacy and Fusion generators only), the following val
 - `600`
 - `1200`
 
-**[Fusion and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ✅            |
+| G2            | ❌            |
 
 This setting is not available for the G2 generator because the `g2` machine does not support engraving. It is not applicable to the Processes generator because newer machines have a per-process resolution for greater control.
 
@@ -426,11 +507,14 @@ The direction in which the engraving will happen.
 
 This can be set to `down` for top-down engraving or `up` for bottom-up engraving.
 
-**[Fusion and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not available for the G2 generator because the `g2` machine does not support engraving. It is not applicable to the Processes generator because newer machines have a per-process resolution for greater control.
-
-**[Fusion and Legacy Generators Only]**
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ✅            |
+| G2            | ❌            |
 
 This setting is not available for the G2 generator because the `g2` machine does not support engraving. It is not applicable to the Processes generator because newer machines have a per-process resolution for greater control.
 
@@ -440,15 +524,29 @@ Whether or not a vector grid is installed for this job.
 
 This setting is necessary for the Fusion and Fusion M2 machines because they have a vector grid attachment that sits on top of the flatbed. The result is that the table has to move down by about 3 inches to accommodate the vector grid when it is installed.
 
-**[Fusion Generator Only]**
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ❌            |
+| G2            | ❌            |
 
 This setting is only available for the Fusion generator because no other machine has as vector grid that sits on top of the flatbed.
 
 ### `vector_speed_half`
 
-Whether or not the vector speed should be halved to get greater control of the speed. Enabling this gives 0.5% increments of speed below 50% instead 1% increments.
+Whether or not the vector speed should be halved to get greater control of the speed. Enabling this effectively provides 0.5% increments of speed up to an equivalent of 50% maximum speed, instead of 1% increments up to the actual maximum speed.
 
-**[Fusion Generator Only]**
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ❌            |
+| G2            | ❌            |
 
 This setting is only available for the Fusion generator. Newer machines allow for decimal precision of speed.
 
@@ -456,7 +554,14 @@ This setting is only available for the Fusion generator. Newer machines allow fo
 
 Whether or not the power compensation feature should be used. When this is on, power is decreased as the carriage slows down at the start and stop as well as around corners.
 
-**[Fusion Generator Only]**
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ❌            |
+| G2            | ❌            |
 
 This setting is only available for the Fusion generator. Newer machines always have this feature enabled.
 
@@ -637,7 +742,16 @@ The all filter selects all remaining elements for a given process. If there are 
 
 # Engrave Process
 
-The engrave process converts the input graphical information into pixels which are then engraved along the width of the engraving machine.
+The engrave process converts the input graphical information into pixels, which are then engraved along the horizontal axis of the engraving machine.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported**           |
+|:--------------|:------------------------|
+| Processes     | ✅                      |
+| Fusion        | ✅                      |
+| Legacy        | ✅                      |
+| G2            | ❌ no engrave processes |
 
 ### `name`
 
@@ -667,9 +781,16 @@ The resolution for which the engrave data will rendered and output as. Lower val
 
 This value must be between `50` and `1200`.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The Fusion and Legacy generators use a global setting called `engrave_resolution`.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The Fusion and Legacy generators use a global setting called `engrave_resolution`.
 
 ### `engrave_direction`
 
@@ -677,9 +798,16 @@ The direction in which the engraving will happen.
 
 This can be set to `down` for top-down engraving or `up` for bottom-up engraving.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The Fusion and Legacy generators use a global setting called `engrave_direction`.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The Fusion and Legacy generators use a global setting called `engrave_direction`.
 
 ### `dithering`
 
@@ -694,11 +822,8 @@ The following options are available:
 - `jarvis` - The [Jarvis (a.k.a. Minimized Average Error)](https://en.wikipedia.org/wiki/Error_diffusion#minimized_average_error) dithering algorithm is applied.
 - `stucki` - The [Stucki](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html) dithering algorithm is applied.
 - `bayer` - A [Bayer](https://en.wikipedia.org/wiki/Ordered_dithering) dithering algorithm is applied.
+- `brighten` - This is the same as the `standard` dithering pattern, but the output is brighter.
 - `grayscale_3d` - This acts in the same way as Epilog's 3D mode where instead of dithering an image into discrete on/off states, the power is dynamically adjusted according to the grayscale value while engraving.
-
-**[Processes, Fusion, and Legacy Generators Only]**
-
-This setting is not applicable to the G2 generator because it does not have engrave processes.
 
 ### `operations`
 
@@ -1176,10 +1301,6 @@ This example also creates a 5-step threshold function equivalent to the example 
 }
 ```
 
-**[Processes, Fusion, and Legacy Generators Only]**
-
-This setting is not applicable to the G2 generator because it does not have engrave processes.
-
 ### `speed`
 
 A value which represents the percentage of the maximum speed that will be used.
@@ -1204,7 +1325,7 @@ This value must be between `0` and `100` and accepts decimal values.
 
 This value must be between `0` and `100` and must be an integer.
 
-### `frequency`
+### `frequency` (Fiber Only)
 
 Except in the Legacy generator, this is a percent value in which a value of `1` maps to the lowest available frequency and a value of `100` maps to the highest available frequency. The minimum and maximum frequency available depends on the laser installed in the machine and may also differ for different waveforms when applicable.
 
@@ -1224,9 +1345,9 @@ This value must be between `1` and `100` and must be an integer.
 
 This value must be between `10` and `5000` and must be an integer.
 
-### `waveform`
+### `waveform` (Waveform Fiber Only)
 
-For machines with waveform-enabled lasers, this option specified the waveform that is to be used.
+For machines with waveform-enabled lasers, this option specifies the waveform that is to be used.
 
 Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
 
@@ -1234,9 +1355,14 @@ Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-en
 
 This value must be between `0` and `15` and must be an integer.
 
-**[G2 Generator]**
+**[Generator/Machine Compatibility]**
 
-This value must be between `0` and `7` and must be an integer.
+| **Generator** | **Supported**           |
+|:--------------|:------------------------|
+| Processes     | ✅                      |
+| Fusion        | ❌                      |
+| Legacy        | ❌                      |
+| G2            | ❌ no engrave processes |
 
 ### `precision_sync`
 
@@ -1250,39 +1376,54 @@ Enabled unidirectional engraving which that engrave lines are only output when t
 
 This value can be set to `true` or `false`.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
 
-### `laser_type`
+### `laser_type` (Optional)
 
 For machines that only have one laser type allowed, this field is optional and will throw an error if the wrong laser type is specified. For machines that can have either or both laser types, this field must be set and will throw an error if it is not.
 
 This value can be set to `co2` or `fiber`.
 
-See the Laser Type section above for details on which laser options are available for each machine type.
+See the [Laser Types](#laser-types) section above for details on which laser options are available for each machine type.
 
-**[Processes and Fusion Generators Only]**
-
-This setting is only applicable to the Processes generator and no others since the only dual source machines belong to these generators.
-
-### `thickness`
+### `thickness` (Optional)
 
 The thickness of the material that will be used. This value follows the length unit options described above.
 
 This value must be specified if `autofocus` is set to `thickness` and must not be specified otherwise.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The other generators use the `focus` setting mentioned below.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The other generators use the `focus` setting mentioned below.
 
 ### `offset` (Optional)
 
 If this value is set, it specifies an additional offset from the material thickness or from the starting position of the table. This value follows the length unit options described above.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The other generators use the `focus` setting mentioned below.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The other generators use the `focus` setting mentioned below.
 
 ### `focus` (Optional)
 
@@ -1290,9 +1431,16 @@ The thickness of the material that will be used or simply the offset of the tabl
 
 This value must be specified if `autofocus` is set to `true` and must not be specified otherwise.
 
-**[G2, Fusion, and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not applicable to the Processes generator because it uses the `thickness` and `offset` settings.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ✅            |
+| G2            | ✅            |
+
+This setting is not applicable to the Processes generator because it uses the `thickness` and `offset` settings above.
 
 ### `air_assist` (Optional)
 
@@ -1300,9 +1448,20 @@ Whether or not the air assist feature should be engaged for this process. A valu
 
 This value can be set to `true` or `false` [default].
 
-**[Processes, Fusion, and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not applicable to the G2 generator because it did not have an air assist feature.
+| **Generator**                        | **Supported** |
+|:-------------------------------------|:--------------|
+| Processes                            | _See Below_   |
+| &emsp;`pro24`, `pro36`, `pro48`      | ✅            |
+| &emsp;_All other Processes machines_ | ❌            |
+| Fusion                               | ✅            |
+| Legacy                               | _See Below_   |
+| &emsp;`mini18`, `mini24`             | ✅            |
+| &emsp;`helix24`                      | ✅            |
+| &emsp;`ext36`                        | ✅            |
+| &emsp;_All other Legacy machines_    | ❌            |
+| G2                                   | ❌            |
 
 # Vector Process
 
@@ -1372,9 +1531,9 @@ This value must be between `1` and `100` and must be an integer.
 
 This value must be between `10` and `5000` and must be an integer.
 
-### `waveform`
+### `waveform` (Waveform Fiber Only)
 
-For machines with waveform-enabled lasers, this option specified the waveform that is to be used.
+For machines with waveform-enabled lasers, this option specifies the waveform that is to be used.
 
 Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
 
@@ -1385,6 +1544,15 @@ This value must be between `0` and `15` and must be an integer.
 **[G2 Generator]**
 
 This value must be between `0` and `7` and must be an integer.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ✅            |
 
 ### `vector_sorting`
 
@@ -1480,39 +1648,56 @@ Whether or not bezier output will be enabled. If this is `true`, smooth bezier c
 
 This value can be set to `true` or `false`.
 
-**[Processes and Fusion Generators Only]**
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ✅            |
+| Legacy        | ❌            |
+| G2            | ❌            |
 
 This setting is only applicable to the Processes and Fusions generators because other machines do not support bezier curves in the output.
 
-### `laser_type`
+### `laser_type` (Optional)
 
 For machines that only have one laser type allowed, this field is optional and will throw an error if the wrong laser type is specified. For machines that can have either or both laser types, this field must be set and will throw an error if it is not.
 
 This value can be set to `co2` or `fiber`.
 
-See the Laser Type section above for details on which laser options are available for each machine type.
+See the [Laser Types](#laser-types) section above for details on which laser options are available for each machine type.
 
-**[Processes and Fusion Generators Only]**
-
-This setting is only applicable to the Processes generator and no others since the only dual source machines belong to these generators.
-
-### `thickness`
+### `thickness` (Optional)
 
 The thickness of the material that will be used. This value follows the length unit options described above.
 
 This value must be specified if `autofocus` is set to `thickness` and must not be specified otherwise.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The other generators use the `focus` setting mentioned below.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The other generators use the `focus` setting mentioned below.
 
 ### `offset` (Optional)
 
 If this value is set, it specifies an additional offset from the material thickness or from the starting position of the table. This value follows the length unit options described above.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The other generators use the `focus` setting mentioned below.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The other generators use the `focus` setting mentioned below.
 
 ### `focus` (Optional)
 
@@ -1520,9 +1705,16 @@ The thickness of the material that will be used or simply the offset of the tabl
 
 This value must be specified if `autofocus` is set to `true` and must not be specified otherwise.
 
-**[G2, Fusion, and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not applicable to the Processes generator because it uses the `thickness` and `offset` settings.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ✅            |
+| G2            | ✅            |
+
+This setting is not applicable to the Processes generator because it uses the `thickness` and `offset` settings above.
 
 ### `air_assist` (Optional)
 
@@ -1530,9 +1722,20 @@ Whether or not the air assist feature should be engaged for this process. A valu
 
 This value can be set to `true` or `false` [default].
 
-**[Processes, Fusion, and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not applicable to the G2 generator because it did not have an air assist feature.
+| **Generator**                        | **Supported** |
+|:-------------------------------------|:--------------|
+| Processes                            | _See Below_   |
+| &emsp;`pro24`, `pro36`, `pro48`      | ✅            |
+| &emsp;_All other Processes machines_ | ❌            |
+| Fusion                               | ✅            |
+| Legacy                               | _See Below_   |
+| &emsp;`mini18`, `mini24`             | ✅            |
+| &emsp;`helix24`                      | ✅            |
+| &emsp;`ext36`                        | ✅            |
+| &emsp;_All other Legacy machines_    | ❌            |
+| G2                                   | ❌            |
 
 ### `optimize_cycles` (Optional)
 
@@ -1630,35 +1833,45 @@ Whether or not separated shapes should be hatched separately.
 
 Note: When this is set to `true`, shapes contained within other shapes are hatched together to optimize runtime.
 
-### `laser_type`
+### `laser_type` (Optional)
 
 For machines that only have one laser type allowed, this field is optional and will throw an error if the wrong laser type is specified. For machines that can have either or both laser types, this field must be set and will throw an error if it is not.
 
 This value can be set to `co2` or `fiber`.
 
-See the Laser Type section above for details on which laser options are available for each machine type.
+See the [Laser Types](#laser-types) section above for details on which laser options are available for each machine type.
 
-**[Processes and Fusion Generators Only]**
-
-This setting is only applicable to the Processes generator and no others since the only dual source machines belong to these generators.
-
-### `thickness`
+### `thickness` (Optional)
 
 The thickness of the material that will be used. This value follows the length unit options described above.
 
 This value must be specified if `autofocus` is set to `thickness` and must not be specified otherwise.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The other generators use the `focus` setting mentioned below.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The other generators use the `focus` setting mentioned below.
 
 ### `offset` (Optional)
 
 If this value is set, it specifies an additional offset from the material thickness or from the starting position of the table. This value follows the length unit options described above.
 
-**[Processes Generator Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is only applicable to the Processes generator and no others. The other generators use the `focus` setting mentioned below.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ❌            |
+
+The other generators use the `focus` setting mentioned below.
 
 ### `focus` (Optional)
 
@@ -1666,9 +1879,16 @@ The thickness of the material that will be used or simply the offset of the tabl
 
 This value must be specified if `autofocus` is set to `true` and must not be specified otherwise.
 
-**[G2, Fusion, and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not applicable to the Processes generator because it uses the `thickness` and `offset` settings.
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ❌            |
+| Fusion        | ✅            |
+| Legacy        | ✅            |
+| G2            | ✅            |
+
+This setting is not applicable to the Processes generator because it uses the `thickness` and `offset` settings above.
 
 ### `air_assist` (Optional)
 
@@ -1676,9 +1896,20 @@ Whether or not the air assist feature should be engaged for this process. A valu
 
 This value can be set to `true` or `false` [default].
 
-**[Processes, Fusion, and Legacy Generators Only]**
+**[Generator/Machine Compatibility]**
 
-This setting is not applicable to the G2 generator because it did not have an air assist feature.
+| **Generator**                        | **Supported** |
+|:-------------------------------------|:--------------|
+| Processes                            | _See Below_   |
+| &emsp;`pro24`, `pro36`, `pro48`      | ✅            |
+| &emsp;_All other Processes machines_ | ❌            |
+| Fusion                               | ✅            |
+| Legacy                               | _See Below_   |
+| &emsp;`mini18`, `mini24`             | ✅            |
+| &emsp;`helix24`                      | ✅            |
+| &emsp;`ext36`                        | ✅            |
+| &emsp;_All other Legacy machines_    | ❌            |
+| G2                                   | ❌            |
 
 ### `optimize_hatch_sort` (Optional)
 
@@ -1786,9 +2017,9 @@ This value must be between `1` and `100` and must be an integer.
 
 This value must be between `10` and `5000` and must be an integer.
 
-### `waveform`
+### `waveform` (Waveform Fiber Only)
 
-For machines with waveform-enabled lasers, this option specified the waveform that is to be used.
+For machines with waveform-enabled lasers, this option specifies the waveform that is to be used.
 
 Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
 
@@ -1799,6 +2030,15 @@ This value must be between `0` and `15` and must be an integer.
 **[G2 Generator]**
 
 This value must be between `0` and `7` and must be an integer.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported** |
+|:--------------|:--------------|
+| Processes     | ✅            |
+| Fusion        | ❌            |
+| Legacy        | ❌            |
+| G2            | ✅            |
 
 ### `passes`
 

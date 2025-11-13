@@ -2,7 +2,7 @@
     "job_name": "Multi-Process-Vector-Legacy",
     "copies": 1,
     "autofocus": false,
-    "engrave_resolution": 600,
+    "engrave_resolution": 400,
     "engrave_direction": "down",
     "processes": [
         {
@@ -16,7 +16,7 @@
             },
             "cycles": 1,
             "speed": 100,
-            "power": 25,
+            "power": 35,
             "frequency": 5000,
             "vector_sorting": "off",
             "air_assist": false
@@ -31,9 +31,9 @@
                 ]
             },
             "cycles": 1,
-            "speed": 100,
-            "power": 25,
-            "frequency": 2500,
+            "speed": 95,
+            "power": 40,
+            "frequency": 5000,
             "vector_sorting": "off",
             "air_assist": false
         },
@@ -48,9 +48,9 @@
             },
             "cycles": 1,
             "speed": 100,
-            "power": 25,
-            "frequency": 1250,
-            "vector_sorting": "off",
+            "power": 35,
+            "frequency": 5000,
+            "vector_sorting": "optimize",
             "air_assist": false
         },
         {
@@ -63,10 +63,10 @@
                 ]
             },
             "cycles": 1,
-            "speed": 100,
-            "power": 25,
-            "frequency": 10,
-            "vector_sorting": "off",
+            "speed": 95,
+            "power": 40,
+            "frequency": 4900,
+            "vector_sorting": "inside_out",
             "air_assist": false
         }
     ]

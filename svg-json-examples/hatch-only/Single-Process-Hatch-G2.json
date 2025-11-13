@@ -1,0 +1,68 @@
+{
+    "job_name": "Single-Process-Hatch-G2",
+    "copies": 1,
+    "autofocus": false,
+    "processes": [
+        {
+            "_of": "hatch_process",
+            "name": "P1 Hatch",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "cycles": 1,
+            "patterns": [
+                {
+                    "name": "Sweep Pass",
+                    "speed": 100,
+                    "power": 60,
+                    "frequency": 1,
+                    "waveform": 10,
+                    "passes": 5,
+                    "pattern_type": {
+                        "_of": "sweep",
+                        "spacing": "0.02in",
+                        "angle": 0
+                    }
+                },
+                {
+                    "name": "Outline Pass",
+                    "speed": 95,
+                    "power": 65,
+                    "frequency": 1,
+                    "waveform": 10,
+                    "passes": 10,
+                    "pattern_type": {
+                        "_of": "outline"
+                    }
+                },
+                {
+                    "name": "Connected Sweep Pass",
+                    "speed": 90,
+                    "power": 70,
+                    "frequency": 1,
+                    "waveform": 10,
+                    "passes": 5,
+                    "pattern_type": {
+                        "_of": "s_sweep",
+                        "spacing": "0.01in",
+                        "angle": 45
+                    }
+                },
+                {
+                    "name": "Unidirectional Pass",
+                    "speed": 100,
+                    "power": 60,
+                    "frequency": 1.1,
+                    "waveform": 10,
+                    "passes": 20,
+                    "pattern_type": {
+                        "_of": "unidirectional",
+                        "spacing": "0.04in",
+                        "angle": 90
+                    }
+                }
+            ],
+            "isolate_shapes": true
+        }
+    ]
+}

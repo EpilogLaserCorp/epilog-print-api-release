@@ -10,11 +10,23 @@ This executable sends existing print files to a laser system.
 epilog_print_file_transmitter.exe --machine-type edge12 --input-prn example.prn --ip-addr "192.168.1.1"
 ```
 
+Note: The executable is contained in the `win-x64` and `win-arm64` folders.
+
 **Linux**
 
 ```
 ./epilog_print_file_transmitter --machine-type edge12 --input-prn example.prn --ip-addr "192.168.1.1"
 ```
+
+Note: The executable is contained in the `linux-x64` folder.
+
+**macOS**
+
+```
+./epilog_print_file_transmitter --machine-type edge12 --input-prn example.prn --ip-addr "192.168.1.1"
+```
+
+Note: The executable is contained in the `macos-x64` and `macos-arm64` folders.
 
 **Wasmtime**
 
@@ -23,6 +35,8 @@ wasmtime --dir=. --wasi inherit-network=true epilog_print_file_transmitter.wasi.
 ```
 
 Note: `--dir` gives access to local file resources and `--wasi inherit-network=true` gives access to network resources. See <https://docs.wasmtime.dev/cli-options.html#additional-options>
+
+Note: The binary is contained in the `wasi` folder.
 
 ## Arguments
 
@@ -57,8 +71,6 @@ The available `machine-type` values are:
 - `maker36`
 - `g100_4x4`
 - `g100_6x6`
-
-Future values for `machine-type` will include:
 - `g2`
 - `fusion32_m2`
 - `fusion40_m2`

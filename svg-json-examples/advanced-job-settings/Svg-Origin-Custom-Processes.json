@@ -1,0 +1,31 @@
+{
+    "job_name": "Svg-Origin-Custom-Processes",
+    "firmware_version": "1.0.9.0",
+    "autofocus": "off",
+    "copies": 1,
+    "svg_origin": {
+        "_of": "custom",
+        "x": "-1in",
+        "y": "-0.5in"
+    },
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave 500 DPI",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "speed": 100,
+            "power": 55,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
+            "resolution": 500,
+            "dithering": "none",
+            "unidirectional": false,
+            "precision_sync": true,
+            "engrave_direction": "up"
+        }
+    ]
+}

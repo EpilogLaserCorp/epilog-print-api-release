@@ -1,0 +1,24 @@
+{
+    "job_name": "Single-Process-Vector-Processes",
+    "firmware_version": "1.0.9.0",
+    "autofocus": "off",
+    "copies": 1,
+    "processes": [
+        {
+            "_of": "vector_process",
+            "name": "P1 Vector",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "speed": 100,
+            "power": 25,
+            "frequency": 100,
+            "laser_type": "co2",
+            "cycles": 1,
+            "offset": 0.0,
+            "beziers": true,
+            "air_assist": false,
+            "vector_sorting": "off"
+        }
+    ]
+}

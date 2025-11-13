@@ -7,18 +7,18 @@
         {
             "_of": "engrave_process",
             "name": "P1 Engrave",
-            "speed": 100,
-            "power": 25,
-            "air_assist": false,
-            "cycles": 1,
-            "laser_type": "co2",
-            "offset": 0,
             "filter": {
                 "_of": "color_filter",
                 "colors": [
                     "blue"
                 ]
             },
+            "speed": 100,
+            "power": 55,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
             "resolution": 500,
             "dithering": "none",
             "unidirectional": false,
@@ -28,19 +28,19 @@
         {
             "_of": "engrave_process",
             "name": "P2 Engrave",
-            "speed": 100,
-            "power": 25,
-            "air_assist": false,
-            "cycles": 1,
-            "laser_type": "co2",
-            "offset": 0,
             "filter": {
                 "_of": "color_filter",
                 "colors": [
                     "lime"
                 ]
             },
-            "resolution": 400,
+            "speed": 95,
+            "power": 60,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
+            "resolution": 500,
             "dithering": "standard",
             "unidirectional": false,
             "precision_sync": true,
@@ -49,6 +49,12 @@
         {
             "_of": "vector_process",
             "name": "P3 Vector",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "aqua"
+                ]
+            },
             "speed": 100,
             "power": 25,
             "frequency": 100,
@@ -57,32 +63,26 @@
             "offset": 0.0,
             "beziers": true,
             "air_assist": false,
-            "vector_sorting": "off",
-            "filter": {
-                "_of": "color_filter",
-                "colors": [
-                    "aqua"
-                ]
-            }
+            "vector_sorting": "off"
         },
         {
             "_of": "vector_process",
             "name": "P4 Vector",
-            "speed": 100,
-            "power": 25,
-            "frequency": 1,
-            "laser_type": "co2",
-            "cycles": 1,
-            "offset": 0.0,
-            "beziers": true,
-            "air_assist": false,
-            "vector_sorting": "off",
             "filter": {
                 "_of": "color_filter",
                 "colors": [
                     "yellow"
                 ]
-            }
+            },
+            "speed": 95,
+            "power": 30,
+            "frequency": 95,
+            "laser_type": "co2",
+            "cycles": 1,
+            "offset": 0.0,
+            "beziers": true,
+            "air_assist": false,
+            "vector_sorting": "inside_out"
         }
     ]
 }

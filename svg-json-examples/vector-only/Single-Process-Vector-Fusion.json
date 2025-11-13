@@ -1,0 +1,28 @@
+{
+    "job_name": "Single-Process-Vector-Fusion",
+    "copies": 1,
+    "autofocus": false,
+    "engrave_resolution": 600,
+    "engrave_direction": "down",
+    "vector_grid": true,
+    "vector_speed_half": false,
+    "vector_power_comp": true,
+    "processes": [
+        {
+            "_of": "vector_process",
+            "name": "P1 Vector",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "cycles": 1,
+            "dithering": "standard",
+            "speed": 100,
+            "power": 30,
+            "frequency": 100,
+            "vector_sorting": "off",
+            "beziers": true,
+            "laser_type": "co2",
+            "air_assist": false
+        }
+    ]
+}

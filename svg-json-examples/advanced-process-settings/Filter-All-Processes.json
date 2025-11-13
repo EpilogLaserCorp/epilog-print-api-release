@@ -1,0 +1,47 @@
+{
+    "job_name": "Filter-All-Processes",
+    "firmware_version": "1.0.9.0",
+    "autofocus": "off",
+    "copies": 1,
+    "processes": [
+        {
+            "_of": "engrave_process",
+            "name": "P1 Engrave",
+            "filter": {
+                "_of": "color_filter",
+                "colors": [
+                    "blue"
+                ]
+            },
+            "speed": 100,
+            "power": 60,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
+            "resolution": 500,
+            "dithering": "none",
+            "unidirectional": false,
+            "precision_sync": true,
+            "engrave_direction": "up"
+        },
+        {
+            "_of": "engrave_process",
+            "name": "P2 Engrave",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "speed": 100,
+            "power": 55,
+            "air_assist": false,
+            "cycles": 1,
+            "laser_type": "co2",
+            "offset": 0,
+            "resolution": 500,
+            "dithering": "none",
+            "unidirectional": false,
+            "precision_sync": true,
+            "engrave_direction": "up"
+        }
+    ]
+}

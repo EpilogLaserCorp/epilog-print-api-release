@@ -17,10 +17,10 @@
                 {
                     "name": "Sweep Pass",
                     "speed": 100,
-                    "power": 25,
-                    "frequency": 100,
-                    "waveform": 0,
-                    "passes": 10,
+                    "power": 60,
+                    "frequency": 1,
+                    "waveform": 10,
+                    "passes": 5,
                     "pattern_type": {
                         "_of": "sweep",
                         "spacing": "0.02in",
@@ -29,9 +29,10 @@
                 },
                 {
                     "name": "Outline Pass",
-                    "speed": 100,
-                    "power": 25,
-                    "frequency": 100,
+                    "speed": 95,
+                    "power": 65,
+                    "frequency": 1,
+                    "waveform": 10,
                     "passes": 10,
                     "pattern_type": {
                         "_of": "outline"
@@ -53,10 +54,10 @@
             "patterns": [
                 {
                     "name": "Connected Sweep Pass",
-                    "speed": 100,
-                    "power": 25,
-                    "frequency": 50,
-                    "waveform": 0,
+                    "speed": 90,
+                    "power": 70,
+                    "frequency": 1,
+                    "waveform": 10,
                     "passes": 5,
                     "pattern_type": {
                         "_of": "s_sweep",
@@ -81,9 +82,9 @@
                 {
                     "name": "Unidirectional Pass",
                     "speed": 100,
-                    "power": 25,
-                    "frequency": 25,
-                    "waveform": 0,
+                    "power": 60,
+                    "frequency": 1.1,
+                    "waveform": 10,
                     "passes": 20,
                     "pattern_type": {
                         "_of": "unidirectional",

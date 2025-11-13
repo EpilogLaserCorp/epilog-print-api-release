@@ -7,11 +7,11 @@
 #include <ostream>
 #include <new>
 
-enum class EpilogGeneratorType {
-    Processes,
-    G2,
-    Fusion,
-    Legacy,
+enum class ProgressType {
+    NotStarted,
+    InProgress,
+    Finished,
+    Error,
 };
 
 enum class EpilogMachine {
@@ -43,11 +43,11 @@ enum class EpilogMachine {
     Ext36,
 };
 
-enum class ProgressType {
-    NotStarted,
-    InProgress,
-    Finished,
-    Error,
+enum class EpilogGeneratorType {
+    Processes,
+    G2,
+    Fusion,
+    Legacy,
 };
 
 struct PrnGen;

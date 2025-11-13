@@ -20,13 +20,17 @@ Note: `epilog-print-api.h` must not be modified.
 
 Contains the `cpp` and `h` files for the provided example C++ program to run the Epilog PrintAPI.
 
-### `win-x64`
+### `win-x64`/`win-arm64`
 
-This folder contains the `dll` and `lib` files necessary to build for 64-bit Windows.
+This folder contains the `dll` and `lib` files necessary to build for x64 and ARM64 Windows.
 
-### `ubuntu-20.04`
+### `linux-x64`
 
 The folder contains the `so` file necessary to build for Ubuntu 20.04 and higher.
+
+### `macos-x64`/`macos-arm64`
+
+This folder contains the `dylib` files necessary to build for x64 and ARM64 macOS systems.
 
 ## Building the Example
 

@@ -1,0 +1,22 @@
+{
+    "job_name": "Single-Process-Vector-Legacy",
+    "copies": 1,
+    "autofocus": false,
+    "engrave_resolution": 400,
+    "engrave_direction": "down",
+    "processes": [
+        {
+            "_of": "vector_process",
+            "name": "P1 Vector",
+            "filter": {
+                "_of": "all_filter"
+            },
+            "cycles": 1,
+            "speed": 100,
+            "power": 35,
+            "frequency": 5000,
+            "vector_sorting": "off",
+            "air_assist": false
+        }
+    ]
+}

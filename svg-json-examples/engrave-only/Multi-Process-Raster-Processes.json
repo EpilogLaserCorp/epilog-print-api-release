@@ -1,12 +1,8 @@
 {
-    "job_name": "Multi-Process-Raster-Fusion",
+    "job_name": "Multi-Process-Raster-Processes",
+    "firmware_version": "1.0.9.0",
+    "autofocus": "off",
     "copies": 1,
-    "autofocus": false,
-    "engrave_resolution": 600,
-    "engrave_direction": "down",
-    "vector_grid": true,
-    "vector_speed_half": false,
-    "vector_power_comp": true,
     "processes": [
         {
             "_of": "engrave_process",
@@ -17,13 +13,17 @@
                     "blue"
                 ]
             },
-            "cycles": 1,
-            "dithering": "standard",
             "speed": 100,
-            "power": 25,
-            "precision_sync": false,
+            "power": 55,
+            "air_assist": false,
+            "cycles": 1,
             "laser_type": "co2",
-            "air_assist": false
+            "offset": 0,
+            "resolution": 500,
+            "dithering": "standard",
+            "unidirectional": false,
+            "precision_sync": false,
+            "engrave_direction": "down"
         },
         {
             "_of": "engrave_process",
@@ -34,13 +34,17 @@
                     "aqua"
                 ]
             },
+            "speed": 95,
+            "power": 60,
+            "air_assist": false,
             "cycles": 1,
-            "dithering": "standard",
-            "speed": 50,
-            "power": 50,
-            "precision_sync": true,
             "laser_type": "co2",
-            "air_assist": false
+            "offset": 0,
+            "resolution": 500,
+            "dithering": "standard",
+            "unidirectional": false,
+            "precision_sync": false,
+            "engrave_direction": "down"
         },
         {
             "_of": "engrave_process",
@@ -51,13 +55,17 @@
                     "lime"
                 ]
             },
-            "cycles": 2,
-            "dithering": "standard",
-            "speed": 10,
-            "power": 100,
-            "precision_sync": true,
+            "speed": 90,
+            "power": 65,
+            "air_assist": false,
+            "cycles": 1,
             "laser_type": "co2",
-            "air_assist": false
+            "offset": 0,
+            "resolution": 500,
+            "dithering": "standard",
+            "unidirectional": false,
+            "precision_sync": false,
+            "engrave_direction": "down"
         }
     ]
 }

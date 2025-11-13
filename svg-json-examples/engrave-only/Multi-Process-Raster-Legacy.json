@@ -2,7 +2,7 @@
     "job_name": "Multi-Process-Raster-Legacy",
     "copies": 1,
     "autofocus": false,
-    "engrave_resolution": 600,
+    "engrave_resolution": 400,
     "engrave_direction": "down",
     "processes": [
         {
@@ -15,9 +15,9 @@
                 ]
             },
             "cycles": 1,
-            "dithering": "standard",
+            "dithering": "none",
             "speed": 100,
-            "power": 25,
+            "power": 70,
             "precision_sync": false,
             "air_assist": false
         },
@@ -32,8 +32,8 @@
             },
             "cycles": 1,
             "dithering": "standard",
-            "speed": 50,
-            "power": 50,
+            "speed": 95,
+            "power": 75,
             "precision_sync": true,
             "air_assist": false
         },
@@ -47,9 +47,9 @@
                 ]
             },
             "cycles": 2,
-            "dithering": "standard",
-            "speed": 10,
-            "power": 100,
+            "dithering": "floyd_steinberg",
+            "speed": 90,
+            "power": 80,
             "precision_sync": true,
             "air_assist": false
         }
