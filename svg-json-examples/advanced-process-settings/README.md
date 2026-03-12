@@ -12,31 +12,31 @@ The jobs contained in this folder demonstrate the use of advanced process settin
 
 ### Filter-All-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
     - This feature is compatible with all machine types, but the example must be modified to use with the other types not listed above.
 - Note that the use of `all_filter` under `filter` sets the filter to capture all objects not previously contained in a process. Using this filter for any process other than the last will cause an error as all subsequent processes will have no objects to capture.
 
 ### Filter-Attribute-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
     - This feature is compatible with all machine types, but the example must be modified to use with the other types not listed above.
 - Note that the use of `attribute_filter` under `filter` sets the filter to specify which objects are contained in the process and whether that process will contain the stroke, the fill, or both.
 
 ### Filter-Color-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
     - This feature is compatible with all machine types, but the example must be modified to use with the other types not listed above.
 - Note that the use of `color_filter` under `filter` sets the filter to specify which colors of objects are contained in the process.
 
 ### 3D-Engraving-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
     - This feature is compatible with all machine types, but the example must be modified to use with the other types not listed above.
 - Note that the use of `grayscale_3d` for `dithering` sets the output of that process into 3D engraving mode.
 
 ### Stamp-Engraving-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
     - This feature is compatible with all machine types, but the example must be modified to use with the other types not listed above.
 - Note that the use of `grayscale_3d` for `dithering` sets the output of that process into 3D engraving mode.
 - Note that the use of `operations` implements the stamp mode.
@@ -51,13 +51,13 @@ The jobs contained in this folder demonstrate the use of advanced process settin
 
 ### Vector-Sorting-Optimize-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
     - This feature is compatible with all machine types, but the example must be modified to use with the other types not listed above.
 - Note that the use of `optimize` for `vector_sorting` ensures that vector paths are processed in the most efficient order to reduce run times.
 
 ### Vector-Sorting-Inside-Out-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
     - This feature is compatible with all machine types, but the example must be modified to use with the other types not listed above.
 - Note that the use of `inside_out` for `vector_sorting` ensures that vector paths are processed in the most efficient order to reduce run times with the caveat that it will do the inner-most paths first. This is preferable when completely cutting through the material in a vector process.
 

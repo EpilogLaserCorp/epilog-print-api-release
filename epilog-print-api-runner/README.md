@@ -101,7 +101,7 @@ If the file does not exist, one will be created. However, the directory that wil
 If this option is not specified, an output file with the same base name as the input svg file will be written to in the working directory of the `epilog_print_api_runner` executable.
 
 ### `-f, --font-paths <FONT_PATHS>` (Optional)
-The location of any addition font files or directories.
+The location of any additional font files or directories.
 
 This can be a comma-separated list or you can provide the argument multiple times. For example, '--font-paths path1,path2' OR '--font-paths path1 --font-paths path2'.
 

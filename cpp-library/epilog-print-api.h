@@ -8,46 +8,49 @@
 #include <new>
 
 enum class ProgressType {
-    NotStarted,
-    InProgress,
-    Finished,
-    Error,
+    NotStarted = 0,
+    InProgress = 1,
+    Finished = 2,
+    Error = 3,
 };
 
 enum class EpilogMachine {
-    Pro24,
-    Pro32,
-    Pro36,
-    Pro48,
-    Edge12,
-    Edge24,
-    Edge36,
-    Maker12,
-    Maker24,
-    Maker36,
-    G100_4x4,
-    G100_6x6,
-    G2,
-    Fusion32M2,
-    Fusion40M2,
-    Fusion32,
-    Fusion32Fibermark,
-    Fusion40,
-    Fibermark24,
-    Fibermark24S2,
-    Zing16,
-    Zing24,
-    Helix24,
-    Mini18,
-    Mini24,
-    Ext36,
+    Pro24 = 0,
+    Pro32 = 1,
+    Pro36 = 2,
+    Pro48 = 3,
+    Ascent12 = 26,
+    Ascent24 = 27,
+    Ascent36 = 28,
+    Edge12 = 4,
+    Edge24 = 5,
+    Edge36 = 6,
+    Maker12 = 7,
+    Maker24 = 8,
+    Maker36 = 9,
+    G100_4x4 = 10,
+    G100_6x6 = 11,
+    G2 = 12,
+    Fusion32M2 = 13,
+    Fusion40M2 = 14,
+    Fusion32 = 15,
+    Fusion32Fibermark = 16,
+    Fusion40 = 17,
+    Fibermark24 = 18,
+    Fibermark24S2 = 19,
+    Zing16 = 20,
+    Zing24 = 21,
+    Helix24 = 22,
+    Mini18 = 23,
+    Mini24 = 24,
+    Ext36 = 25,
 };
 
 enum class EpilogGeneratorType {
-    Processes,
-    G2,
-    Fusion,
-    Legacy,
+    Processes = 0,
+    G2 = 1,
+    Fusion = 2,
+    Legacy = 3,
 };
 
 struct PrnGen;
@@ -98,21 +101,21 @@ PrnGen *prn_gen_new(const char *svg, const char *settings, EpilogMachine machine
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-bool free_prn_gen(PrnGen *gen);
+bool free_prn_gen(PrnGen *generator);
 
 /// Does work for the specified `PrnGen` object.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-CApiError prn_gen_add_font_data(PrnGen *gen, const char *data, uintptr_t data_length);
+CApiError prn_gen_add_font_data(PrnGen *generator, const char *data, uintptr_t data_length);
 
 /// Does work for the specified `PrnGen` object.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-bool prn_gen_run_chunk(PrnGen *gen);
+bool prn_gen_run_chunk(PrnGen *generator);
 
 /// Does work for the specified `PrnGen` object until all work is complete or until an error has
 /// occurred.
@@ -120,56 +123,56 @@ bool prn_gen_run_chunk(PrnGen *gen);
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-CApiResult prn_gen_run_until_complete(PrnGen *gen);
+CApiResult prn_gen_run_until_complete(PrnGen *generator);
 
 /// Requests that the specified `PrnGen` object aborts as soon as possible.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-bool prn_gen_request_abort(PrnGen *gen);
+bool prn_gen_request_abort(PrnGen *generator);
 
 /// Determines the progress of the specified `PrnGen` object.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-CProgressReport prn_gen_get_progress(const PrnGen *gen);
+CProgressReport prn_gen_get_progress(const PrnGen *generator);
 
 /// Determines the progress of the specified `PrnGen` object.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-CApiResult prn_gen_get_result(const PrnGen *gen);
+CApiResult prn_gen_get_result(const PrnGen *generator);
 
 /// Checks if the specified `PrnGen` object has been completed.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-bool prn_gen_is_complete(const PrnGen *gen);
+bool prn_gen_is_complete(const PrnGen *generator);
 
 /// Checks if the specified `PrnGen` object is in an error state.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-bool prn_gen_has_error(const PrnGen *gen);
+bool prn_gen_has_error(const PrnGen *generator);
 
 /// Checks if the specified `PrnGen` object has been aborted.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-bool prn_gen_was_aborted(const PrnGen *gen);
+bool prn_gen_was_aborted(const PrnGen *generator);
 
 /// Gets the current error string (if there is one) of the specified `PrnGen` object.
 ///
 /// ### Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointer is valid.
-const char *prn_gen_error_string(const PrnGen *gen);
+const char *prn_gen_error_string(const PrnGen *generator);
 
 /// Sends a print file to a laser engraver at the specified IP address.
 ///

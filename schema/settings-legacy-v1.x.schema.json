@@ -1,15 +1,7 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "SettingsGeneric_for_Filter_and_Nullable_Filter",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SettingsGeneric",
   "type": "object",
-  "required": [
-    "autofocus",
-    "copies",
-    "engrave_direction",
-    "engrave_resolution",
-    "job_name",
-    "processes"
-  ],
   "properties": {
     "autofocus": {
       "type": "boolean"
@@ -17,36 +9,30 @@
     "copies": {
       "type": "integer",
       "format": "uint16",
-      "minimum": 1.0
+      "maximum": 65535,
+      "minimum": 1
     },
     "engrave_direction": {
       "description": "The direction that all engrave processes should move in.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/EngravingDirection"
-        }
-      ]
+      "$ref": "#/$defs/EngravingDirection"
     },
     "engrave_resolution": {
       "description": "The resolution at which all engrave processes should render.",
       "type": "integer",
       "format": "uint16",
-      "minimum": 0.0
+      "maximum": 65535,
+      "minimum": 0
     },
     "generic_font_families": {
+      "$ref": "#/$defs/GenericFontFamilies",
       "default": {
         "_of": "system_defaults"
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/GenericFontFamilies"
-        }
-      ]
+      }
     },
     "job_alignment": {
       "anyOf": [
         {
-          "$ref": "#/definitions/JobAlignment"
+          "$ref": "#/$defs/JobAlignment"
         },
         {
           "type": "null"
@@ -61,36 +47,40 @@
     "processes": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ProcessGeneric_for_Filter_and_Nullable_Filter"
+        "$ref": "#/$defs/ProcessGeneric"
       },
       "minItems": 1
     },
     "svg_origin": {
+      "$ref": "#/$defs/SvgOrigin",
       "default": {
         "_of": "zero"
-      },
-      "allOf": [
-        {
-          "$ref": "#/definitions/SvgOrigin"
-        }
-      ]
+      }
     }
   },
-  "definitions": {
+  "required": [
+    "job_name",
+    "copies",
+    "autofocus",
+    "engrave_resolution",
+    "engrave_direction",
+    "processes"
+  ],
+  "$defs": {
     "AttributeFilter": {
       "type": "object",
-      "required": [
-        "attribute",
-        "id"
-      ],
       "properties": {
         "attribute": {
-          "$ref": "#/definitions/AttributeType"
+          "$ref": "#/$defs/AttributeType"
         },
         "id": {
           "type": "string"
         }
-      }
+      },
+      "required": [
+        "id",
+        "attribute"
+      ]
     },
     "AttributeType": {
       "type": "string",
@@ -102,10 +92,6 @@
     },
     "CenteringOffset": {
       "type": "object",
-      "required": [
-        "x",
-        "y"
-      ],
       "properties": {
         "x": {
           "anyOf": [
@@ -129,7 +115,11 @@
             }
           ]
         }
-      }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
     },
     "CenteringPoint": {
       "type": "string",
@@ -152,62 +142,54 @@
         {
           "description": "The outside of the path is the side that will be lased.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "outside"
-              ]
+              "const": "outside"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "The inside of the path is the side that will be lased.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "inside"
-              ]
+              "const": "inside"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "The cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "right_hand_rule"
-              ]
+              "const": "right_hand_rule"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "The negative cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "left_hand_rule"
-              ]
+              "const": "left_hand_rule"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         }
       ]
     },
@@ -224,53 +206,45 @@
         "grayscale_3d"
       ]
     },
-    "EngraveOperationGeneric_for_Filter": {
+    "EngraveOperationGeneric": {
       "oneOf": [
         {
           "type": "object",
-          "required": [
-            "_of",
-            "value"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "threshold"
-              ]
+              "const": "threshold"
             },
             "value": {
               "type": "number",
-              "format": "float"
+              "format": "float",
+              "maximum": 1.0,
+              "minimum": 0.0
             }
-          }
+          },
+          "required": [
+            "_of",
+            "value"
+          ]
         },
         {
           "type": "object",
+          "properties": {
+            "_of": {
+              "type": "string",
+              "const": "invert"
+            }
+          },
           "required": [
             "_of"
-          ],
-          "properties": {
-            "_of": {
-              "type": "string",
-              "enum": [
-                "invert"
-              ]
-            }
-          }
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "distance"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "dilate"
-              ]
+              "const": "dilate"
             },
             "distance": {
               "anyOf": [
@@ -283,20 +257,18 @@
                 }
               ]
             }
-          }
-        },
-        {
-          "type": "object",
+          },
           "required": [
             "_of",
             "distance"
-          ],
+          ]
+        },
+        {
+          "type": "object",
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "distance_transform"
-              ]
+              "const": "distance_transform"
             },
             "distance": {
               "anyOf": [
@@ -309,77 +281,73 @@
                 }
               ]
             }
-          }
+          },
+          "required": [
+            "_of",
+            "distance"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "mask"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "image_mask"
-              ]
+              "const": "image_mask"
             },
             "mask": {
-              "$ref": "#/definitions/Filter"
+              "$ref": "#/$defs/Filter"
             },
             "mask_operations": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EngraveOperationGeneric_for_Filter"
+                "$ref": "#/$defs/EngraveOperationGeneric"
               }
             }
-          }
-        },
-        {
-          "type": "object",
+          },
           "required": [
             "_of",
             "mask"
-          ],
+          ]
+        },
+        {
+          "type": "object",
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "path_mask"
-              ]
+              "const": "path_mask"
             },
             "mask": {
-              "$ref": "#/definitions/Filter"
+              "$ref": "#/$defs/Filter"
             },
             "mask_operations": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/EngraveOperationGeneric_for_Filter"
+                "$ref": "#/$defs/EngraveOperationGeneric"
               }
             }
-          }
+          },
+          "required": [
+            "_of",
+            "mask"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "interpolate_type"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "map"
-              ]
+              "const": "map"
             },
             "interpolate_type": {
-              "$ref": "#/definitions/InterpolateType"
+              "$ref": "#/$defs/InterpolateType"
             },
             "value_map": {
               "type": "array",
               "items": {
                 "type": "array",
-                "items": [
+                "maxItems": 2,
+                "minItems": 2,
+                "prefixItems": [
                   {
                     "type": "number",
                     "format": "float"
@@ -388,13 +356,123 @@
                     "type": "number",
                     "format": "float"
                   }
-                ],
-                "maxItems": 2,
-                "minItems": 2
+                ]
               }
             }
-          }
+          },
+          "required": [
+            "_of",
+            "interpolate_type"
+          ]
         }
+      ]
+    },
+    "EngraveProcessGeneric": {
+      "type": "object",
+      "properties": {
+        "air_assist": {
+          "description": "Whether or not the air assist solenoid will be activated. This option is available for the Legend series, but not for the Fibermark, and Zing series. As such, the validation stage may throw an error if this option is specified.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "cycles": {
+          "type": "integer",
+          "format": "uint16",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "dithering": {
+          "$ref": "#/$defs/DitheringType"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "filter": {
+          "$ref": "#/$defs/Filter"
+        },
+        "focus": {
+          "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled. This option is available for the Fibermark and Zing series, but not for the Legend series. As such, the validation stage may throw an error if this option is specified.",
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        },
+        "frequency": {
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 5000,
+              "minimum": 10
+            }
+          ]
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EngraveOperationGeneric"
+          }
+        },
+        "power": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100,
+              "minimum": 0
+            }
+          ]
+        },
+        "precision_sync": {
+          "type": "boolean"
+        },
+        "speed": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100,
+              "minimum": 1
+            }
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "filter",
+        "cycles",
+        "dithering",
+        "speed",
+        "power",
+        "precision_sync"
       ]
     },
     "EngravingDirection": {
@@ -408,30 +486,22 @@
       "oneOf": [
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "all_filter"
-              ]
+              "const": "all_filter"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "colors"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "color_filter"
-              ]
+              "const": "color_filter"
             },
             "colors": {
               "type": "array",
@@ -439,58 +509,43 @@
                 "type": "string"
               }
             }
-          }
+          },
+          "required": [
+            "_of",
+            "colors"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "op",
-            "width"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "stroke_filter"
-              ]
-            },
-            "op": {
-              "$ref": "#/definitions/StrokeFilterOp"
-            },
-            "width": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number",
-                  "format": "float"
-                }
-              ]
+              "const": "stroke_filter"
             }
-          }
+          },
+          "$ref": "#/$defs/StrokeFilter",
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "attributes"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "attribute_filter"
-              ]
+              "const": "attribute_filter"
             },
             "attributes": {
               "type": "array",
               "items": {
-                "$ref": "#/definitions/AttributeFilter"
+                "$ref": "#/$defs/AttributeFilter"
               }
             }
-          }
+          },
+          "required": [
+            "_of",
+            "attributes"
+          ]
         }
       ]
     },
@@ -498,80 +553,62 @@
       "oneOf": [
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "none"
-              ]
+              "const": "none"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "epilog_defaults"
-              ]
+              "const": "epilog_defaults"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "system_defaults"
-              ]
+              "const": "system_defaults"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "font_family"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "single_named"
-              ]
+              "const": "single_named"
             },
             "font_family": {
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "_of",
+            "font_family"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "cursive_family",
-            "fantasy_family",
-            "monospace_family",
-            "sans_serif_family",
-            "serif_family"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "named"
-              ]
+              "const": "named"
             },
             "cursive_family": {
               "type": "string"
@@ -588,143 +625,20 @@
             "serif_family": {
               "type": "string"
             }
-          }
+          },
+          "required": [
+            "_of",
+            "serif_family",
+            "sans_serif_family",
+            "cursive_family",
+            "fantasy_family",
+            "monospace_family"
+          ]
         }
       ]
     },
-    "HatchPatternType": {
-      "oneOf": [
-        {
-          "type": "object",
-          "required": [
-            "_of",
-            "angle",
-            "spacing"
-          ],
-          "properties": {
-            "_of": {
-              "type": "string",
-              "enum": [
-                "sweep"
-              ]
-            },
-            "angle": {
-              "type": "number",
-              "format": "float",
-              "maximum": 360.0,
-              "minimum": -360.0
-            },
-            "spacing": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number",
-                  "format": "float"
-                }
-              ],
-              "maximum": 25.4,
-              "minimum": 0.000254
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "_of",
-            "angle",
-            "spacing"
-          ],
-          "properties": {
-            "_of": {
-              "type": "string",
-              "enum": [
-                "s_sweep"
-              ]
-            },
-            "angle": {
-              "type": "number",
-              "format": "float",
-              "maximum": 360.0,
-              "minimum": -360.0
-            },
-            "spacing": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number",
-                  "format": "float"
-                }
-              ],
-              "maximum": 25.4,
-              "minimum": 0.000254
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "_of",
-            "angle",
-            "spacing"
-          ],
-          "properties": {
-            "_of": {
-              "type": "string",
-              "enum": [
-                "unidirectional"
-              ]
-            },
-            "angle": {
-              "type": "number",
-              "format": "float",
-              "maximum": 360.0,
-              "minimum": -360.0
-            },
-            "spacing": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number",
-                  "format": "float"
-                }
-              ],
-              "maximum": 25.4,
-              "minimum": 0.000254
-            }
-          }
-        },
-        {
-          "type": "object",
-          "required": [
-            "_of"
-          ],
-          "properties": {
-            "_of": {
-              "type": "string",
-              "enum": [
-                "outline"
-              ]
-            }
-          }
-        }
-      ]
-    },
-    "HatchPattern_for_SpfLegacyVector": {
+    "HatchPattern": {
       "type": "object",
-      "required": [
-        "frequency",
-        "name",
-        "passes",
-        "pattern_type",
-        "power",
-        "speed"
-      ],
       "properties": {
         "enabled": {
           "type": [
@@ -740,8 +654,8 @@
             {
               "type": "integer",
               "format": "uint16",
-              "maximum": 5000.0,
-              "minimum": 10.0
+              "maximum": 5000,
+              "minimum": 10
             }
           ]
         },
@@ -753,10 +667,11 @@
         "passes": {
           "type": "integer",
           "format": "uint16",
-          "minimum": 1.0
+          "maximum": 65535,
+          "minimum": 1
         },
         "pattern_type": {
-          "$ref": "#/definitions/HatchPatternType"
+          "$ref": "#/$defs/HatchPatternType"
         },
         "power": {
           "anyOf": [
@@ -766,8 +681,8 @@
             {
               "type": "integer",
               "format": "uint16",
-              "maximum": 100.0,
-              "minimum": 0.0
+              "maximum": 100,
+              "minimum": 0
             }
           ]
         },
@@ -779,12 +694,195 @@
             {
               "type": "integer",
               "format": "uint16",
-              "maximum": 100.0,
-              "minimum": 1.0
+              "maximum": 100,
+              "minimum": 1
             }
           ]
         }
-      }
+      },
+      "required": [
+        "name",
+        "pattern_type",
+        "speed",
+        "power",
+        "frequency",
+        "passes"
+      ]
+    },
+    "HatchPatternType": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "_of": {
+              "type": "string",
+              "const": "sweep"
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          },
+          "required": [
+            "_of",
+            "spacing",
+            "angle"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "_of": {
+              "type": "string",
+              "const": "s_sweep"
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          },
+          "required": [
+            "_of",
+            "spacing",
+            "angle"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "_of": {
+              "type": "string",
+              "const": "unidirectional"
+            },
+            "angle": {
+              "type": "number",
+              "format": "float",
+              "maximum": 360.0,
+              "minimum": -360.0
+            },
+            "spacing": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number",
+                  "format": "float"
+                }
+              ]
+            }
+          },
+          "required": [
+            "_of",
+            "spacing",
+            "angle"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "_of": {
+              "type": "string",
+              "const": "outline"
+            }
+          },
+          "required": [
+            "_of"
+          ]
+        }
+      ]
+    },
+    "HatchProcessGeneric": {
+      "type": "object",
+      "properties": {
+        "air_assist": {
+          "description": "Whether or not the air assist solenoid will be activated. This option for the Legend series, but not for the Fibermark and Zing series. As such, the validation stage may throw an error if this option is specified.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "cycles": {
+          "type": "integer",
+          "format": "uint16",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "filter": {
+          "$ref": "#/$defs/Filter"
+        },
+        "focus": {
+          "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled. This option is available for the Fibermark and Zing series, but not for the Legend series. As such, the validation stage may throw an error if this option is specified.",
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        },
+        "isolate_shapes": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "optimize_hatch_sort": {
+          "type": "boolean",
+          "default": true
+        },
+        "patterns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HatchPattern"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "name",
+        "filter",
+        "cycles",
+        "patterns",
+        "isolate_shapes"
+      ]
     },
     "InterpolateType": {
       "description": "Defines how values in between the map's `value_map` points are treated.",
@@ -792,104 +890,102 @@
         {
           "description": "Linearly interpolates between the nearest input value below and the nearest input value above the specified input.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "linear"
-              ]
+              "const": "linear"
             },
             "max": {
               "description": "The value that 1 maps to if not specified in the `value_map`.",
-              "default": 1.0,
               "type": "number",
-              "format": "float"
+              "format": "float",
+              "default": 1.0,
+              "maximum": 1.0,
+              "minimum": 0.0
             },
             "min": {
               "description": "The value that 0 maps to if not specified in the `value_map`.",
-              "default": 0.0,
               "type": "number",
-              "format": "float"
+              "format": "float",
+              "default": 0.0,
+              "maximum": 1.0,
+              "minimum": 0.0
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "Chooses the mapping to the nearest input value below the specified input.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "nearest_below"
-              ]
+              "const": "nearest_below"
             },
             "min": {
               "description": "The value that 0 maps to if not specified in the `value_map`.",
-              "default": 0.0,
               "type": "number",
-              "format": "float"
+              "format": "float",
+              "default": 0.0,
+              "maximum": 1.0,
+              "minimum": 0.0
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "Chooses the mapping to the nearest input value above the specified input.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "nearest_above"
-              ]
+              "const": "nearest_above"
             },
             "max": {
               "description": "The value that 1 maps to if not specified in the `value_map`.",
-              "default": 1.0,
               "type": "number",
-              "format": "float"
+              "format": "float",
+              "default": 1.0,
+              "maximum": 1.0,
+              "minimum": 0.0
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         }
       ]
     },
     "JobAlignment": {
       "type": "object",
-      "required": [
-        "centering_point"
-      ],
       "properties": {
         "centering_point": {
-          "$ref": "#/definitions/CenteringPoint"
+          "$ref": "#/$defs/CenteringPoint"
         },
         "offset": {
           "anyOf": [
             {
-              "$ref": "#/definitions/CenteringOffset"
+              "$ref": "#/$defs/CenteringOffset"
             },
             {
               "type": "null"
             }
           ]
         }
-      }
+      },
+      "required": [
+        "centering_point"
+      ]
     },
     "Kerf": {
       "type": "object",
-      "required": [
-        "line_join",
-        "offset"
-      ],
       "properties": {
         "line_join": {
-          "$ref": "#/definitions/LineJoin"
+          "$ref": "#/$defs/LineJoin"
         },
         "offset": {
           "anyOf": [
@@ -902,38 +998,42 @@
             }
           ]
         }
-      }
+      },
+      "required": [
+        "offset",
+        "line_join"
+      ]
     },
-    "LaserSideGeneric_for_Nullable_Filter": {
+    "LaserSideGeneric": {
       "description": "Laser-side can essentially be thought of as the side of an artwork path that we would like to laser. As such, this represents the side of the path that we would like to offset towards. This struct specifies the side of the line for offsetting paths and will eventually be used for lead-in and lead-out as well. Note: When lead-in and lead-out are implemented, make the `kerf_offset` field optional.",
       "type": "object",
-      "required": [
-        "closed",
-        "kerf",
-        "open"
-      ],
       "properties": {
         "closed": {
-          "$ref": "#/definitions/ClosedPathLaserSide"
+          "$ref": "#/$defs/ClosedPathLaserSide"
         },
         "kerf": {
-          "$ref": "#/definitions/Kerf"
+          "$ref": "#/$defs/Kerf"
         },
         "open": {
-          "$ref": "#/definitions/OpenPathLaserSide"
+          "$ref": "#/$defs/OpenPathLaserSide"
         },
         "overrides": {
           "description": "This specifies which objects will have their laser sides flipped as such: - Outside <-> Inside - RightHandRule <-> LeftHandRule",
           "anyOf": [
             {
-              "$ref": "#/definitions/Filter"
+              "$ref": "#/$defs/Filter"
             },
             {
               "type": "null"
             }
           ]
         }
-      }
+      },
+      "required": [
+        "closed",
+        "open",
+        "kerf"
+      ]
     },
     "LineJoin": {
       "description": "The type of joining used when offsetting paths.",
@@ -941,47 +1041,41 @@
         {
           "description": "Joins the ends of the lines with a simple bevel.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "bevel"
-              ]
+              "const": "bevel"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "Joins the ends of the lines with a circular arc.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "round"
-              ]
+              "const": "round"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "Joins the ends of the lines with a miter.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "miter"
-              ]
+              "const": "miter"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         }
       ]
     },
@@ -991,338 +1085,95 @@
         {
           "description": "The cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "right_hand_rule"
-              ]
+              "const": "right_hand_rule"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "description": "The negative cross product of the direction of the path with a vector pointing out of the screen gives the direction that will be lased.",
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "left_hand_rule"
-              ]
+              "const": "left_hand_rule"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         }
       ]
     },
-    "ProcessGeneric_for_Filter_and_Nullable_Filter": {
+    "ProcessGeneric": {
       "oneOf": [
         {
           "type": "object",
-          "required": [
-            "_of",
-            "cycles",
-            "dithering",
-            "filter",
-            "name",
-            "power",
-            "precision_sync",
-            "speed"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "engrave_process"
-              ]
-            },
-            "air_assist": {
-              "description": "Whether or not the air assist solenoid will be activated. This option is available for the Legend series, but not for the Fibermark, and Zing series. As such, the validation stage may throw an error if this option is specified.",
-              "type": [
-                "boolean",
-                "null"
-              ]
-            },
-            "cycles": {
-              "type": "integer",
-              "format": "uint16",
-              "minimum": 1.0
-            },
-            "dithering": {
-              "$ref": "#/definitions/DitheringType"
-            },
-            "enabled": {
-              "default": true,
-              "type": "boolean"
-            },
-            "filter": {
-              "$ref": "#/definitions/Filter"
-            },
-            "focus": {
-              "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled. This option is available for the Fibermark and Zing series, but not for the Legend series. As such, the validation stage may throw an error if this option is specified.",
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number",
-                  "format": "float"
-                }
-              ]
-            },
-            "frequency": {
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer",
-                  "format": "uint16",
-                  "maximum": 5000.0,
-                  "minimum": 10.0
-                }
-              ]
-            },
-            "name": {
-              "type": "string",
-              "maxLength": 255,
-              "minLength": 1
-            },
-            "operations": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/EngraveOperationGeneric_for_Filter"
-              }
-            },
-            "power": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer",
-                  "format": "uint16",
-                  "maximum": 100.0,
-                  "minimum": 0.0
-                }
-              ]
-            },
-            "precision_sync": {
-              "type": "boolean"
-            },
-            "speed": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer",
-                  "format": "uint16",
-                  "maximum": 100.0,
-                  "minimum": 1.0
-                }
-              ]
+              "const": "engrave_process"
             }
-          }
+          },
+          "$ref": "#/$defs/EngraveProcessGeneric",
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "cycles",
-            "filter",
-            "frequency",
-            "name",
-            "power",
-            "speed",
-            "vector_sorting"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "vector_process"
-              ]
-            },
-            "air_assist": {
-              "description": "Whether or not the air assist solenoid will be activated. This option for the Legend series, but not for the Fibermark and Zing series. As such, the validation stage may throw an error if this option is specified.",
-              "type": [
-                "boolean",
-                "null"
-              ]
-            },
-            "cycles": {
-              "type": "integer",
-              "format": "uint16",
-              "minimum": 1.0
-            },
-            "enabled": {
-              "default": true,
-              "type": "boolean"
-            },
-            "filter": {
-              "$ref": "#/definitions/Filter"
-            },
-            "focus": {
-              "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled. This option is available for the Fibermark and Zing series, but not for the Legend series. As such, the validation stage may throw an error if this option is specified.",
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number",
-                  "format": "float"
-                }
-              ]
-            },
-            "frequency": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer",
-                  "format": "uint16",
-                  "maximum": 5000.0,
-                  "minimum": 10.0
-                }
-              ]
-            },
-            "laser_side": {
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/LaserSideGeneric_for_Nullable_Filter"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "name": {
-              "type": "string",
-              "maxLength": 255,
-              "minLength": 1
-            },
-            "optimize_cycles": {
-              "default": true,
-              "type": "boolean"
-            },
-            "power": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer",
-                  "format": "uint16",
-                  "maximum": 100.0,
-                  "minimum": 0.0
-                }
-              ]
-            },
-            "speed": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "integer",
-                  "format": "uint16",
-                  "maximum": 100.0,
-                  "minimum": 1.0
-                }
-              ]
-            },
-            "vector_sorting": {
-              "$ref": "#/definitions/VectorSorting"
+              "const": "vector_process"
             }
-          }
+          },
+          "$ref": "#/$defs/VectorProcessGeneric",
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "cycles",
-            "filter",
-            "isolate_shapes",
-            "name",
-            "patterns"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "hatch_process"
-              ]
-            },
-            "air_assist": {
-              "description": "Whether or not the air assist solenoid will be activated. This option for the Legend series, but not for the Fibermark and Zing series. As such, the validation stage may throw an error if this option is specified.",
-              "type": [
-                "boolean",
-                "null"
-              ]
-            },
-            "cycles": {
-              "type": "integer",
-              "format": "uint16",
-              "minimum": 1.0
-            },
-            "enabled": {
-              "default": true,
-              "type": "boolean"
-            },
-            "filter": {
-              "$ref": "#/definitions/Filter"
-            },
-            "focus": {
-              "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled. This option is available for the Fibermark and Zing series, but not for the Legend series. As such, the validation stage may throw an error if this option is specified.",
-              "anyOf": [
-                {
-                  "type": "null"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number",
-                  "format": "float"
-                }
-              ]
-            },
-            "isolate_shapes": {
-              "type": "boolean"
-            },
-            "name": {
-              "type": "string",
-              "maxLength": 255,
-              "minLength": 1
-            },
-            "optimize_hatch_sort": {
-              "default": true,
-              "type": "boolean"
-            },
-            "patterns": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/HatchPattern_for_SpfLegacyVector"
-              }
+              "const": "hatch_process"
             }
-          }
+          },
+          "$ref": "#/$defs/HatchProcessGeneric",
+          "required": [
+            "_of"
+          ]
         }
+      ]
+    },
+    "StrokeFilter": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "$ref": "#/$defs/StrokeFilterOp"
+        },
+        "width": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        }
+      },
+      "required": [
+        "width",
+        "op"
       ]
     },
     "StrokeFilterOp": {
@@ -1340,73 +1191,58 @@
       "oneOf": [
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "zero"
-              ]
+              "const": "zero"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "half_table_size"
-              ]
+              "const": "half_table_size"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "view_rect_top_left"
-              ]
+              "const": "view_rect_top_left"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "view_rect_center"
-              ]
+              "const": "view_rect_center"
             }
-          }
+          },
+          "required": [
+            "_of"
+          ]
         },
         {
           "type": "object",
-          "required": [
-            "_of",
-            "x",
-            "y"
-          ],
           "properties": {
             "_of": {
               "type": "string",
-              "enum": [
-                "custom"
-              ]
+              "const": "custom"
             },
             "x": {
               "anyOf": [
@@ -1430,8 +1266,123 @@
                 }
               ]
             }
-          }
+          },
+          "required": [
+            "_of",
+            "x",
+            "y"
+          ]
         }
+      ]
+    },
+    "VectorProcessGeneric": {
+      "type": "object",
+      "properties": {
+        "air_assist": {
+          "description": "Whether or not the air assist solenoid will be activated. This option for the Legend series, but not for the Fibermark and Zing series. As such, the validation stage may throw an error if this option is specified.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "cycles": {
+          "type": "integer",
+          "format": "uint16",
+          "maximum": 65535,
+          "minimum": 1
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true
+        },
+        "filter": {
+          "$ref": "#/$defs/Filter"
+        },
+        "focus": {
+          "description": "The depth to which we want to focus. Must be specified iff auto focus is enabled. This option is available for the Fibermark and Zing series, but not for the Legend series. As such, the validation stage may throw an error if this option is specified.",
+          "anyOf": [
+            {
+              "type": "null"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "number",
+              "format": "float"
+            }
+          ]
+        },
+        "frequency": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 5000,
+              "minimum": 10
+            }
+          ]
+        },
+        "laser_side": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LaserSideGeneric"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "optimize_cycles": {
+          "type": "boolean",
+          "default": true
+        },
+        "power": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100,
+              "minimum": 0
+            }
+          ]
+        },
+        "speed": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer",
+              "format": "uint16",
+              "maximum": 100,
+              "minimum": 1
+            }
+          ]
+        },
+        "vector_sorting": {
+          "$ref": "#/$defs/VectorSorting"
+        }
+      },
+      "required": [
+        "name",
+        "filter",
+        "cycles",
+        "speed",
+        "power",
+        "frequency",
+        "vector_sorting"
       ]
     },
     "VectorSorting": {

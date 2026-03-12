@@ -16,6 +16,9 @@ The four generators and their associated machines are as follows:
     - `pro32`
     - `pro36`
     - `pro48`
+    - `ascent12`
+    - `ascent24`
+    - `ascent36`
     - `edge12`
     - `edge24`
     - `edge36`
@@ -53,8 +56,8 @@ The four generators and their associated machines are as follows:
 | [Autofocus Manual Thickness](#autofocus) | `autofocus` = `thickness` <br/> `processes` > `thickness`/`offset` | Machines for the **Processes** generator |
 | [Autofocus Manual Thickness](#autofocus) | `autofocus` = `true` <br/> `processes` > `focus` | Machines for the **Fusion**, **Legacy**, and **G2** generators |
 | [Laser Type](#laser-types) | `processes` > `laser_type` | Machines for the **Processes**, **Fusion** and **Legacy** generators (restrictions apply, see the [Laser Types](#laser-types) section for details) |
-| [CO2 Laser](#co2-laser) | `processes` > `laser_type` = `co2` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`, `fusion32_m2`, `fusion40_m2`, `fusion32`, `fusion40`, `zing16`, `zing24`, `helix24`, `mini18`, `mini24`, `ext36` |
-| [Fiber Laser](#laser-types) | `processes` > `laser_type` = `fiber` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `g100_4x4`, `g100_6x6`, `g2`, `fusion32_m2`, `fusion40_m2`, `fusion32_fibermark`, `fibermark24`, `fibermark24_s2` |
+| [CO2 Laser](#co2-laser) | `processes` > `laser_type` = `co2` | `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`, `fusion32_m2`, `fusion40_m2`, `fusion32`, `fusion40`, `zing16`, `zing24`, `helix24`, `mini18`, `mini24`, `ext36` |
+| [Fiber Laser](#laser-types) | `processes` > `laser_type` = `fiber` | `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `edge12`, `g100_4x4`, `g100_6x6`, `g2`, `fusion32_m2`, `fusion40_m2`, `fusion32_fibermark`, `fibermark24`, `fibermark24_s2` |
 | [CO2/Fiber Dual Source](#laser-types) | `processes` > `laser_type` = `co2` and `fiber` | `pro24`, `pro32`, `pro36`, `pro48`, `fusion32_m2`, `fusion40_m2` |
 | [Engrave Processes](#engrave-process) | `processes` > `_of` = `engrave_process` | All machines except for the `g2` |
 | [Global Engrave Settings](#engrave-process) | `processes` > `engrave_resolution`/`engrave_direction` | Machines for the **Fusion** and **Legacy** generators |
@@ -69,12 +72,22 @@ The four generators and their associated machines are as follows:
 
 It will be important when setting process `laser_type` parameters to know which machines support which laser types.
 
-The following machine types can only have `co2` lasers:
+The following machine types support `co2` lasers:
+- `pro24`
+- `pro32`
+- `pro36`
+- `pro48`
+- `ascent12`
+- `ascent24`
+- `ascent36`
+- `edge12`
 - `edge24`
 - `edge36`
 - `maker12`
 - `maker24`
 - `maker36`
+- `fusion32_m2`
+- `fusion40_m2`
 - `fusion32`
 - `fusion40`
 - `zing16`
@@ -84,18 +97,24 @@ The following machine types can only have `co2` lasers:
 - `mini24`
 - `ext36`
 
-The following machine types can only have `fiber` lasers:
+The following machine types support `fiber` lasers:
+- `pro24`
+- `pro32`
+- `pro36`
+- `pro48`
+- `ascent12`
+- `ascent24`
+- `edge12`
 - `g100_4x4`
 - `g100_6x6`
 - `g2`
+- `fusion32_m2`
+- `fusion40_m2`
 - `fusion32_fibermark`
 - `fibermark24`
 - `fibermark24_s2`
 
-The following machine types have either laser type, but not both:
-- `edge12`
-
-The following machine types can have either or both laser types (dual source):
+The following machine types can have multiple lasers installed (dual source):
 - `pro24`
 - `pro32`
 - `pro36`
@@ -107,33 +126,36 @@ Note: Process settings can omit the laser type setting if the machine only suppo
 
 **[Generator/Machine Compatibility]**
 
-| **Generator**                         | **Supported**                |
-|:--------------------------------------|:-----------------------------|
-| Processes                             | _See Below_                  |
-| &emsp;`pro24`, `pro36`, `pro48`       | ✅ `co2`/`fiber` dual source |
-| &emsp;`pro32`                         | ✅ `co2`/`fiber` dual source |
-| &emsp;`edge12`                        | ✅ `co2`/`fiber`             |
-| &emsp;`edge24`, `edge36`              | ❌ `fiber` ✅ `co2`          |
-| &emsp;`maker12`, `maker24`, `maker36` | ❌ `fiber` ✅ `co2`          |
-| &emsp;`g100_4x4`, `g100_6x6`          | ❌ `co2` ✅ `fiber`          |
-| Fusion                                | _See Below_                  |
-| &emsp;`fusion32_m2`, `fusion40_m2`    | ✅ `co2`/`fiber` dual source |
-| &emsp;`fusion32_fibermark`            | ❌ `co2` ✅ `fiber`          |
-| &emsp;`fusion32`, `fusion40`          | ❌ `fiber` ✅ `co2`          |
-| Legacy                                | _See Below_                  |
-| &emsp;`fibermark24`, `fibermark24_s2` | ❌ `co2` ✅ `fiber`          |
-| &emsp;_All other Legacy machines_     | ❌ `fiber` ✅ `co2`          |
-| G2                                    | ❌ `co2` ✅ `fiber`          |
+| **Generator**                         | **Supported**                          |
+|:--------------------------------------|:---------------------------------------|
+| Processes                             | _See Below_                            |
+| &emsp;`pro24`, `pro36`, `pro48`       | ✅ `co2`/`fiber` dual source           |
+| &emsp;`pro32`                         | ✅ `co2`/`fiber` dual source           |
+| &emsp;`ascent12`, `ascent24`          | ✅ `co2`/`fiber`                       |
+| &emsp;`ascent36`                      | ❌ `fiber` ✅ `co2`                    |
+| &emsp;`edge12`                        | ✅ `co2`/`fiber`                       |
+| &emsp;`edge24`, `edge36`              | ❌ `fiber` ✅ `co2`                    |
+| &emsp;`maker12`, `maker24`, `maker36` | ❌ `fiber` ✅ `co2`                    |
+| &emsp;`g100_4x4`, `g100_6x6`          | ❌ `co2` ✅ `fiber`                    |
+| Fusion                                | _See Below_                            |
+| &emsp;`fusion32_m2`, `fusion40_m2`    | ✅ `co2`/`fiber` dual source           |
+| &emsp;`fusion32_fibermark`            | ❌ `co2` ✅ `fiber`                    |
+| &emsp;`fusion32`, `fusion40`          | ❌ `fiber` ✅ `co2`                    |
+| Legacy                                | _See Below_                            |
+| &emsp;`fibermark24`, `fibermark24_s2` | ❌ `co2` ✅ `fiber`                    |
+| &emsp;_All other Legacy machines_     | ❌ `fiber` ✅ `co2`                    |
+| G2                                    | ❌ `co2` ✅ `fiber`                    |
 
 # Length Units
-By default, all settings parameters are assumed to be provided in `mm`. However, other units can be specified by appending the unit string to end of the numeric value. The following options are available.
-- `mm` - The default unit.
-- `cm` - There are 10 millimeters in a centimeter (cm).
-- `in` - There are 25.4 millimeters in an inch (in).
-- `q`  - There are 4 quarter millimeters (q) in a millimeter.
-- `pc` - There are 6 PostScript picas (pc) in an inch.
-- `pt` - There are 72 points (pt) in an inch.
-- `px` - There are 96 pixels (px) in an inch.
+
+By default, all settings parameters are assumed to be provided in `mm`. However, other units can be specified by appending the unit string to end of the numeric value. The following options are available:
+- `mm` - Millimeters, the default unit.
+- `cm` - Centimeters (10 millimeters per centimeter).
+- `in` - Inches (25.4 millimeters per inch).
+- `q`  - Quarter-millimeters (4 quarter-millimeters per millimeter).
+- `pc` - PostScript picas (6 PostScript picas per inch).
+- `pt` - Points (72 points per inch).
+- `px` - Pixels (96 pixels per inch).
 
 In the following examples, the focus thickness is assumed to be in `mm`:
 ```json
@@ -144,9 +166,168 @@ In the following examples, the focus thickness is assumed to be in `mm`:
 ```
 
 This could be equivalently described as such:
+```json
+"thickness": "1 in"
 ```
-"thickness": "1in"
+
+# Speed Units
+
+_Note: This feature is only available for machines that use the processes generator and have a firmware version of 1.1.3.0 or higher._
+
+By default, all speed settings parameters are assumed to be provided as a percentage. If it is known that the provided value is in absolute units, the value is assumed to be in `mm/s`.
+
+Other units can be specified by appending the unit string to end of the numeric value. The following options are available:
+- `%` - Percent, the default unit.
+- `mm/s` - Millimeters per second.
+- `cm/s` - Centimeters per second (10 mm/s per cm/s).
+- `in/s` - Inches per second (25.4 mm/s per inch/s).
+
+In the following examples, the speed is assumed to be a percentage:
+```json
+"speed": 10.5
 ```
+```json
+"speed": "10.5"
+```
+```json
+"speed": {
+    "_of": "percent",
+    "value": 10.5
+}
+```
+
+This could also be described in absolute units as such (each are equivalent to each other):
+```json
+"speed": "25.4 mm/s"
+```
+```json
+"speed": "1 in/s"
+```
+```json
+"speed": {
+    "_of": "absolute",
+    "value": 25.4
+}
+```
+```json
+"speed": {
+    "_of": "absolute",
+    "value": "1 in/s"
+}
+```
+
+The conversion between percentage and absolute units is dependent upon each machine.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported**                 |
+|:--------------|:------------------------------|
+| Processes     | ✅ firmware 1.1.3.0 or higher |
+| Fusion        | ❌                            |
+| Legacy        | ❌                            |
+| G2            | ❌                            |
+
+# Frequency Units
+
+_Note: This feature is only available for machines that use the processes generator and have a firmware version of 1.1.3.0 or higher._
+
+By default, all frequency settings parameters are assumed to be provided as a percentage. If it is known that the provided value is in absolute units, the value is assumed to be in `Hz`.
+
+Other units can be specified by appending the unit string to end of the numeric value. The following options are available:
+- `%` - Percent, the default unit.
+- `Hz` - Hertz (one cycle per second).
+- `kHz` - Kilohertz (1,000 Hz per kHz).
+- `MHz` - Megahertz (1,000,000 Hz per MHz).
+
+In the following examples, the frequency is assumed to be a percentage:
+```json
+"frequency": 10.5
+```
+```json
+"frequency": "10.5"
+```
+```json
+"frequency": {
+    "_of": "percent",
+    "value": 10.5
+}
+```
+
+This could also be described in absolute units as such (each are equivalent to each other):
+```json
+"frequency": "1000 Hz"
+```
+```json
+"frequency": "1 kHz"
+```
+```json
+"frequency": {
+    "_of": "absolute",
+    "value": 1000
+}
+```
+```json
+"frequency": {
+    "_of": "absolute",
+    "value": "1 kHz"
+}
+```
+
+The conversion between percentage and absolute units is dependent upon each machine and laser combination.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported**                 |
+|:--------------|:------------------------------|
+| Processes     | ✅ firmware 1.1.3.0 or higher |
+| Fusion        | ❌                            |
+| Legacy        | ❌                            |
+| G2            | ❌                            |
+
+# Pulse Duration Units
+
+_Note: This feature is only available for machines that use the processes generator and have a firmware version of 1.1.3.0 or higher._
+
+By default, all pulse duration settings parameters are assumed to be provided as an index. If it is known that the provided value is in absolute units, the value is assumed to be in `ns`.
+
+Units can be specified by appending the unit string to end of the numeric value. The following options are available:
+- `ns` - Nanoseconds.
+
+In the following examples, the waveform is assumed to be an index:
+```json
+"waveform": 2
+```
+```json
+"waveform": "2"
+```
+```json
+"waveform": {
+    "_of": "index",
+    "value": 2
+}
+```
+
+This could also be described in absolute units as such (each are equivalent to each other):
+```json
+"waveform": "6 ns"
+```
+```json
+"waveform": {
+    "_of": "absolute",
+    "value": 6
+}
+```
+
+The conversion between index and absolute units is dependent upon each laser.
+
+**[Generator/Machine Compatibility]**
+
+| **Generator** | **Supported**                 |
+|:--------------|:------------------------------|
+| Processes     | ✅ firmware 1.1.3.0 or higher |
+| Fusion        | ❌                            |
+| Legacy        | ❌                            |
+| G2            | ❌                            |
 
 # Stamp and 3D Modes
 
@@ -813,7 +994,7 @@ The Fusion and Legacy generators use a global setting called `engrave_direction`
 
 The algorithm used to dither the artwork for the process into the binary (monochromatic) data used by the engraver.
 
-Note: `grayscale_3d` is not available for `g100_4x4` and `g100_6x6` machines and will throw an error if used.
+Note: `grayscale_3d` is not available for fiber laser machines or processes and will throw an error if used.
 
 The following options are available:
 - `none` - No dithering is applied.
@@ -1303,15 +1484,19 @@ This example also creates a 5-step threshold function equivalent to the example 
 
 ### `speed`
 
-A value which represents the percentage of the maximum speed that will be used.
+A value which represents the maximum speed that will be used.
 
 **[Processes Generator]**
 
-This value must be between `0.01` and `100` and accepts decimal values.
+Percentage values must be between `0.01` and `100` and accepts decimal values. 
+
+Absolute units are supported and follow the speed unit options described above.
 
 **[Fusion and Legacy Generators]**
 
-This value must be between `1` and `100` and must be an integer.
+This percentage value must be between `1` and `100` and must be an integer.
+
+Absolute units are not supported.
 
 ### `power`
 
@@ -1327,33 +1512,39 @@ This value must be between `0` and `100` and must be an integer.
 
 ### `frequency` (Fiber Only)
 
-Except in the Legacy generator, this is a percent value in which a value of `1` maps to the lowest available frequency and a value of `100` maps to the highest available frequency. The minimum and maximum frequency available depends on the laser installed in the machine and may also differ for different waveforms when applicable.
+A value which represents the frequency of the laser.
 
-In the legacy generator, the value is provided in Hertz (Hz) and therefore have a different range of values as noted below.
+When this is a percentage, a value of `1` maps to the lowest available frequency and a value of `100` maps to the highest available frequency. The minimum and maximum frequency available depends on the laser installed in the machine and may also differ for different waveforms when applicable.
 
 This must only be set when the `laser_type` (specified or implied) is `fiber`.
 
 **[Processes Generator]**
 
-This value must be between `1` and `100` and accepts decimal values.
+Percentage values must be between `1` and `100` and accepts decimal values.
+
+Absolute units are supported and follow the frequency unit options described above.
 
 **[Fusion Generator]**
 
-This value must be between `1` and `100` and must be an integer.
+This percentage value must be between `1` and `100` and must be an integer.
+
+Absolute units are not supported.
 
 **[Legacy Generator]**
 
-This value must be between `10` and `5000` and must be an integer.
+This value must be between `10` and `5000`, must be an integer, and is in units of Hertz.
+
+Percentage values are not supported.
 
 ### `waveform` (Waveform Fiber Only)
 
-For machines with waveform-enabled lasers, this option specifies the waveform that is to be used.
-
-Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
+A value which represents the pulse duration of the laser and is only applicable to machines in which waveform lasers are available. This can be represented as an index or as a time duration.
 
 **[Processes Generator]**
 
-This value must be between `0` and `15` and must be an integer.
+Index values must be between `0` and `15` and must be an integer.
+
+Absolute units are supported and follow the pulse duration unit options described above.
 
 **[Generator/Machine Compatibility]**
 
@@ -1491,15 +1682,19 @@ The value must be greater than or equal to `1`.
 
 ### `speed`
 
-A value which represents the percentage of the maximum speed that will be used.
+A value which represents the maximum speed that will be used.
 
 **[Processes Generator]**
 
-This value must be between `0.01` and `100` and accepts decimal values.
+Percentage values must be between `0.01` and `100` and accepts decimal values. 
+
+Absolute units are supported and follow the speed unit options described above.
 
 **[Fusion and Legacy Generators]**
 
-This value must be between `1` and `100` and must be an integer.
+This percentage value must be between `1` and `100` and must be an integer.
+
+Absolute units are not supported.
 
 ### `power`
 
@@ -1515,35 +1710,43 @@ This value must be between `0` and `100` and must be an integer.
 
 ### `frequency`
 
-Except in the Legacy generator, this is a percent value in which a value of `1` maps to the lowest available frequency and a value of `100` maps to the highest available frequency. The minimum and maximum frequency available depends on the laser installed in the machine and may also differ for different waveforms when applicable.
+A value which represents the frequency of the laser.
 
-In the legacy generator, the value is provided in Hertz (Hz) and therefore have a different range of values as noted below.
+When this is a percentage, a value of `1` maps to the lowest available frequency and a value of `100` maps to the highest available frequency. The minimum and maximum frequency available depends on the laser installed in the machine and may also differ for different waveforms when applicable.
 
 **[Processes Generator]**
 
-This value must be between `1` and `100` and accepts decimal values.
+Percentage values must be between `1` and `100` and accepts decimal values.
+
+Absolute units are supported and follow the frequency unit options described above.
 
 **[Fusion Generator]**
 
-This value must be between `1` and `100` and must be an integer.
+This percentage value must be between `1` and `100` and must be an integer.
+
+Absolute units are not supported.
 
 **[Legacy Generator]**
 
-This value must be between `10` and `5000` and must be an integer.
+This value must be between `10` and `5000`, must be an integer, and is in units of Hertz.
+
+Percentage values are not supported.
 
 ### `waveform` (Waveform Fiber Only)
 
-For machines with waveform-enabled lasers, this option specifies the waveform that is to be used.
-
-Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
+A value which represents the pulse duration of the laser and is only applicable to machines in which waveform lasers are available. This can be represented as an index or as a time duration.
 
 **[Processes Generator]**
 
-This value must be between `0` and `15` and must be an integer.
+Index values must be between `0` and `15` and must be an integer.
+
+Absolute units are supported and follow the pulse duration unit options described above.
 
 **[G2 Generator]**
 
 This value must be between `0` and `7` and must be an integer.
+
+Absolute units are not supported.
 
 **[Generator/Machine Compatibility]**
 
@@ -1977,15 +2180,19 @@ The following options are available:
 
 ### `speed`
 
-A value which represents the percentage of the maximum speed that will be used.
+A value which represents the maximum speed that will be used.
 
 **[Processes Generator]**
 
-This value must be between `0.01` and `100` and accepts decimal values.
+Percentage values must be between `0.01` and `100` and accepts decimal values. 
+
+Absolute units are supported and follow the speed unit options described above.
 
 **[Fusion and Legacy Generators]**
 
-This value must be between `1` and `100` and must be an integer.
+This percentage value must be between `1` and `100` and must be an integer.
+
+Absolute units are not supported.
 
 ### `power`
 
@@ -2001,35 +2208,43 @@ This value must be between `0` and `100` and must be an integer.
 
 ### `frequency`
 
-Except in the Legacy generator, this is a percent value in which a value of `1` maps to the lowest available frequency and a value of `100` maps to the highest available frequency. The minimum and maximum frequency available depends on the laser installed in the machine and may also differ for different waveforms when applicable.
+A value which represents the frequency of the laser.
 
-In the legacy generator, the value is provided in Hertz (Hz) and therefore have a different range of values as noted below.
+When this is a percentage, a value of `1` maps to the lowest available frequency and a value of `100` maps to the highest available frequency. The minimum and maximum frequency available depends on the laser installed in the machine and may also differ for different waveforms when applicable.
 
 **[Processes Generator]**
 
-This value must be between `1` and `100` and accepts decimal values.
+Percentage values must be between `1` and `100` and accepts decimal values.
+
+Absolute units are supported and follow the frequency unit options described above.
 
 **[Fusion Generator]**
 
-This value must be between `1` and `100` and must be an integer.
+This percentage value must be between `1` and `100` and must be an integer.
+
+Absolute units are not supported.
 
 **[Legacy Generator]**
 
-This value must be between `10` and `5000` and must be an integer.
+This value must be between `10` and `5000`, must be an integer, and is in units of Hertz.
+
+Percentage values are not supported.
 
 ### `waveform` (Waveform Fiber Only)
 
-For machines with waveform-enabled lasers, this option specifies the waveform that is to be used.
-
-Note: Currently, only `g100_4x4`, `g100_6x6`, and `g2` machines have waveform-enabled lasers available.
+A value which represents the pulse duration of the laser and is only applicable to machines in which waveform lasers are available. This can be represented as an index or as a time duration.
 
 **[Processes Generator]**
 
-This value must be between `0` and `15` and must be an integer.
+Index values must be between `0` and `15` and must be an integer.
+
+Absolute units are supported and follow the pulse duration unit options described above.
 
 **[G2 Generator]**
 
 This value must be between `0` and `7` and must be an integer.
+
+Absolute units are not supported.
 
 **[Generator/Machine Compatibility]**
 

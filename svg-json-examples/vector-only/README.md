@@ -16,7 +16,7 @@ The jobs contained in this folder demonstrate the use of vector processes. These
 
 ### Multi-Process-Vector-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
 - Contains multiple processes. Some settings like `speed`, `power`, `frequency`, and `vector_sorting` will vary between processes.
 
 ### Multi-Process-Vector-Fusion.json
@@ -32,7 +32,7 @@ The jobs contained in this folder demonstrate the use of vector processes. These
 
 ### Single-Process-Vector-Processes.json
 
-- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
+- For use with the following machine types without modification (if they have a CO2 laser installed): `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`.
 - Contains one process.
 
 ### Single-Process-Vector-Fusion.json
