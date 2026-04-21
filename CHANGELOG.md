@@ -2,6 +2,12 @@
 
 Note: This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1] 2026-04-03
+
+### Fixed
+
+- `laser_type` instruction is now always output in the print file for every process in a job even if it is omitted on machines that can only have a single `laser_type`. This circumvents an issue found in some firmware versions.
+
 ## [1.4.0] 2026-03-16
 
 ### Added
