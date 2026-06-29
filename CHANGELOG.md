@@ -2,6 +2,12 @@
 
 Note: This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] 2026-06-29
+
+### Fixed
+
+- `autofocus` parameter now works correctly for Legend machines (Helix, Mini, Ext), instructing the machine to perform a plunger focus at the start of the job when set to `true`.
+
 ## [1.4.1] 2026-04-03
 
 ### Fixed

@@ -53,8 +53,9 @@ The four generators and their associated machines are as follows:
 | [Rim Rotary](#rotary-optional) | `rotary` = `rim` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`, machines for the **Fusion** generator <br /> _Note: Machines for the **Legacy** generator configure their rotaries at the machine, not through the PrintAPI_ |
 | [3-Jaw Rotary](#rotary-optional) | `rotary` = `three_jaw` | Machines for the **Processes** and **Fusion** generators <br /> _Note: Machines for the **Legacy** generator configure their rotaries at the machine, not through the PrintAPI_ |
 | [Autofocus Plunger](#autofocus) | `autofocus` = `plunger` <br/> `processes` > `thickness`/`offset` | `pro24`, `pro32`, `pro36`, `pro48`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36` |
+| [Autofocus Plunger](#autofocus) | `autofocus` = `true` | `helix24`, `mini18`, `mini24`, `ext36` |
 | [Autofocus Manual Thickness](#autofocus) | `autofocus` = `thickness` <br/> `processes` > `thickness`/`offset` | Machines for the **Processes** generator |
-| [Autofocus Manual Thickness](#autofocus) | `autofocus` = `true` <br/> `processes` > `focus` | Machines for the **Fusion**, **Legacy**, and **G2** generators |
+| [Autofocus Manual Thickness](#autofocus) | `autofocus` = `true` <br/> `processes` > `focus` | Machines for the **Fusion** and **G2** generators; `zing16`, `zing24`, `fibermark24`, `fibermark24_s2` |
 | [Laser Type](#laser-types) | `processes` > `laser_type` | Machines for the **Processes**, **Fusion** and **Legacy** generators (restrictions apply, see the [Laser Types](#laser-types) section for details) |
 | [CO2 Laser](#co2-laser) | `processes` > `laser_type` = `co2` | `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `edge12`, `edge24`, `edge36`, `maker12`, `maker24`, `maker36`, `fusion32_m2`, `fusion40_m2`, `fusion32`, `fusion40`, `zing16`, `zing24`, `helix24`, `mini18`, `mini24`, `ext36` |
 | [Fiber Laser](#laser-types) | `processes` > `laser_type` = `fiber` | `pro24`, `pro32`, `pro36`, `pro48`, `ascent12`, `ascent24`, `edge12`, `g100_4x4`, `g100_6x6`, `g2`, `fusion32_m2`, `fusion40_m2`, `fusion32_fibermark`, `fibermark24`, `fibermark24_s2` |
@@ -66,7 +67,6 @@ The four generators and their associated machines are as follows:
 | [3D/Stamp Engraving](#stamp-and-3d-modes) | `processes` > `dithering`/`operations` (engrave processes only) | Machines for the Processes, **Fusion** and **Legacy** generators (CO2-lasers only) |
 | [Bezier Vectors](#beziers) | `processes` > `beziers` (vector processes only) | Machines for the **Processes** and **Fusion** generators |
 | [Air Assist](#air_assist-optional) | `processes` > `air_assist` | `pro24`, `pro36`, `pro48`, `mini18`, `mini24`, `helix24`, `ext36`, machines for the **Fusion** generator |
-
 
 # Laser Types
 
@@ -530,7 +530,7 @@ Examples:
 }
 ```
 
-**[G2, Fusion, and Legacy Generators]**
+**[G2, Fusion Generators]**
 
 The following options are available:
 - `false` - No autofocus will occur.
@@ -539,27 +539,45 @@ The following options are available:
 Examples:
 ```json
 {
-    "autofocus": "false",
+    "autofocus": false,
     ... more job settings
 }
 ```
 ```json
 {
-    "autofocus": "true",
+    "autofocus": true,
     ... more job settings
 }
 ```
 
+**[Legacy Generator — `helix24`, `mini18`, `mini24`, `ext36`]**
+
+The following options are available:
+
+- `false` - No autofocus will occur.
+- `true` - The machine will use its plunger to measure material thickness automatically.
+
+Note: Per-process `focus` values are not accepted for these machines and will cause a validation error.
+
+**[Legacy Generator — All Other Legacy machines]**
+
+The following options are available:
+
+- `false` - No autofocus will occur.
+- `true` - A `focus` value must be provided in each process and will be used to set the table to the specified height.
+
 **[Generator/Machine Compatibility]**
 
-| **Generator**                        | **Supported**                     |
-|:-------------------------------------|:----------------------------------|
-| Processes                            | _See Below_                       |
-| &emsp;`g100_4x4`, `g100_6x6`         | ❌ `plunger` ✅ `off`/`thickness` |
-| &emsp;_All other Processes machines_ | ✅ `off`/`plunger`/`thickness`    |
-| Fusion                               | ✅ `true`/`false`                 |
-| Legacy                               | ✅ `true`/`false`                 |
-| G2                                   | ✅ `true`/`false`                 |
+| **Generator**                                | **Supported**                            |
+|:---------------------------------------------|:-----------------------------------------|
+| Processes                                    | _See Below_                              |
+| &emsp;`g100_4x4`, `g100_6x6`                 | ❌ `plunger` ✅ `off`/`thickness`        |
+| &emsp;_All other Processes machines_         | ✅ `off`/`plunger`/`thickness`           |
+| Fusion                                       | ✅ `true`/`false`                        |
+| Legacy                                       | ✅ `true`/`false`                        |
+| &emsp;`helix24`, `mini18`, `mini24`, `ext36` | Plunger; No per-process `focus`          |
+| &emsp;_All other Legacy machines_            | Per-process `focus` required when `true` |
+| G2                                           | ✅ `true`/`false`                        |
 
 ### `job_alignment` (Optional)
 
