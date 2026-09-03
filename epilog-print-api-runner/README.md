@@ -100,6 +100,14 @@ If the file does not exist, one will be created. However, the directory that wil
 
 If this option is not specified, an output file with the same base name as the input svg file will be written to in the working directory of the `epilog_print_api_runner` executable.
 
+Note: This cannot be specified in conjunction with the `--no-file-output` option.
+
+### `--no-file-output` (Optional)
+
+Opt out of writing the generated print data to a file.
+
+Note: This cannot be specified in conjunction with the `-o`/`--output-path` option.
+
 ### `-f, --font-paths <FONT_PATHS>` (Optional)
 The location of any additional font files or directories.
 

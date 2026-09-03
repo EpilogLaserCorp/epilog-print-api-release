@@ -71,6 +71,8 @@ Provides a `PrnGen` Object. This object will be passed to all other `prn_gen_*` 
 
 Note: The object created by this function must be freed using the `free_prn_gen` function.
 
+Note: `svg` and `settings` must be null-terminated UTF-8 strings. This function does not accept UTF-16 (or any other non-UTF-8 encoding). If your svg or settings file was saved as UTF-16 (which some editors do by default), it must be transcoded to UTF-8 before calling this function — passing UTF-16 bytes through a `const char *` will produce garbage or truncated results rather than a clear error, since UTF-16 text contains embedded null bytes that a C-string will treat as the end of the string.
+
 ```
 PrnGen* prnGen = prn_gen_new(svgFileStr, settingsJsonStr, machine);
 
@@ -306,6 +308,7 @@ The type of machine that the print file will be generated for.
 ### `ProgressType`
 
 An enumeration with the following variants:
+
 - [variant: `NotStarted`] Print file generation has not yet started. Call the `prn_gen_run_chunk` or `prn_gen_run_until_complete` functions to start print file generation.
 - [variant: `InProgress`] Print file generation has started, but is not complete.
 - [variant: `Finished`] Print file generation has finished successfully. Call the `prn_gen_get_result` function to get the final result.

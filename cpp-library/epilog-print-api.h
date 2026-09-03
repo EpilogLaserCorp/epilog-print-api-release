@@ -91,6 +91,11 @@ bool free_c_progress_report(const CProgressReport *result);
 
 /// Creates a new print file generator.
 ///
+/// `svg` and `settings` must be null-terminated UTF-8 strings. UTF-16 (or any other non-UTF-8
+/// encoding) is not supported — UTF-16 text contains embedded null bytes that will cause the
+/// C-string conversion to truncate silently rather than fail with a clear error. Callers must
+/// transcode to UTF-8 before calling this function.
+///
 /// # Safety
 ///
 /// This is unsafe because it takes a pointer but we cannot guarantee that the pointers are valid.

@@ -2,6 +2,19 @@
 
 Note: This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.3] 2026-09-02
+
+### Added
+
+- Added a `--no-file-output` option to `epilog_print_api_runner` to skip writing the generated print data to a file entirely. Conflicts with `-o`/`--output-path`.
+
+### Fixed
+
+- `epilog_print_api_runner` no longer crashes with an invalid-UTF-8 error when given a UTF-16 encoded svg or settings file, which some editors save by default.
+- `epilog_print_api_runner` no longer skips transmitting already-generated print data to `--ip-addr` when saving the print file locally fails.
+- `inside_out` vector sorting no longer cuts a shape's outer boundary before an inner path whose endpoints touch that boundary exactly (rather than sitting strictly inside it); the inner path is now correctly cut first.
+- Svg text and element ids containing characters that XML reserves, such as the `&` in `&amp;`, no longer cause print file generation to fail.
+
 ## [1.4.2] 2026-06-29
 
 ### Fixed
