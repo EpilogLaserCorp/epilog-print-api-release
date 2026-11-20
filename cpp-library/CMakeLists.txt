@@ -28,22 +28,28 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/example)
 
 if(UNIX AND NOT APPLE)
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64)$")
+        set(LINUX_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/linux-arm64)
+    else()
+        set(LINUX_LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/linux-x64)
+    endif()
+
     if(CMAKE_VERSION VERSION_LESS "3.21.0")
         file(
             COPY
-            ${CMAKE_CURRENT_SOURCE_DIR}/linux-x64/libepilog_print_api_libcpp.so
+            ${LINUX_LIB_DIR}/libepilog_print_api_libcpp.so
             DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
         )
     else()
         file(
             COPY_FILE
-            ${CMAKE_CURRENT_SOURCE_DIR}/linux-x64/libepilog_print_api_libcpp.so
+            ${LINUX_LIB_DIR}/libepilog_print_api_libcpp.so
             ${CMAKE_CURRENT_BINARY_DIR}/libepilog_print_api_libcpp.so ONLY_IF_DIFFERENT
         )
     endif()
 
     install(
-        FILES ${CMAKE_CURRENT_SOURCE_DIR}/linux-x64/libepilog_print_api_libcpp.so
+        FILES ${LINUX_LIB_DIR}/libepilog_print_api_libcpp.so
         DESTINATION ${CMAKE_INSTALL_BINDIR}
     )
 

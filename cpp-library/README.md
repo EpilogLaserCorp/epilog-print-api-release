@@ -24,9 +24,9 @@ Contains the `cpp` and `h` files for the provided example C++ program to run the
 
 This folder contains the `dll` and `lib` files necessary to build for x64 and ARM64 Windows.
 
-### `linux-x64`
+### `linux-x64`/`linux-arm64`
 
-The folder contains the `so` file necessary to build for Ubuntu 20.04 and higher.
+This folder contains the `so` files necessary to build for x64 and ARM64 Linux systems with glibc 2.34 or later, such as Ubuntu 22.04 and higher.
 
 ### `macos-x64`/`macos-arm64`
 

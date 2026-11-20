@@ -2,6 +2,21 @@
 
 Note: This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.4] 2026-11-20
+
+### Added
+
+- Windows `.dll` and `.exe` files now include version information (company, product, description and version), shown in their file properties.
+- Now includes Linux Arm64 builds of the executables and C++ library, in the `linux-arm64` folders.
+
+### Fixed
+
+- `air_assist` now defaults to `false` when omitted on machines that support air assist, as the documentation describes, instead of leaving air assist in the state set by the previous process.
+- `air_assist` is now applied to hatch processes on Fusion and Legend (Helix, Mini, Ext) machines, which previously ignored it.
+- The `air_assist` documentation now lists the Ascent machines (`ascent12`, `ascent24`, `ascent36`), which already supported it.
+- The C++ library documentation now gives the correct Linux requirement, glibc 2.34 or later (such as Ubuntu 22.04), instead of Ubuntu 20.04.
+- Windows `.dll` and `.exe` files are now code signed, so Windows Smart App Control no longer blocks them with a "Bad Image" error (`0xc0e90002`).
+
 ## [1.4.3] 2026-09-02
 
 ### Added

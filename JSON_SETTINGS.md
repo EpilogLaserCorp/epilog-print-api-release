@@ -66,7 +66,7 @@ The four generators and their associated machines are as follows:
 | [Unidirectional Engraving](#unidirectional) | `processes` > `unidirectional` (engrave processes only) | Machines for the **Processes** generator |
 | [3D/Stamp Engraving](#stamp-and-3d-modes) | `processes` > `dithering`/`operations` (engrave processes only) | Machines for the Processes, **Fusion** and **Legacy** generators (CO2-lasers only) |
 | [Bezier Vectors](#beziers) | `processes` > `beziers` (vector processes only) | Machines for the **Processes** and **Fusion** generators |
-| [Air Assist](#air_assist-optional) | `processes` > `air_assist` | `pro24`, `pro36`, `pro48`, `mini18`, `mini24`, `helix24`, `ext36`, machines for the **Fusion** generator |
+| [Air Assist](#air_assist-optional) | `processes` > `air_assist` | `pro24`, `pro36`, `pro48`, `ascent12`, `ascent24`, `ascent36`, `mini18`, `mini24`, `helix24`, `ext36`, machines for the **Fusion** generator |
 
 # Laser Types
 
@@ -1659,18 +1659,21 @@ This value can be set to `true` or `false` [default].
 
 **[Generator/Machine Compatibility]**
 
-| **Generator**                        | **Supported** |
-|:-------------------------------------|:--------------|
-| Processes                            | _See Below_   |
-| &emsp;`pro24`, `pro36`, `pro48`      | ✅            |
-| &emsp;_All other Processes machines_ | ❌            |
-| Fusion                               | ✅            |
-| Legacy                               | _See Below_   |
-| &emsp;`mini18`, `mini24`             | ✅            |
-| &emsp;`helix24`                      | ✅            |
-| &emsp;`ext36`                        | ✅            |
-| &emsp;_All other Legacy machines_    | ❌            |
-| G2                                   | ❌            |
+| **Generator**                              | **Supported** |
+|:-------------------------------------------|:--------------|
+| Processes                                  | _See Below_   |
+| &emsp;`pro24`, `pro36`, `pro48`            | ✅            |
+| &emsp;`ascent12`, `ascent24`, `ascent36`   | ✅            |
+| &emsp;_All other Processes machines_       | ❌            |
+| Fusion                                     | ✅            |
+| Legacy                                     | _See Below_   |
+| &emsp;`mini18`, `mini24`                   | ✅            |
+| &emsp;`helix24`                            | ✅            |
+| &emsp;`ext36`                              | ✅            |
+| &emsp;_All other Legacy machines_          | ❌            |
+| G2                                         | ❌            |
+
+_Note: Some `pro48` machines are set up to run air assist for the entire job. On those machines, this setting has no effect._
 
 # Vector Process
 
@@ -1945,18 +1948,21 @@ This value can be set to `true` or `false` [default].
 
 **[Generator/Machine Compatibility]**
 
-| **Generator**                        | **Supported** |
-|:-------------------------------------|:--------------|
-| Processes                            | _See Below_   |
-| &emsp;`pro24`, `pro36`, `pro48`      | ✅            |
-| &emsp;_All other Processes machines_ | ❌            |
-| Fusion                               | ✅            |
-| Legacy                               | _See Below_   |
-| &emsp;`mini18`, `mini24`             | ✅            |
-| &emsp;`helix24`                      | ✅            |
-| &emsp;`ext36`                        | ✅            |
-| &emsp;_All other Legacy machines_    | ❌            |
-| G2                                   | ❌            |
+| **Generator**                              | **Supported** |
+|:-------------------------------------------|:--------------|
+| Processes                                  | _See Below_   |
+| &emsp;`pro24`, `pro36`, `pro48`            | ✅            |
+| &emsp;`ascent12`, `ascent24`, `ascent36`   | ✅            |
+| &emsp;_All other Processes machines_       | ❌            |
+| Fusion                                     | ✅            |
+| Legacy                                     | _See Below_   |
+| &emsp;`mini18`, `mini24`                   | ✅            |
+| &emsp;`helix24`                            | ✅            |
+| &emsp;`ext36`                              | ✅            |
+| &emsp;_All other Legacy machines_          | ❌            |
+| G2                                         | ❌            |
+
+_Note: Some `pro48` machines are set up to run air assist for the entire job. On those machines, this setting has no effect._
 
 ### `optimize_cycles` (Optional)
 
@@ -2119,18 +2125,21 @@ This value can be set to `true` or `false` [default].
 
 **[Generator/Machine Compatibility]**
 
-| **Generator**                        | **Supported** |
-|:-------------------------------------|:--------------|
-| Processes                            | _See Below_   |
-| &emsp;`pro24`, `pro36`, `pro48`      | ✅            |
-| &emsp;_All other Processes machines_ | ❌            |
-| Fusion                               | ✅            |
-| Legacy                               | _See Below_   |
-| &emsp;`mini18`, `mini24`             | ✅            |
-| &emsp;`helix24`                      | ✅            |
-| &emsp;`ext36`                        | ✅            |
-| &emsp;_All other Legacy machines_    | ❌            |
-| G2                                   | ❌            |
+| **Generator**                              | **Supported** |
+|:-------------------------------------------|:--------------|
+| Processes                                  | _See Below_   |
+| &emsp;`pro24`, `pro36`, `pro48`            | ✅            |
+| &emsp;`ascent12`, `ascent24`, `ascent36`   | ✅            |
+| &emsp;_All other Processes machines_       | ❌            |
+| Fusion                                     | ✅            |
+| Legacy                                     | _See Below_   |
+| &emsp;`mini18`, `mini24`                   | ✅            |
+| &emsp;`helix24`                            | ✅            |
+| &emsp;`ext36`                              | ✅            |
+| &emsp;_All other Legacy machines_          | ❌            |
+| G2                                         | ❌            |
+
+_Note: Some `pro48` machines are set up to run air assist for the entire job. On those machines, this setting has no effect._
 
 ### `optimize_hatch_sort` (Optional)
 

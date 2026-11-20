@@ -18,7 +18,7 @@ Note: The executable is contained in the `win-x64` and `win-arm64` folders.
 ./epilog_print_file_transmitter --machine-type edge12 --input-prn example.prn --ip-addr "192.168.1.1"
 ```
 
-Note: The executable is contained in the `linux-x64` folder.
+Note: The executable is contained in the `linux-x64` and `linux-arm64` folders.
 
 **macOS**
 
